@@ -1,6 +1,7 @@
 import { APPLICATION_PORT, APPLICATION_CONNECTION_NAME } from "./utils/index.util";
 import { createConnection } from "typeorm";
-// import app from "./app";
+import AccountEntity from "./models/AccountEntity";
+import { join } from "path/posix";
 
 createConnection({
   type: "postgres",
@@ -10,8 +11,8 @@ createConnection({
   password: "blog",
   database: "iotapplication",
   synchronize: false,
-  // logging: true,
-//   entities: [PersonEntity],
+  logging: true,
+  entities: [join(__dirname, "./models/*.ts")],
   name: APPLICATION_CONNECTION_NAME,
 }).then(async (connect) => {
     // populate data in the database

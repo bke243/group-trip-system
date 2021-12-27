@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_util_1 = require("./utils/index.util");
 const typeorm_1 = require("typeorm");
-// import app from "./app";
+const posix_1 = require("path/posix");
 typeorm_1.createConnection({
     type: "postgres",
     host: "localhost",
@@ -20,8 +20,8 @@ typeorm_1.createConnection({
     password: "blog",
     database: "iotapplication",
     synchronize: false,
-    // logging: true,
-    //   entities: [PersonEntity],
+    logging: true,
+    entities: [posix_1.join(__dirname, "./models/*.ts")],
     name: index_util_1.APPLICATION_CONNECTION_NAME,
 }).then((connect) => __awaiter(void 0, void 0, void 0, function* () {
     // populate data in the database
