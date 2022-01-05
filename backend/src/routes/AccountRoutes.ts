@@ -1,17 +1,20 @@
 import { Router } from "express";
-import AccountController from "../controllers/AccountController";
+import AccountCallbacks from "../middleware-callbacks/AccountCallbacks";
 import { validateBodyParams } from "../middlewares/request-body-validator";
-import AccountSchema from "../utils/schemas/AccountSchema.util";
+import { AccountLoginSchema, AccountSingUpSchema } from "../utils/schemas/AccountSchema.util";
 
 const router = Router();
 
 // get all accounts to be disabled and removed
-router.get("/accounts", AccountController.getAccounts);
+router.get("/accounts", AccountCallbacks.getAccounts);
 
 // create a user account
-router.post("/user/sign-up", validateBodyParams(AccountSchema),AccountController.createAccount);
+router.post("/user/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postUserSignUp);
 
 // create an admin user account that will work only once
-router.post("/admin/sign-up", validateBodyParams(AccountSchema), AccountController.createAccount);
+router.post("/admin/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postAdminSignUp);
+
+// autehnticate the user and return a the user
+router.post("/user/login", validateBodyParams(AccountLoginSchema), AccountCallbacks.postLogin);
 
 export default router;

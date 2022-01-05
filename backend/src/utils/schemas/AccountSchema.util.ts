@@ -1,11 +1,14 @@
 import Joi from "joi";
 
-const AccountSchema = Joi.object({
+export const AccountSingUpSchema = Joi.object({
   password: Joi.string().required(),
   firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  telephone: Joi.string().required(),
+  lastName: Joi.string(),
+  telephone: Joi.string(),
   email: Joi.string().email().required(),
 })
 
-export default AccountSchema;
+export const AccountLoginSchema =  Joi.object({
+  password: Joi.string().required(),
+  email: Joi.string().email().required(),
+})

@@ -4,6 +4,9 @@ import { AnySchema } from "joi";
 export enum RESPONSE_STATUS {
   BAD_REQUEST=400,
   OK=200,
+  CONFLICT=409,
+  INTERNAL_SERVER_ERROR=500,
+  UNAUTHORIZED = 401,
 }
 
 export const validateBodyParams = (validationSchema: AnySchema): RequestHandler => {

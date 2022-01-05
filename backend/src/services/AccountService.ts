@@ -20,15 +20,20 @@ class AccountService {
   public createAccountEntity = async (newAccountDetails: AccountCreationDto) => {
     const repository = this.getRepository();
     return repository.create({ 
-      created: new Date,
+      created: new Date(),
       email: newAccountDetails.email,
-      password: newAccountDetails.password
+      password: newAccountDetails.password,
      })
   }
 
   public saveAccount = async (account: AccountEntity) => {
     const repository = this.getRepository();
     return repository.save(account);
+  }
+
+  public findAccountByEmail = async (email: string) => {
+    const repository = this.getRepository();
+    return repository.findOne({ where: { email: email }});
   }
 }
 

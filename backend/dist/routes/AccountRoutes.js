@@ -4,14 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const AccountController_1 = __importDefault(require("../controllers/AccountController"));
+const AccountCallbacks_1 = __importDefault(require("../middleware-callbacks/AccountCallbacks"));
 const request_body_validator_1 = require("../middlewares/request-body-validator");
-const AccountSchema_util_1 = __importDefault(require("../utils/schemas/AccountSchema.util"));
+const AccountSchema_util_1 = require("../utils/schemas/AccountSchema.util");
 const router = express_1.Router();
 // get all accounts to be disabled and removed
-router.get("/accounts", AccountController_1.default.getAccounts);
+router.get("/accounts", AccountCallbacks_1.default.getAccounts);
 // create a user account
-router.post("/user/sign-up", request_body_validator_1.validateBodyParams(AccountSchema_util_1.default), AccountController_1.default.createAccount);
+router.post("/user/signup", request_body_validator_1.validateBodyParams(AccountSchema_util_1.AccountSingUpSchema), AccountCallbacks_1.default.hasAccountWithSameEmail, AccountCallbacks_1.default.postUserSignUp);
 // create an admin user account that will work only once
-router.post("/admin/sign-up", request_body_validator_1.validateBodyParams(AccountSchema_util_1.default), AccountController_1.default.createAccount);
+router.post("/admin/signup", request_body_validator_1.validateBodyParams(AccountSchema_util_1.AccountSingUpSchema), AccountCallbacks_1.default.hasAccountWithSameEmail, AccountCallbacks_1.default.postAdminSignUp);
+// autehnticate the user and return a the user
+router.post("/user/login", request_body_validator_1.validateBodyParams(AccountSchema_util_1.AccountLoginSchema), AccountCallbacks_1.default.postLogin);
 exports.default = router;
