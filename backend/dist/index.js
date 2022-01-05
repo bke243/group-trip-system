@@ -8,27 +8,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_util_1 = require("./utils/index.util");
 const typeorm_1 = require("typeorm");
-const posix_1 = require("path/posix");
+const AccountEntity_1 = __importDefault(require("./models/AccountEntity"));
+const AdminEntity_1 = __importDefault(require("./models/AdminEntity"));
+const UserEntity_1 = __importDefault(require("./models/UserEntity"));
+const PersonEntity_1 = __importDefault(require("./models/PersonEntity"));
+const GroupEntity_1 = __importDefault(require("./models/GroupEntity"));
+const PackageEntity_1 = __importDefault(require("./models/PackageEntity"));
+const PurchaseDetailEntity_1 = __importDefault(require("./models/PurchaseDetailEntity"));
+const MessageEntity_1 = __importDefault(require("./models/MessageEntity"));
+const CountryEntity_1 = __importDefault(require("./models/CountryEntity"));
+const CityEntity_1 = __importDefault(require("./models/CityEntity"));
+const LocationEntity_1 = __importDefault(require("./models/LocationEntity"));
+const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
 typeorm_1.createConnection({
     type: "postgres",
     host: "localhost",
     port: 5432,
-    username: "blog",
-    password: "blog",
-    database: "iotapplication",
-    synchronize: false,
+    username: "user",
+    password: "password",
+    database: "grouptripdatabase",
+    synchronize: true,
     logging: true,
-    entities: [posix_1.join(__dirname, "./models/*.ts")],
+    entities: [
+        AccountEntity_1.default, AdminEntity_1.default, UserEntity_1.default,
+        PersonEntity_1.default, GroupEntity_1.default, MessageEntity_1.default,
+        CountryEntity_1.default, CityEntity_1.default, LocationEntity_1.default,
+        PackageEntity_1.default, PurchaseDetailEntity_1.default, GroupUserEntity_1.default
+    ],
     name: index_util_1.APPLICATION_CONNECTION_NAME,
 }).then((connect) => __awaiter(void 0, void 0, void 0, function* () {
-    // populate data in the database
+    // populate tables if not created  in the database
     yield connect.synchronize();
     // start the application
     const server = require("./app").listen(index_util_1.APPLICATION_PORT, () => {
-        console.log("Application started");
+        console.log("The application started");
     });
-    // seting  upthe websocket connection
 }));

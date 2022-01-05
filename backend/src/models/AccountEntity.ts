@@ -21,6 +21,11 @@ export interface AccountCreationDto {
   firstName: string;
   lastName: string;
   telephone: string;
+  birthDate?: string;
 }
 
+export interface AccountLoginDto {
+  password: string;
+  email: string;
+}
 export default AccountEntity;

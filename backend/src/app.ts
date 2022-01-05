@@ -1,8 +1,9 @@
 import express from "express";
-import AccountRoutes from "./routes/AccountRoutes";
 import bodyParder from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
+import AccountRoutes from "./routes/AccountRoutes";
+import PackageRoutes from "./routes/PackageRoutes";
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use(cors({
 app.use(bodyParder.json());
 
 app.use("/auth", AccountRoutes);
+app.use("/packages", PackageRoutes);
 
 module.exports = app;

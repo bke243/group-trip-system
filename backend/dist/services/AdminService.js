@@ -13,34 +13,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const AccountEntity_1 = __importDefault(require("../models/AccountEntity"));
+const AdminEntity_1 = __importDefault(require("../models/AdminEntity"));
 const index_util_1 = require("../utils/index.util");
-class AccountService {
+class AdminService {
     constructor() {
         this.getRepository = () => {
-            return this.accountRepository;
+            return this.adminRepository;
         };
-        this.getAccounts = () => __awaiter(this, void 0, void 0, function* () {
+        this.getAdmins = () => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.find();
         });
-        this.createAccountEntity = (newAccountDetails) => __awaiter(this, void 0, void 0, function* () {
+        this.createAdminEntity = (newPersonAccount) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.create({
-                created: new Date(),
-                email: newAccountDetails.email,
-                password: newAccountDetails.password,
+                account: newPersonAccount.id,
+                accountId: newPersonAccount.id,
             });
         });
-        this.saveAccount = (account) => __awaiter(this, void 0, void 0, function* () {
+        this.saveAdmin = (admin) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.save(account);
+            return repository.save(admin);
         });
-        this.findAccountByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
+        this.findAdminByAccountId = (accountId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.findOne({ where: { email: email } });
+            return repository.findOne({ where: { accountId: accountId } });
         });
-        this.accountRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AccountEntity_1.default);
+        this.adminRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AdminEntity_1.default);
     }
 }
-exports.default = new AccountService();
+exports.default = new AdminService();

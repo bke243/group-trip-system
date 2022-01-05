@@ -13,34 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const AccountEntity_1 = __importDefault(require("../models/AccountEntity"));
+const PackageEntity_1 = __importDefault(require("../models/PackageEntity"));
 const index_util_1 = require("../utils/index.util");
-class AccountService {
+class PackageService {
     constructor() {
         this.getRepository = () => {
-            return this.accountRepository;
+            return this.locationRepository;
         };
-        this.getAccounts = () => __awaiter(this, void 0, void 0, function* () {
+        this.getPackages = () => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.find();
         });
-        this.createAccountEntity = (newAccountDetails) => __awaiter(this, void 0, void 0, function* () {
+        this.savePackage = (user) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.create({
-                created: new Date(),
-                email: newAccountDetails.email,
-                password: newAccountDetails.password,
-            });
+            return repository.save(user);
         });
-        this.saveAccount = (account) => __awaiter(this, void 0, void 0, function* () {
+        this.findPackageById = (accountId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.save(account);
+            return repository.findOne({ where: { id: accountId } });
         });
-        this.findAccountByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
-            const repository = this.getRepository();
-            return repository.findOne({ where: { email: email } });
-        });
-        this.accountRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AccountEntity_1.default);
+        this.locationRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PackageEntity_1.default);
     }
 }
-exports.default = new AccountService();
+exports.default = new PackageService();
