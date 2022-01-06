@@ -40,7 +40,7 @@ class AccountService {
             const repository = this.getRepository();
             return repository.findOne({ where: { email: email } });
         });
-        this.accountRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AccountEntity_1.default);
+        this.accountRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AccountEntity_1.default);
     }
 }
 exports.default = new AccountService();

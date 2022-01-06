@@ -13,26 +13,26 @@ const typeorm_1 = require("typeorm");
 let MessageEntity = class MessageEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], MessageEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], MessageEntity.prototype, "content", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], MessageEntity.prototype, "originId", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], MessageEntity.prototype, "receiverId", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], MessageEntity.prototype, "sentDate", void 0);
 MessageEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], MessageEntity);
 exports.default = MessageEntity;

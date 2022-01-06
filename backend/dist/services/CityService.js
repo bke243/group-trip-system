@@ -40,7 +40,7 @@ class CityService {
             const repository = this.getRepository();
             return repository.findOne({ where: { id: contryId } });
         });
-        this.cityRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(CityEntity_1.default);
+        this.cityRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(CityEntity_1.default);
     }
 }
 exports.default = new CityService();

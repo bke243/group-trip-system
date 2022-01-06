@@ -13,22 +13,22 @@ const typeorm_1 = require("typeorm");
 let AccountEntity = class AccountEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], AccountEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], AccountEntity.prototype, "created", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], AccountEntity.prototype, "password", void 0);
 __decorate([
-    typeorm_1.Column({ unique: true }),
+    (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], AccountEntity.prototype, "email", void 0);
 AccountEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], AccountEntity);
 exports.default = AccountEntity;

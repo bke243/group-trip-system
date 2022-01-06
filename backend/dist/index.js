@@ -26,7 +26,7 @@ const CountryEntity_1 = __importDefault(require("./models/CountryEntity"));
 const CityEntity_1 = __importDefault(require("./models/CityEntity"));
 const LocationEntity_1 = __importDefault(require("./models/LocationEntity"));
 const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
-typeorm_1.createConnection({
+(0, typeorm_1.createConnection)({
     type: "postgres",
     host: "localhost",
     port: 5432,

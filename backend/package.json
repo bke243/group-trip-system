@@ -4,7 +4,7 @@
   "description": "group trip system backend",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node dist/app.js",
     "dev": "nodemon src/index.ts ",
     "build": "tsc -p ."
@@ -25,8 +25,11 @@
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.0",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^17.0.5"
+    "@types/node": "^17.0.5",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.2"
   }
 }

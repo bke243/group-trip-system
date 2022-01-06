@@ -17,35 +17,35 @@ const UserEntity_1 = __importDefault(require("./UserEntity"));
 let GroupEntity = class GroupEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], GroupEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], GroupEntity.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], GroupEntity.prototype, "created", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => UserEntity_1.default, user => user.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => UserEntity_1.default, user => user.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", UserEntity_1.default)
 ], GroupEntity.prototype, "owner", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", UserEntity_1.default)
 ], GroupEntity.prototype, "ownerId", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], GroupEntity.prototype, "destination", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], GroupEntity.prototype, "description", void 0);
 GroupEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], GroupEntity);
 exports.default = GroupEntity;

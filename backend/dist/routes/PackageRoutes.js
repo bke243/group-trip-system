@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const PackageService_1 = __importDefault(require("../services/PackageService"));
 const database_seed_1 = require("../utils/database_seed");
-const router = express_1.Router();
+const router = (0, express_1.Router)();
 // get all the dummy packages
 router.get("/", (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

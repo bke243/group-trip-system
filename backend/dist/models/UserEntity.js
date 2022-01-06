@@ -17,19 +17,19 @@ const AccountEntity_1 = __importDefault(require("./AccountEntity"));
 let UserEntity = class UserEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], UserEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.OneToOne(type => AccountEntity_1.default, account => account.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.OneToOne)(type => AccountEntity_1.default, account => account.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], UserEntity.prototype, "account", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], UserEntity.prototype, "accountId", void 0);
 UserEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], UserEntity);
 exports.default = UserEntity;

@@ -32,7 +32,7 @@ class PackageService {
             const repository = this.getRepository();
             return repository.findOne({ where: { id: accountId } });
         });
-        this.locationRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PackageEntity_1.default);
+        this.locationRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PackageEntity_1.default);
     }
 }
 exports.default = new PackageService();
