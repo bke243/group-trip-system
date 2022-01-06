@@ -10,7 +10,7 @@ class LocationEntity extends BaseEntity {
   @Column()
   streetName!: string;
 
-  @Column()
+  @Column({ nullable: true })
   zipCode!: string;
 
   @Column({ nullable: true })
