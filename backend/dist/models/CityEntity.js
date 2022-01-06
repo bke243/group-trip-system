@@ -17,23 +17,23 @@ const CountryEntity_1 = __importDefault(require("./CountryEntity"));
 let CityEntity = class CityEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], CityEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], CityEntity.prototype, "name", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => CountryEntity_1.default, country => country.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => CountryEntity_1.default, country => country.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], CityEntity.prototype, "country", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], CityEntity.prototype, "countryId", void 0);
 CityEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], CityEntity);
 exports.default = CityEntity;

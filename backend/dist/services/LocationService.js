@@ -43,7 +43,7 @@ class LocationService {
             const repository = this.getRepository();
             return repository.findOne({ where: { accountId: accountId } });
         });
-        this.locationRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(LocationEntity_1.default);
+        this.locationRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(LocationEntity_1.default);
     }
 }
 exports.default = new LocationService();

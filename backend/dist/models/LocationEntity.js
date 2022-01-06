@@ -18,40 +18,40 @@ const CountryEntity_1 = __importDefault(require("./CountryEntity"));
 let LocationEntity = class LocationEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], LocationEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], LocationEntity.prototype, "streetName", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], LocationEntity.prototype, "zipCode", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], LocationEntity.prototype, "state", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => CityEntity_1.default, city => city.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => CityEntity_1.default, city => city.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], LocationEntity.prototype, "city", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], LocationEntity.prototype, "cityId", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => CountryEntity_1.default, country => country.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => CountryEntity_1.default, country => country.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], LocationEntity.prototype, "country", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], LocationEntity.prototype, "countryId", void 0);
 LocationEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], LocationEntity);
 exports.default = LocationEntity;

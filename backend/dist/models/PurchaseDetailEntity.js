@@ -18,36 +18,36 @@ const PackageEntity_1 = __importDefault(require("./PackageEntity"));
 let PurchaseDetailEntity = class PurchaseDetailEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "cost", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], PurchaseDetailEntity.prototype, "paid", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => GroupEntity_1.default, group => group.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => GroupEntity_1.default, group => group.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "group", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "groupId", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => PackageEntity_1.default, packageEntity => packageEntity.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => PackageEntity_1.default, packageEntity => packageEntity.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "country", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "countryId", void 0);
 PurchaseDetailEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], PurchaseDetailEntity);
 exports.default = PurchaseDetailEntity;

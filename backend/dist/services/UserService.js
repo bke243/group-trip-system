@@ -39,7 +39,7 @@ class UserService {
             const repository = this.getRepository();
             return repository.findOne({ where: { accountId: accountId } });
         });
-        this.userRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(UserEntity_1.default);
+        this.userRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(UserEntity_1.default);
     }
 }
 exports.default = new UserService();

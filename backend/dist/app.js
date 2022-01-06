@@ -9,10 +9,10 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const AccountRoutes_1 = __importDefault(require("./routes/AccountRoutes"));
 const PackageRoutes_1 = __importDefault(require("./routes/PackageRoutes"));
-const app = express_1.default();
+const app = (0, express_1.default)();
 // log requests
-app.use(morgan_1.default('combined'));
-app.use(cors_1.default({
+app.use((0, morgan_1.default)('combined'));
+app.use((0, cors_1.default)({
     origin: ['*'],
 }));
 // parse all the request body

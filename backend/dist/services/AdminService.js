@@ -39,7 +39,7 @@ class AdminService {
             const repository = this.getRepository();
             return repository.findOne({ where: { accountId: accountId } });
         });
-        this.adminRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AdminEntity_1.default);
+        this.adminRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AdminEntity_1.default);
     }
 }
 exports.default = new AdminService();

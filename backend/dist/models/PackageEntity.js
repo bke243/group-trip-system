@@ -18,64 +18,64 @@ const LocationEntity_1 = __importDefault(require("./LocationEntity"));
 let PackageEntity = class PackageEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], PackageEntity.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column("text", { array: true }),
+    (0, typeorm_1.Column)("text", { array: true }),
     __metadata("design:type", Array)
 ], PackageEntity.prototype, "activities", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], PackageEntity.prototype, "description", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "price", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "created", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "startDate", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "endDate", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "count", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "maxPersons", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => AdminEntity_1.default, admin => admin.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => AdminEntity_1.default, admin => admin.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "admin", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "adminId", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => LocationEntity_1.default, location => location.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.ManyToOne)(type => LocationEntity_1.default, location => location.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "location", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "locationId", void 0);
 PackageEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], PackageEntity);
 exports.default = PackageEntity;

@@ -38,7 +38,7 @@ class CountryService {
             const repository = this.getRepository();
             return repository.findOne({ where: { id: contryId } });
         });
-        this.countryRepository = typeorm_1.getConnectionManager().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(CountryEntity_1.default);
+        this.countryRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(CountryEntity_1.default);
     }
 }
 exports.default = new CountryService();

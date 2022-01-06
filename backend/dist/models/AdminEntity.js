@@ -17,19 +17,19 @@ const AccountEntity_1 = __importDefault(require("./AccountEntity"));
 let AdminEntity = class AdminEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], AdminEntity.prototype, "id", void 0);
 __decorate([
-    typeorm_1.OneToOne(type => AccountEntity_1.default, account => account.id),
-    typeorm_1.JoinColumn(),
+    (0, typeorm_1.OneToOne)(type => AccountEntity_1.default, account => account.id),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Number)
 ], AdminEntity.prototype, "account", void 0);
 __decorate([
-    typeorm_1.Column(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], AdminEntity.prototype, "accountId", void 0);
 AdminEntity = __decorate([
-    typeorm_1.Entity()
+    (0, typeorm_1.Entity)()
 ], AdminEntity);
 exports.default = AdminEntity;

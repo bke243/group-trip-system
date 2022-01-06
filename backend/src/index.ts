@@ -24,7 +24,7 @@ createConnection({
   password: "password",
   database: "grouptripdatabase",
   synchronize: true,
-  logging: true, // comment it to disable db logs
+  // logging: true, // comment it to disable db logs
   entities: [
     AccountEntity, AdminEntity, UserEntity, 
     PersonEntity, GroupEntity, MessageEntity,
