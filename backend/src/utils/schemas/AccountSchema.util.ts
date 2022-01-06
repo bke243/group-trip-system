@@ -6,6 +6,7 @@ export const AccountSingUpSchema = Joi.object({
   lastName: Joi.string(),
   telephone: Joi.string(),
   email: Joi.string().email().required(),
+  birthDate: Joi.string(),
 })
 
 export const AccountLoginSchema =  Joi.object({

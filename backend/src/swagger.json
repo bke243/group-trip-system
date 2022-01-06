@@ -1,0 +1,89 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+      "version": "1.0.0",
+      "title": "Group trip settlement system",
+      "description": "Description is coming, to do ...",
+      "license": {
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT"
+      }
+  },
+  "servers": [
+      {
+          "url": "http://localhost:5000",
+          "description": "Local Dev"
+      }
+  ],
+
+  "paths": {
+    "/auth/user/signup": {
+      "post": {
+        "tags": [
+            "Users"
+        ],
+        "summary": "Crate a new user in the system",
+        "requestBody": {
+          "description": "User sign up data ",
+          "required": true,
+          "content": {
+              "application/json": {
+                  "schema": {
+                      "$ref": "#/definitions/UserSignUpDto"
+                  }
+              }
+          }
+      },
+        "responses": {
+          "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/UserSignUpDtoOKResponse"
+            }
+          },
+          "409": {
+              "description": "Conflict, user with the email already exist"
+          },
+          "400": {
+              "description": "Bad request, the request body is not of the proper format"
+          }
+
+        }
+      }
+  }},
+  "definitions": {
+    "UserSignUpDto": {
+        "type": "object",
+        "properties": {
+            "password": {
+                "type": "string"
+            },
+            "firstName": {
+                "type": "string"
+            },
+            "lastName": {
+                "type": "string"
+            },
+            "telephone": {
+                "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+        }
+        }
+    },
+    "UserSignUpDtoOKResponse": {
+        "type": "object",
+        "properties": {
+            "token": {
+                "type": "string"
+            }
+        }
+    }
+  }
+}
