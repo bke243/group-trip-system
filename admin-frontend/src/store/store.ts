@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import systemSlice from "./systemSlice";
+import dialogSlice from "./dialogSlice";
 import { persistReducer } from "redux-persist";
 import createIdbStorage from "@piotr-cz/redux-persist-idb-storage";
 
@@ -11,7 +12,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    system: systemSlice
+    system: systemSlice,
+    dialog: dialogSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

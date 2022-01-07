@@ -1,0 +1,1 @@
+export const createPackageFields = ["name", "price", "startDate", "endDate", "count", "maxPersons", "country", "city", "streetName", "zipCode", "state",  "description" ];

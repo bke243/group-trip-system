@@ -6,6 +6,7 @@ import './App.css';
 import Home from '../Home/Home';
 import AdminPanel from '../AdminPanel/AdminPanel';
 import Login from '../Login/Login';
+import DialogView from "../../components/dialogs/DialogView";
 
 const useStyles  = makeStyles(() => ({
   appContainer: {
@@ -24,6 +25,7 @@ const App = () => {
   return (
     <Box className={classes.appContainer}>
       <Layout>
+        <DialogView />
         <Routes >
           <Route path="/" element={<Home />}  />
           <Route path="/admin" element={<AdminPanel />} />
