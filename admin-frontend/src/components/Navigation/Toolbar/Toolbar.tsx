@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { makeStyles } from '@mui/styles';
 import { Box } from "@mui/material";
 import ApplicationBar from "./integrant/ApplicationBar/ApplicationBar";
@@ -9,7 +8,6 @@ const useStyles  = makeStyles(() => ({
     width: "100%",
     height: "100%",
     flexDirection: "column",
-    border: "5px red green",
   }
 }))
 
