@@ -6,9 +6,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
-import { Button } from "@mui/material";
-import { useDispatch } from "../../store/react-redux-hooks";
-import { openDialog, DIALOG_TYPE } from "../../store/dialogSlice";
+import AdminPackagesTabPanel from "../../components/AdminPackagesTabPanel/AdminPackagesTabPanel";
+
 
 
 const useStyles  = makeStyles(() => ({
@@ -22,7 +21,8 @@ const useStyles  = makeStyles(() => ({
   },
   paperStyles: {
     width: "100%",
-    minHeight: "80vh" 
+    minHeight: "80vh" ,
+    border: "1px solid green",
   }
 }))
 
@@ -30,20 +30,17 @@ const useStyles  = makeStyles(() => ({
 const AdminPanel = () => {
   const [value, setValue] = useState('1');
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
-  const onPackageAddClickHandler = () => {
-    dispatch(openDialog({ dialogType: DIALOG_TYPE.CREATE_PACKAGE, dialogTitle: "Create Package" }))
-  }
+  
 
   return (
     <Box className={classes.panelContainer}>
       <Paper elevation={3} className={classes.paperStyles}>
-        <TabContext value={value} >
+        <TabContext value={value}>
           <Box  sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={handleChange}>
               <Tab label="Packages" value="1" />
@@ -51,11 +48,11 @@ const AdminPanel = () => {
               <Tab label="Manage users" value="3" disabled/>
             </TabList>
           </Box>
-          <TabPanel value="1">
-            <Button onClick={onPackageAddClickHandler}>Create package</Button>
+          <TabPanel value="1" style={{ border: "1px solid red", minHeight: "73vh" }}>
+            <AdminPackagesTabPanel />
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
+          <TabPanel value="2" style={{ border: "1px solid red", minHeight: "73vh" }}>Item Two</TabPanel>
+          <TabPanel value="3" style={{ border: "1px solid red", minHeight: "73vh" }}>Item Three</TabPanel>
         </TabContext>
       </Paper>
     </Box>

@@ -22,6 +22,7 @@ const fields: FormFieldProps[] = [
     name: "price",
     label: "Price",
     Component: FreeTextField,
+    type: "number",
   },
   {
     name: "email",
