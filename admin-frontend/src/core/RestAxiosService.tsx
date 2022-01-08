@@ -7,7 +7,7 @@ interface AxiosService {
 }
 
 class RestAxiosService implements AxiosService {
-  public BACKEND_BASE_URL = "https://localhost:500/";
+  public BACKEND_BASE_URL = "http://localhost:5000/";
   public readonly axiosInstance: AxiosInstance;
   constructor() {
     this.axiosInstance = axios.create({

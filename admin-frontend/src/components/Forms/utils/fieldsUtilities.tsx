@@ -1,5 +1,6 @@
 export enum FORM_NAME {
   CREATE_PACKAGE,
+  LOGIN
 }
 
 export interface FormFieldProps {

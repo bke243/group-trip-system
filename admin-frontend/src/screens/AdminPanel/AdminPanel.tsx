@@ -22,7 +22,6 @@ const useStyles  = makeStyles(() => ({
   paperStyles: {
     width: "100%",
     minHeight: "80vh" ,
-    border: "1px solid green",
   }
 }))
 
@@ -48,11 +47,11 @@ const AdminPanel = () => {
               <Tab label="Manage users" value="3" disabled/>
             </TabList>
           </Box>
-          <TabPanel value="1" style={{ border: "1px solid red", minHeight: "73vh" }}>
+          <TabPanel value="1" style={{ minHeight: "73vh" }}>
             <AdminPackagesTabPanel />
           </TabPanel>
-          <TabPanel value="2" style={{ border: "1px solid red", minHeight: "73vh" }}>Item Two</TabPanel>
-          <TabPanel value="3" style={{ border: "1px solid red", minHeight: "73vh" }}>Item Three</TabPanel>
+          <TabPanel value="2" style={{ minHeight: "73vh" }}>Item Two</TabPanel>
+          <TabPanel value="3" style={{ minHeight: "73vh" }}>Item Three</TabPanel>
         </TabContext>
       </Paper>
     </Box>
