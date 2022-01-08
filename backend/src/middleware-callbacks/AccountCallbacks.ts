@@ -10,7 +10,7 @@ import AdminService from "../services/AdminService";
 
 class AccountCallbacks {
 
-  private jwtSecret = "do not do it in production"
+  public jwtSecret = "do not do it in production"
   constructor() {
 
   }
@@ -20,7 +20,6 @@ class AccountCallbacks {
       const accounts = await AccountService.getAccounts();
       return res.json({ accounts });
     } catch (error) {
-      console.log(error);
       return res.json({ error });
     }
   }

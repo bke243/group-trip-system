@@ -17,7 +17,7 @@
   ],
 
   "paths": {
-    "/auth/user/signup": {
+    "/auth/signup": {
       "post": {
         "tags": [
             "Users"
@@ -50,7 +50,80 @@
 
         }
       }
-  }},
+  },
+  "/auth/login/": {
+      "post": {
+          "tags": [ "Users" ],
+          "summary": "Authenticate both the customer and the administrator in the system, and returns JWT",
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/definitions/UserSignUpDto"
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "OK, Successfully athenticated",
+                "schema": {
+                  "$ref": "#/definitions/UserSignUpDtoOKResponse"
+              }
+            },
+            "401": {
+                "description": "UnAuthorized, the user credential provide is wrong (missing user/wrong password/ wrong email)"
+            }
+          }
+      }
+  },
+  "/packages": {
+    "get": {
+      "tags": [ "Packages" ],
+      "summary": "Used to retreive all the available packages in the system",
+      "content": {
+          "application/json": {
+              "schema": {
+                  "$ref": "#/definitions/UserSignUpDto"
+              }
+          }
+      }
+    },
+    "post": {
+      "tags": [ "Packages" ],
+      "summary": "Used to create packages by the administrator",
+      "content": {
+          "application/json": {
+              "schema": {
+                  "$ref": "#/definitions/UserSignUpDto"
+              }
+          }
+      }
+    }
+  },
+  "/packages/:id": {
+    "put": {
+      "tags": [ "Packages" ],
+      "summary": "Used to update a package in the system by the administrator",
+      "content": {
+          "application/json": {
+              "schema": {
+                  "$ref": "#/definitions/UserSignUpDto"
+              }
+          }
+      }
+    },
+    "delete": {
+      "tags": [ "Packages" ],
+      "summary": "Used to delete packages by the administrator",
+      "content": {
+          "application/json": {
+              "schema": {
+                  "$ref": "#/definitions/UserSignUpDto"
+              }
+          }
+      }
+    }
+  }
+},
   "definitions": {
     "UserSignUpDto": {
         "type": "object",

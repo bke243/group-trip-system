@@ -9,7 +9,7 @@ const router = Router();
 router.get("/accounts", AccountCallbacks.getAccounts);
 
 // create a user account
-router.post("/user/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postUserSignUp);
+router.post("/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postUserSignUp);
 
 // create an admin user account that will work only once
 router.post("/admin/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postAdminSignUp);

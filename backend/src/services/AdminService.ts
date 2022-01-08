@@ -2,6 +2,7 @@ import { getConnectionManager, Repository } from "typeorm";
 import AccountEntity from "../models/AccountEntity";
 import AdminEntity from "../models/AdminEntity";
 import { APPLICATION_CONNECTION_NAME } from "../utils/index.util";
+import AccountService from "./AccountService";
 
 class AdminService {
   private adminRepository: Repository<AdminEntity>;
@@ -29,6 +30,13 @@ class AdminService {
   public saveAdmin = async (admin: AdminEntity) => {
     const repository = this.getRepository();
     return repository.save(admin);
+  }
+
+  public findAdminByEmail = async (accountEmail: string) => {
+    return AccountService.findAccountByEmail(accountEmail).then((userAccount) => {
+      if (userAccount) return this.findAdminByAccountId(userAccount.id);
+      return;
+    })
   }
 
   public findAdminByAccountId = async (accountId: number) => {

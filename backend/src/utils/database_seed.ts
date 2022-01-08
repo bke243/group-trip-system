@@ -73,8 +73,7 @@ export const addDummyPackages = async (request: Request, response: Response, nex
         packageEntity.locationId = createdLoaction.id;
         packageEntity.admin = admin.id;
         packageEntity.adminId = admin.id;
-        const createdPackage = await PackageService.savePackage(packageEntity);
-        console.log(createdPackage);
+        await PackageService.savePackage(packageEntity);
       }); 
 
       return response.status(RESPONSE_STATUS.OK).json({ message: "successfully done"  });

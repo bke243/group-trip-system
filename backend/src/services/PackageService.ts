@@ -17,7 +17,26 @@ class PackageService {
     return repository.find();
   }
 
-  
+  public createPackageEntity = async (packageCreateData: { name: string, activities: string[], description: string, price: number, startDate: Date, endDate: Date, count: number, maxPersons: number, locationId: number, adminId: number  }) => {
+    const repository = this.getRepository();
+    return repository.create({
+      name: packageCreateData.name,
+      activities: packageCreateData.activities,
+      description: packageCreateData.description,
+      price: packageCreateData.price,
+      created: new Date(),
+      startDate: packageCreateData.startDate,
+      endDate: packageCreateData.endDate,
+      count: packageCreateData.count,
+      maxPersons: packageCreateData.maxPersons,
+      location: packageCreateData.locationId,
+      locationId: packageCreateData.locationId,
+      adminId: packageCreateData.adminId,
+      admin: packageCreateData.adminId,
+    })
+
+  }
+
   public savePackage = async (user: PackageEntity) => {
     const repository = this.getRepository();
     return repository.save(user);
