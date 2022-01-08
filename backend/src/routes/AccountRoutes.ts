@@ -15,6 +15,6 @@ router.post("/user/signup", validateBodyParams(AccountSingUpSchema), AccountCall
 router.post("/admin/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postAdminSignUp);
 
 // autehnticate the user and return a the user
-router.post("/user/login", validateBodyParams(AccountLoginSchema), AccountCallbacks.postLogin);
+router.post("/login", validateBodyParams(AccountLoginSchema), AccountCallbacks.postLogin);
 
 export default router;
