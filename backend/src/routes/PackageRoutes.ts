@@ -1,22 +1,24 @@
-import { NextFunction, Request, Response, Router } from "express";
-import PackageService from "../services/PackageService";
+import { Router } from "express";
+import PackagesCallbacks from "../middleware-callbacks/PackagesCallbacks";
+import isUserAuthenticated from "../middlewares/check-user-auth";
+import { validateBodyParams } from "../middlewares/request-body-validator";
 import { addDummyPackages } from "../utils/database_seed";
+import { CreatePackageSchema, UpdatePackageSchema } from "../utils/schemas/PackageSchema.util";
 
 const router = Router();
 
 // get all the dummy packages
-router.get("/", async (request: Request, response: Response, next: NextFunction) => {
-  try {
-    const packages = await PackageService.getPackages();
-    return response.json({ packages });
-    } catch (error) {
-    console.log(error);
-    return response.json({ error });
-  }
-});
+router.get("/", PackagesCallbacks.getPackages);
+
+// create packages
+router.post("/", validateBodyParams(CreatePackageSchema), isUserAuthenticated, PackagesCallbacks.createPackages);
+
+// TODO , update package 
+router.put("/", validateBodyParams(UpdatePackageSchema), isUserAuthenticated, PackagesCallbacks.getPackages);
+
 
 // create the dummy pakages and admin, run only ones,
-router.post("/", addDummyPackages);
+router.post("/dummy", PackagesCallbacks.createPackages);
 
 
 

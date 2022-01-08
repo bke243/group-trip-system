@@ -49,4 +49,20 @@ class PackageEntity extends BaseEntity {
   locationId!: number;
 }
 
+export interface  CreatePackageDto {
+  name: string;
+  activities: string[];
+  description: string;
+  price: number;
+  startDate: Date;
+  endDate: Date;
+  count: number;
+  maxPersons: number;
+  country: string;
+  city: string;
+  streetName: string;
+  zipCode?: string;
+  state?: string;
+}
+
 export default PackageEntity;

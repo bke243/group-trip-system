@@ -17,15 +17,17 @@ class CountryService {
     return repository.find();
   }
 
-  public createCountryEntity = async (country: { name: string }) => {
+  public createCountryEntity = async (country: string) => {
     const repository = this.getRepository();
     return repository.create({ 
-        name: country.name,
+        name: country,
      })
   }
 
   public saveCountry = async (country: CountryEntity) => {
     const repository = this.getRepository();
+    const hasCountry = await repository.findOne({ where: { name: country.name } })
+    if(hasCountry) return hasCountry;
     return repository.save(country);
   }
 

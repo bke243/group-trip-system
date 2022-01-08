@@ -26,9 +26,11 @@ class CityService {
      });
   }
 
-  public saveCity = async (country: CityEntity) => {
+  public saveCity = async (city: CityEntity) => {
     const repository = this.getRepository();
-    return repository.save(country);
+    const hasCity = await repository.findOne({ where: { name: city.name } })
+    if(hasCity) return hasCity;
+    return repository.save(city);
   }
 
   public findCityById = async (contryId: number) => {
