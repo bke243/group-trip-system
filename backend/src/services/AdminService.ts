@@ -1,8 +1,10 @@
 import { getConnectionManager, Repository } from "typeorm";
 import AccountEntity from "../models/AccountEntity";
 import AdminEntity from "../models/AdminEntity";
+import PersonEntity from "../models/PersonEntity";
 import { APPLICATION_CONNECTION_NAME } from "../utils/index.util";
 import AccountService from "./AccountService";
+import PersonService from "./PersonService";
 
 class AdminService {
   private adminRepository: Repository<AdminEntity>;
@@ -17,6 +19,17 @@ class AdminService {
   public getAdmins = async () => {
     const repository = this.getRepository();
     return repository.find();
+  }
+
+  public getAdminsWithPersonDetails = async () => {
+    const persons = await (await PersonService.getPersons()).reduce((indexedPersons, person) => {
+      indexedPersons[person.accountId] = person;
+      return indexedPersons
+    }, {} as { [accountId: number]: PersonEntity });
+    const admins = await this.getRepository().find();
+    const mappedAdmin = admins.map((admin) => ({ ...admin, adminDetails: persons[admin.accountId] }));
+
+    return mappedAdmin;
   }
 
   public createAdminEntity = async (newPersonAccount: AccountEntity) => {
