@@ -18,7 +18,7 @@ class PackagesCallbacks {
 
   public getPackages = async (request: Request<{}, {}, any>, response: Response, next: NextFunction) => {
     return  PackageService.getPackages().then((packages) => {
-        return response.json({ packages });
+        return response.json(packages);
     }).catch((error) => {
         return response.json({ error });
     })

@@ -14,7 +14,7 @@ class LocationService {
 
   public getLocations = async () => {
     const repository = this.getRepository();
-    return repository.find();
+    return repository.find({ relations: ["country", "city"] });
   }
 
   public createLocationEntity = async (location: { streetName: string, zipCode?: string, state?: string, countryId: number, cityId: number }) => {

@@ -5,6 +5,8 @@ import cors from "cors";
 import AccountRoutes from "./routes/AccountRoutes";
 import PackageRoutes from "./routes/PackageRoutes";
 import swaggerUI from "swagger-ui-express";
+import LocationRoutes from "./routes/LocationRoutes";
+import AdminRoutes from "./routes/AdminRoutes";
 const swaggerDocumentDemo =  require("./swagger-demo.json");
 const swaggerDocument =  require("./swagger.json");
 
@@ -36,6 +38,8 @@ app.use((req, res, next) => {
 
 app.use("/auth", AccountRoutes);
 app.use("/packages", PackageRoutes);
+app.use("/locations", LocationRoutes);
+app.use("/admins", AdminRoutes);
 
 // documentation demo command out to see the result
 // app.use("/docs/demo", swaggerUI.serve, swaggerUI.setup(swaggerDocumentDemo));
