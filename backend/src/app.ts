@@ -21,6 +21,19 @@ app.use(cors({
 // parse all the request body
 app.use(bodyParder.json());
 
+// allow CROS information, allow specific origin addresses
+app.use((req, res, next) => {
+    // please add a filter to clean access endpoint
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+    if (req.method === "OPTIONS") {
+        res.header('Access-control-Methods', 'PUT, POST, PATCH, DELETE, GET')
+        return res.status(200).json({});
+    }
+    next();
+})
+
 app.use("/auth", AccountRoutes);
 app.use("/packages", PackageRoutes);
 
