@@ -2,6 +2,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import systemSlice from "./systemSlice";
 import dialogSlice from "./dialogSlice";
 import toastSlice from "./toastSlice";
+import packageSlice from "./packageSlice";
+import dictionarySlice from "./dictionarySlice";
 import { persistReducer } from "redux-persist";
 import createIdbStorage from "@piotr-cz/redux-persist-idb-storage";
 
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     system: systemSlice,
     dialog: dialogSlice,
     toast: toastSlice,
+    package: packageSlice,
+    dictionary: dictionarySlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

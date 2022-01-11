@@ -21,7 +21,7 @@ const useStyles  = makeStyles(() => ({
 
 
 const pages: string[] = [];
-const settings = ['SetImage', 'Logout'];
+const settings = ["Logout"];
 
 const ApplicationBar = () => {
   const classes = useStyles();

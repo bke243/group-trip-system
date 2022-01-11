@@ -1,1 +1,2 @@
-export const createPackageFields = ["name", "price", "startDate", "endDate", "count", "maxPersons", "country", "city", "streetName", "zipCode", "state",  "description" ];
+export const createPackageFields = ["name", "price", "startDate", "endDate", "count", "maxPersons", "country", "city", "streetName", "activities", "zipCode", "state",  "description" ];
+export const isDescriptionField = (index: number) => (createPackageFields.length - 1) === index;
