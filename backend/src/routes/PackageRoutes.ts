@@ -16,6 +16,9 @@ router.post("/", validateBodyParams(CreatePackageSchema), isUserAuthenticated, P
 // TODO , update package 
 router.put("/", validateBodyParams(UpdatePackageSchema), isUserAuthenticated, PackagesCallbacks.getPackages);
 
+// TODO , update package 
+router.get("/:id", isUserAuthenticated, PackagesCallbacks.getPackageById);
+
 
 // create the dummy pakages and admin, run only ones,
 router.post("/dummy", PackagesCallbacks.createPackages);

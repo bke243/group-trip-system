@@ -24,6 +24,21 @@ class PackagesCallbacks {
     })
   }
 
+  public getPackageById = async (request: Request<{ id:string }, {}, any>, response: Response, next: NextFunction) => {
+    const packageId = request.params?.id;
+    if (!this.isNumber(packageId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({messagr: "Missing the package id or improper data type"});
+    return  PackageService.findPackageById(packageId as unknown as number).then((foundPackage) => {
+        if (foundPackage) return response.json(foundPackage);
+        else return response.status(RESPONSE_STATUS.NOT_FOUND).json({messagr: "Package not found "});
+    }).catch((error) => {
+        return response.json({ error });
+    })
+  }
+
+  private  isNumber = (value: string | number) =>{
+   return ((value != null) && (value !== '') && !isNaN(Number(value.toString())));
+}
+
   public createPackages = async (request: Request<{}, {}, { userAccountData: UserAccountData } & CreatePackageDto >, response: Response, next: NextFunction) => {
     const requestBody = request.body;
     return AdminService.findAdminByEmail(requestBody.userAccountData.email).then(async (adminRequester) => {

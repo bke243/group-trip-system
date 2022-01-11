@@ -42,9 +42,9 @@ class PackageService {
     return repository.save(user);
   }
 
-  public findPackageById = async (accountId: number) => {
+  public findPackageById = async (packageId: number) => {
     const repository = this.getRepository();
-    return repository.findOne({ where: { id: accountId  }});
+    return repository.findOne({ where: { id: packageId  }});
   }
 }
 
