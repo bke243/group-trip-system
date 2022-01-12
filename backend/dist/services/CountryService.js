@@ -27,11 +27,14 @@ class CountryService {
         this.createCountryEntity = (country) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.create({
-                name: country.name,
+                name: country,
             });
         });
         this.saveCountry = (country) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
+            const hasCountry = yield repository.findOne({ where: { name: country.name } });
+            if (hasCountry)
+                return hasCountry;
             return repository.save(country);
         });
         this.findCountryById = (contryId) => __awaiter(this, void 0, void 0, function* () {

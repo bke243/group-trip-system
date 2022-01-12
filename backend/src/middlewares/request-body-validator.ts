@@ -7,6 +7,7 @@ export enum RESPONSE_STATUS {
   CONFLICT=409,
   INTERNAL_SERVER_ERROR=500,
   UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
 }
 
 export const validateBodyParams = (validationSchema: AnySchema): RequestHandler => {

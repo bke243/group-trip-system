@@ -28,9 +28,9 @@ const Layout = ({ children }: LayoutProps) => {
       <Box component="main" className={classes.mainAppContainer}>
         {children}
       </Box>
-      <Box>
+      {/* <Box>
         <Box>Footer</Box>
-      </Box>
+      </Box> */}
     </>
   );
 }

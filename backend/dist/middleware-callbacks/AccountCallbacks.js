@@ -28,7 +28,6 @@ class AccountCallbacks {
                 return res.json({ accounts });
             }
             catch (error) {
-                console.log(error);
                 return res.json({ error });
             }
         });

@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const TextAreaField = (props: FormFieldProps) => {
   const { setValue, getValues, control } = useFormContext();
-  const { name, label, disabled, id } = props;
+  const { name, label, disabled, id, error } = props;
   const classes = useStyles();
   const formValue = useWatch({ name: name, control: control });
   const [fieldValue, setFieldValue] = useState<string | undefined>(getValues(name) ?? "");
@@ -54,7 +54,7 @@ const TextAreaField = (props: FormFieldProps) => {
       autoComplete="off"
       minRows={13}
       draggable={false}
-      style={{ width: "100%", resize: "none", borderColor: "1px solid #C2C2C2", borderRadius: "5px" }}
+      style={{ width: "100%", resize: "none", border: `1px solid ${error ? "red" : blueButtonsColors}`, borderRadius: "5px" }}
     />
   );
 };

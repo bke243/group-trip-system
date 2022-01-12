@@ -37,6 +37,6 @@ createConnection({
     await connect.synchronize();
     // start the application
     const server = require("./app").listen(APPLICATION_PORT,  () => {
-        console.log("The application started");
+        console.log("==================The application started==========");
     });
 })

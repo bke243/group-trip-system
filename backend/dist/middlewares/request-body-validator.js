@@ -17,6 +17,7 @@ var RESPONSE_STATUS;
     RESPONSE_STATUS[RESPONSE_STATUS["CONFLICT"] = 409] = "CONFLICT";
     RESPONSE_STATUS[RESPONSE_STATUS["INTERNAL_SERVER_ERROR"] = 500] = "INTERNAL_SERVER_ERROR";
     RESPONSE_STATUS[RESPONSE_STATUS["UNAUTHORIZED"] = 401] = "UNAUTHORIZED";
+    RESPONSE_STATUS[RESPONSE_STATUS["NOT_FOUND"] = 404] = "NOT_FOUND";
 })(RESPONSE_STATUS = exports.RESPONSE_STATUS || (exports.RESPONSE_STATUS = {}));
 const validateBodyParams = (validationSchema) => {
     return (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {

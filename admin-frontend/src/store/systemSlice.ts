@@ -8,7 +8,6 @@ import { showToast } from "./toastSlice";
 interface UserCredentialSate {
   isAuthenticated: boolean;
   isLoadingUserDetail: boolean;
-  hasUserDetailLoadingError?: string;
 }
 
 const initialState: UserCredentialSate = {

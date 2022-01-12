@@ -1,32 +1,25 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const PackageService_1 = __importDefault(require("../services/PackageService"));
+const PackagesCallbacks_1 = __importDefault(require("../middleware-callbacks/PackagesCallbacks"));
+const check_user_auth_1 = __importDefault(require("../middlewares/check-user-auth"));
+const request_body_validator_1 = require("../middlewares/request-body-validator");
 const database_seed_1 = require("../utils/database_seed");
+const PackageSchema_util_1 = require("../utils/schemas/PackageSchema.util");
 const router = (0, express_1.Router)();
 // get all the dummy packages
-router.get("/", (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const packages = yield PackageService_1.default.getPackages();
-        return response.json({ packages });
-    }
-    catch (error) {
-        console.log(error);
-        return response.json({ error });
-    }
-}));
+router.get("/", PackagesCallbacks_1.default.getPackages);
+// create packages
+router.post("/", (0, request_body_validator_1.validateBodyParams)(PackageSchema_util_1.CreatePackageSchema), check_user_auth_1.default, PackagesCallbacks_1.default.createPackages);
+// TODO , update package
+router.put("/:id", (0, request_body_validator_1.validateBodyParams)(PackageSchema_util_1.UpdatePackageSchema), check_user_auth_1.default, PackagesCallbacks_1.default.updatePackage);
+// TODO , update package 
+router.get("/:id", check_user_auth_1.default, PackagesCallbacks_1.default.getPackageById);
+// TODO delete 
+router.delete("/:id", check_user_auth_1.default, PackagesCallbacks_1.default.deletePackageById);
 // create the dummy pakages and admin, run only ones,
-router.post("/", database_seed_1.addDummyPackages);
+router.post("/dummy", database_seed_1.addDummyPackages);
 exports.default = router;

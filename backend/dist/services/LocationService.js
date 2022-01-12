@@ -22,7 +22,7 @@ class LocationService {
         };
         this.getLocations = () => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.find();
+            return repository.find({ relations: ["country", "city"] });
         });
         this.createLocationEntity = (location) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
@@ -33,11 +33,23 @@ class LocationService {
                 country: location.countryId,
                 countryId: location.countryId,
                 cityId: location.cityId,
+                city: location.cityId,
             });
         });
-        this.saveLocation = (user) => __awaiter(this, void 0, void 0, function* () {
+        this.saveLocation = (location) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.save(user);
+            const existingLocation = yield repository.findOne({ where: {
+                    streetName: location.streetName,
+                    zipCode: location.zipCode,
+                    state: location.state,
+                    country: location.countryId,
+                    countryId: location.countryId,
+                    cityId: location.cityId,
+                    city: location.cityId
+                } });
+            if (existingLocation)
+                return existingLocation;
+            return repository.save(location);
         });
         this.findLocationByAccountId = (accountId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();

@@ -19,7 +19,7 @@ class RestAxiosService implements AxiosService {
       if (userAuthenticationToken) {
         config.headers = {
           ...config.headers,
-          Authorization: `Bearer ${userAuthenticationToken}`,
+          Authorization: `${userAuthenticationToken}`,
         };
       }
       return config;

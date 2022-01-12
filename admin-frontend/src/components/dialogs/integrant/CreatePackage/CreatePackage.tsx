@@ -5,9 +5,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FORM_NAME } from "../../../Forms/utils/fieldsUtilities";
 import FormBuilder from "../../../Forms/utils/formBuilder";
 import DialogActionsButton from "../DialogActionsButton/DialogActionsButton";
-import { createPackageFields } from "./utils/CreatePackage.util";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useDispatch } from "../../../../store/react-redux-hooks";
+import { createPackageFields, isDescriptionField } from "./utils/CreatePackage.util";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PackageCreateModel, PackageCreateSchema } from "../../../../models/PackageModel";
+import { createPackage } from "../../../../store/packageSlice";
+import { useDispatch } from "../../../../store/react-redux-hooks";
 
 const useStyles = makeStyles({
   addpersonToTreeContainer: {
@@ -36,20 +38,28 @@ const useStyles = makeStyles({
 const DialogCreatePackage = () => {
   const classes = useStyles();
   const [fields, setFields] = useState<JSX.Element[]>([]);
-  const formMethods = useForm<any>({
-    resolver: undefined,
+  const formMethods = useForm<PackageCreateModel>({
+    resolver: zodResolver(PackageCreateSchema),
+    defaultValues: {
+      activities: ["Default activities"],
+    }
   });
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   
   const onSubmit = (values: any) => {
-    console.log(values);
+    dispatch(createPackage(values));
   };
+
 
   useEffect(() => {
     const formBuilder = new FormBuilder(createPackageFields, FORM_NAME.CREATE_PACKAGE);
     const newFields = formBuilder.buildFormFields();
     setFields(newFields);
   }, []);
+
+  // useEffect(() => {
+  //   console.log(formMethods.formState.errors);
+  // }, [formMethods.formState.errors]);
 
   return (
     <Box className={classes.addpersonToTreeContainer}>
@@ -60,7 +70,7 @@ const DialogCreatePackage = () => {
             <Grid container spacing={2}>
               {fields.map((field, index) => {
                 return (
-                  <Grid item xs={12} md={6} key={`create-package-field-${index}`}>
+                  <Grid item xs={12} md={isDescriptionField(index) ? 12 : 6} key={`create-package-field-${index}`}>
                     {field}
                   </Grid>
                 );
@@ -68,7 +78,7 @@ const DialogCreatePackage = () => {
             </Grid>
           </Box>
           </FormProvider>
-          <DialogActionsButton submiText={"Add Person"} />
+          <DialogActionsButton submiText={"Create  Package"} />
         </form>
       </Box>
     </Box>

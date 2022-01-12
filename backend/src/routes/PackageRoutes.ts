@@ -13,12 +13,18 @@ router.get("/", PackagesCallbacks.getPackages);
 // create packages
 router.post("/", validateBodyParams(CreatePackageSchema), isUserAuthenticated, PackagesCallbacks.createPackages);
 
+// TODO , update package
+router.put("/:id", validateBodyParams(UpdatePackageSchema), isUserAuthenticated, PackagesCallbacks.updatePackage);
+
 // TODO , update package 
-router.put("/", validateBodyParams(UpdatePackageSchema), isUserAuthenticated, PackagesCallbacks.getPackages);
+router.get("/:id", isUserAuthenticated, PackagesCallbacks.getPackageById);
+
+// TODO delete 
+router.delete("/:id", isUserAuthenticated, PackagesCallbacks.deletePackageById);
 
 
 // create the dummy pakages and admin, run only ones,
-router.post("/dummy", PackagesCallbacks.createPackages);
+router.post("/dummy", addDummyPackages);
 
 
 

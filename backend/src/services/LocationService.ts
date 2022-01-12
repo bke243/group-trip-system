@@ -30,9 +30,18 @@ class LocationService {
      })
   }
 
-  public saveLocation = async (user: LocationEntity) => {
+  public saveLocation = async (location: LocationEntity) => {
     const repository = this.getRepository();
-    return repository.save(user);
+    const existingLocation = await repository.findOne({ where: { 
+      streetName: location.streetName,
+      zipCode: location.zipCode,
+      state: location.state,
+      country: location.countryId,
+      countryId: location.countryId,
+      cityId: location.cityId,
+      city: location.cityId } })
+    if(existingLocation) return existingLocation;
+    return repository.save(location);
   }
 
   public findLocationByAccountId = async (accountId: number) => {

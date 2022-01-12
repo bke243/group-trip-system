@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
 import DateField from "../formFields/DateField";
-import FreeTextField from "../formFields/FreeTextField";
+import FreeTextField, { FreeNumberField } from "../formFields/FreeTextField";
 import TextAreaField from "../formFields/TextAreaField";
 import FormFieldContainer from "../views/FormFieldContainer.view";
 import { FormFieldProps, FORM_NAME } from "./fieldsUtilities";
@@ -10,7 +10,7 @@ export const UserRegisterFeildsName: string[] = ["firstName", "lastName", "birth
 const fields: FormFieldProps[] = [
   {
     name: "name",
-    label: "PackageName",
+    label: "Package name",
     Component: FreeTextField,
   },
   {
@@ -21,7 +21,7 @@ const fields: FormFieldProps[] = [
   {
     name: "price",
     label: "Price",
-    Component: FreeTextField,
+    Component: FreeNumberField,
     type: "number",
   },
   {
@@ -43,7 +43,7 @@ const fields: FormFieldProps[] = [
   {
     name: "count",
     label: "Available number",
-    Component: FreeTextField,
+    Component: FreeNumberField,
     type: "number",
     
   },
@@ -63,7 +63,7 @@ const fields: FormFieldProps[] = [
   {
     name: "maxPersons",
     label: "Maximun Persons",
-    Component: FreeTextField,
+    Component: FreeNumberField,
     type: "number",
   },
   {
@@ -91,6 +91,11 @@ const fields: FormFieldProps[] = [
     label: "State",
     Component: FreeTextField,
   },
+  {
+    name: "activities",
+    label: "Activities",
+    Component: FreeTextField
+  }
 ];
 
 class FormBuilder {
