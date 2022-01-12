@@ -34,7 +34,7 @@ const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
     password: "password",
     database: "grouptripdatabase",
     synchronize: true,
-    logging: true,
+    // logging: true, // comment it to disable db logs
     entities: [
         AccountEntity_1.default, AdminEntity_1.default, UserEntity_1.default,
         PersonEntity_1.default, GroupEntity_1.default, MessageEntity_1.default,
@@ -47,6 +47,6 @@ const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
     yield connect.synchronize();
     // start the application
     const server = require("./app").listen(index_util_1.APPLICATION_PORT, () => {
-        console.log("The application started");
+        console.log("==================The application started==========");
     });
 }));

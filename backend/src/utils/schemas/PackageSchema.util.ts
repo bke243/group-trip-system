@@ -12,8 +12,8 @@ export const CreatePackageSchema = Joi.object({
   country: Joi.string().required(),
   city: Joi.string().required(),
   streetName: Joi.string().required(),
-  zipCode: Joi.string(),
-  state: Joi.string(),
+  zipCode: Joi.string().allow(null),
+  state: Joi.string().allow(null),
 })
 
 export const UpdatePackageSchema = Joi.object({
@@ -27,8 +27,8 @@ export const UpdatePackageSchema = Joi.object({
   endDate: Joi.date().required(),
   count: Joi.number().positive().required(),
   maxPersons: Joi.number().positive().required(),
-  adminId: Joi.number().positive().required,
-  locationId: Joi.number().positive().required,
+  adminId: Joi.number().positive().required(),
+  locationId: Joi.number().positive().required(),
   country: Joi.string().required(),
   city: Joi.string().required(),
   streetName: Joi.string().required(),

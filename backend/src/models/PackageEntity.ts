@@ -19,33 +19,33 @@ class PackageEntity extends BaseEntity {
   @Column()
   price!:number;
 
-  @Column()
+  @Column({  type: "date"  })
   created!: Date;
 
-  @Column()
+  @Column({ name: "startdate", type: "date"  })
   startDate!: Date;
 
-  @Column()
+  @Column({ name: "enddate",  type: "date"  })
   endDate!: Date;
 
   @Column()
   count!:number
 
-  @Column()
+  @Column({ name: "maxpersons" })
   maxPersons!: number
 
   @ManyToOne(type => AdminEntity, admin => admin.id)
   @JoinColumn()
   admin!: number;
 
-  @Column()
+  @Column({ name: "adminid" })
   adminId!: number;
 
   @ManyToOne(type => LocationEntity, location => location.id)
   @JoinColumn()
   location!: number;
   
-  @Column()
+  @Column({ name: "locationid"})
   locationId!: number;
 }
 
@@ -60,6 +60,26 @@ export interface  CreatePackageDto {
   maxPersons: number;
   country: string;
   city: string;
+  streetName: string;
+  zipCode?: string;
+  state?: string;
+}
+
+export interface UpdatePackageDto {
+  id: number;
+  name: string;
+  activities: string[],
+  description: string,
+  price: number,
+  created: Date,
+  startDate: Date,
+  endDate: Date,
+  count: number,
+  maxPersons: number,
+  adminId: number,
+  locationId: number,
+  country: string,
+  city: string,
   streetName: string;
   zipCode?: string;
   state?: string;

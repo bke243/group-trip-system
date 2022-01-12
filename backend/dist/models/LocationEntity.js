@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], LocationEntity.prototype, "streetName", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], LocationEntity.prototype, "zipCode", void 0);
 __decorate([

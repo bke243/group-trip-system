@@ -38,15 +38,15 @@ __decorate([
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "date" }),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "created", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "startdate", type: "date" }),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "startDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "enddate", type: "date" }),
     __metadata("design:type", Date)
 ], PackageEntity.prototype, "endDate", void 0);
 __decorate([
@@ -54,7 +54,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "count", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "maxpersons" }),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "maxPersons", void 0);
 __decorate([
@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "admin", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "adminid" }),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "adminId", void 0);
 __decorate([
@@ -72,7 +72,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "location", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "locationid" }),
     __metadata("design:type", Number)
 ], PackageEntity.prototype, "locationId", void 0);
 PackageEntity = __decorate([

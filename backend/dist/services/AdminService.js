@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const AdminEntity_1 = __importDefault(require("../models/AdminEntity"));
 const index_util_1 = require("../utils/index.util");
+const AccountService_1 = __importDefault(require("./AccountService"));
+const PersonService_1 = __importDefault(require("./PersonService"));
 class AdminService {
     constructor() {
         this.getRepository = () => {
@@ -23,6 +25,15 @@ class AdminService {
         this.getAdmins = () => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.find();
+        });
+        this.getAdminsWithPersonDetails = () => __awaiter(this, void 0, void 0, function* () {
+            const persons = yield (yield PersonService_1.default.getPersons()).reduce((indexedPersons, person) => {
+                indexedPersons[person.accountId] = person;
+                return indexedPersons;
+            }, {});
+            const admins = yield this.getRepository().find();
+            const mappedAdmin = admins.map((admin) => (Object.assign(Object.assign({}, admin), { adminDetails: persons[admin.accountId] })));
+            return mappedAdmin;
         });
         this.createAdminEntity = (newPersonAccount) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
@@ -34,6 +45,13 @@ class AdminService {
         this.saveAdmin = (admin) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.save(admin);
+        });
+        this.findAdminByEmail = (accountEmail) => __awaiter(this, void 0, void 0, function* () {
+            return AccountService_1.default.findAccountByEmail(accountEmail).then((userAccount) => {
+                if (userAccount)
+                    return this.findAdminByAccountId(userAccount.id);
+                return;
+            });
         });
         this.findAdminByAccountId = (accountId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();

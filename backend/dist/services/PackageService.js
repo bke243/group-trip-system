@@ -24,13 +24,69 @@ class PackageService {
             const repository = this.getRepository();
             return repository.find();
         });
-        this.savePackage = (user) => __awaiter(this, void 0, void 0, function* () {
+        this.createPackageEntity = (packageCreateData) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.save(user);
+            return repository.create({
+                name: packageCreateData.name,
+                activities: packageCreateData.activities,
+                description: packageCreateData.description,
+                price: packageCreateData.price,
+                created: new Date(),
+                startDate: packageCreateData.startDate,
+                endDate: packageCreateData.endDate,
+                count: packageCreateData.count,
+                maxPersons: packageCreateData.maxPersons,
+                location: packageCreateData.locationId,
+                locationId: packageCreateData.locationId,
+                adminId: packageCreateData.adminId,
+                admin: packageCreateData.adminId,
+            });
         });
-        this.findPackageById = (accountId) => __awaiter(this, void 0, void 0, function* () {
+        this.createPackageEntityWithoutKeys = (packageCreateData) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.findOne({ where: { id: accountId } });
+            return repository.create({
+                name: packageCreateData.name,
+                activities: packageCreateData.activities,
+                description: packageCreateData.description,
+                price: packageCreateData.price,
+                created: new Date(),
+                startDate: packageCreateData.startDate,
+                endDate: packageCreateData.endDate,
+                count: packageCreateData.count,
+                maxPersons: packageCreateData.maxPersons,
+                location: packageCreateData.locationId,
+                locationId: packageCreateData.locationId,
+                adminId: packageCreateData.adminId,
+                admin: packageCreateData.adminId,
+            });
+        });
+        this.savePackage = (packageEntity) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository.save(packageEntity);
+        });
+        this.updatePackage = (packageId, packageEntity) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository
+                .query(`UPDATE package_entity SET 
+      name = $2, 
+      activities = $3, 
+      description = $4,
+      price = $5,
+      count = $6,
+      startDate = $7,
+      endDate = $8,
+      maxPersons = $9,
+      locationId = $10
+      WHERE id = $1`, [packageId, packageEntity.name, packageEntity.activities, packageEntity.description, packageEntity.price,
+                packageEntity.count, packageEntity.startDate, packageEntity.endDate, packageEntity.maxPersons, packageEntity.locationId]);
+        });
+        this.findPackageById = (packageId) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository.findOne({ where: { id: packageId }, relations: ["location", "location.city", "location.country"] });
+        });
+        this.deletePackageById = (packageEntity) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository.delete({ id: packageEntity.id });
         });
         this.locationRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PackageEntity_1.default);
     }

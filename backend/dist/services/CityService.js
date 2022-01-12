@@ -32,9 +32,12 @@ class CityService {
                 countryId: city.countryId,
             });
         });
-        this.saveCity = (country) => __awaiter(this, void 0, void 0, function* () {
+        this.saveCity = (city) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
-            return repository.save(country);
+            const hasCity = yield repository.findOne({ where: { name: city.name } });
+            if (hasCity)
+                return hasCity;
+            return repository.save(city);
         });
         this.findCityById = (contryId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();

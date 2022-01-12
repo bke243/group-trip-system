@@ -11,6 +11,7 @@ exports.AccountSingUpSchema = joi_1.default.object({
     lastName: joi_1.default.string(),
     telephone: joi_1.default.string(),
     email: joi_1.default.string().email().required(),
+    birthDate: joi_1.default.string(),
 });
 exports.AccountLoginSchema = joi_1.default.object({
     password: joi_1.default.string().required(),

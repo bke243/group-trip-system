@@ -78,8 +78,7 @@ const addDummyPackages = (request, response, next) => __awaiter(void 0, void 0, 
             packageEntity.locationId = createdLoaction.id;
             packageEntity.admin = admin.id;
             packageEntity.adminId = admin.id;
-            const createdPackage = yield PackageService_1.default.savePackage(packageEntity);
-            console.log(createdPackage);
+            yield PackageService_1.default.savePackage(packageEntity);
         }));
         return response.status(request_body_validator_1.RESPONSE_STATUS.OK).json({ message: "successfully done" });
     })).catch((error) => {
