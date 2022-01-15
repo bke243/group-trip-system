@@ -6,12 +6,13 @@ import { makeStyles } from '@mui/styles';
 const useStyles  = makeStyles(() => ({
   mainAppContainer: {
     display: "flex",
-    width: "100%",
+    width: "99%",
     height: "100%",
     minHeight: "100vh",
     alignItems: "center",
     flexDirection: "column",
     padding: "30px",
+    boxSizing: "border-box"
   }
 }))
 

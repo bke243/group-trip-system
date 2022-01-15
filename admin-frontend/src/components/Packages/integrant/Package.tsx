@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { PackageReadDto } from "../../../store/packageSlice"
+import { PackageReadDto, setDeletePackageId } from "../../../store/packageSlice"
 import { Box } from '@mui/material';
 import { makeStyles } from "@mui/styles";
 import travelManImage from "../../../assets/travelImage.jpg";
@@ -12,13 +12,15 @@ import { truncateText } from '../../../utils/customTypes';
 import moment from 'moment';
 import { DATE_FORMAT } from '../../Forms/utils/fieldsUtilities';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from '../../../store/react-redux-hooks';
+import { DIALOG_TYPE, openDialog } from '../../../store/dialogSlice';
 
 const useStyles = makeStyles({
   root: {
     transition: "transform 0.15s ease-in-out",
-    "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
+    // "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
     width: "400px",
-    height: "600px",
+    // height: "600px",
     boxShadow: "5px 10px red"
   },
 });
@@ -27,8 +29,13 @@ const Package = (props: PackageReadDto) => {
   const { name, description, price, count, startDate, endDate, id } = props;
   const classes = useStyles()
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  
   const onViewViewDetailsClick = () => navigate(`/package/${id}`)
+  const onPackageDeleteClickHandler = () => {
+  dispatch(setDeletePackageId(id));
+    dispatch(openDialog({ dialogType: DIALOG_TYPE.DELETE_PACKAGE, dialogTitle: "Delete Package" }))
+  }
 
   return (
     <Card className={classes.root} sx={{ boxShadow: 3 }}>
@@ -61,7 +68,7 @@ const Package = (props: PackageReadDto) => {
         </CardContent>
         <CardActions style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", paddingBottom: "10px" }}>
           <Button color="success"  size="small" variant="contained" onClick={onViewViewDetailsClick}>View details</Button>
-          <Button color="error" size="small" variant="contained">Delete</Button>
+          <Button color="error" size="small" variant="contained" onClick={onPackageDeleteClickHandler}>Delete</Button>
         </CardActions>
       </Box>
     </Card>

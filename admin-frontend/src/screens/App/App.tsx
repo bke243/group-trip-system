@@ -20,6 +20,8 @@ const useStyles  = makeStyles(() => ({
     alignItems: "center",
     flexDirection: "column",
     backgroundColor: "#ECEEF0",
+    padding: 0,
+    margin: 0,
   },
 }))
 
@@ -35,7 +37,7 @@ const App = () => {
            [
             <Route path="/admin" element={<AdminPanel />} key={"admin"} />,
             <Route path="/package" key={"package"}>
-              <Route path=":id"  element={<Package />} />
+              <Route path=":packageId"  element={<Package />} />
             </Route>
            ] : 
            <Route path="/admin" element={<Navigate replace to="/" />} />

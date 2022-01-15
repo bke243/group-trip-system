@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum DIALOG_TYPE {
   CREATE_PACKAGE,
-  ADD_PICTURE_FORM
+  ADD_PICTURE_FORM,
+  DELETE_PACKAGE,
 }
 
 interface DialogState {

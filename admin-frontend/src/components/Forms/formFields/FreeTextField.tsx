@@ -94,6 +94,10 @@ export const FreeNumberField = (props: FormFieldProps) => {
       onChange={handTextFieldChange}
       type={"number"}
       autoComplete="off"
+      // inputProps={{
+      //   maxLength: 13,
+      //   step: name === "price" ? "0.01" : "1"
+      // }}
     />
   );
 };

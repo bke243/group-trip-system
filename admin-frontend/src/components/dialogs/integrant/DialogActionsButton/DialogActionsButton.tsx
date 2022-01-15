@@ -16,7 +16,7 @@ const DialogActionsButton = (props: DialogActionsButtonProps) => {
   };
   return (
     <DialogActions style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-      <Button onClick={onSubmitClick} disabled={disabled} variant="contained" color="primary" style={{ color: "white" }} type="submit">
+      <Button onClick={onSubmitClick} disabled={disabled} variant="contained" color="success" style={{ color: "white" }} type="submit">
         {submiText}
       </Button>
       <Button onClick={handleCloseDialog} variant="contained" style={{ color: "white", backgroundColor: "red" }}>
