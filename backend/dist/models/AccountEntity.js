@@ -11,6 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 let AccountEntity = class AccountEntity extends typeorm_1.BaseEntity {
+    constructor() {
+        super(...arguments);
+        this.isActive = true;
+    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -28,6 +32,10 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], AccountEntity.prototype, "email", void 0);
+__decorate([
+    (0, typeorm_1.Column)('boolean', { default: true, name: "isActive" }),
+    __metadata("design:type", Boolean)
+], AccountEntity.prototype, "isActive", void 0);
 AccountEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], AccountEntity);

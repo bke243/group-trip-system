@@ -43,6 +43,10 @@ class PersonService {
             const repository = this.getRepository();
             return repository.findOne({ where: { accountId: accountId } });
         });
+        this.findPersonsByAccountIds = (accountIds) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository.find({ where: { accountId: (0, typeorm_1.In)(accountIds) } });
+        });
         this.personRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PersonEntity_1.default);
     }
 }

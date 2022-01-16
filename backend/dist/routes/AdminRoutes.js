@@ -7,6 +7,6 @@ const express_1 = require("express");
 const AdminCallbacks_1 = __importDefault(require("../middleware-callbacks/AdminCallbacks"));
 const check_user_auth_1 = __importDefault(require("../middlewares/check-user-auth"));
 const router = (0, express_1.Router)();
-// get all locations
-router.get("/", check_user_auth_1.default, AdminCallbacks_1.default.getAdmins);
+// get all admins
+router.get("/", check_user_auth_1.default, AdminCallbacks_1.default.isAdminUser, AdminCallbacks_1.default.getAdmins);
 exports.default = router;
