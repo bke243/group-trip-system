@@ -7,6 +7,8 @@ import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
 import AdminPackagesTabPanel from "../../components/AdminPackagesTabPanel/AdminPackagesTabPanel";
+import AdminMessageTabPanel from "../../components/AdminMessageTabPanel/AdminMessageTabPanel";
+import UserManagement from "../../components/UserManagement/UserManagement";
 
 
 
@@ -44,14 +46,18 @@ const AdminPanel = () => {
             <TabList onChange={handleChange}>
               <Tab label="Packages" value="1" />
               <Tab label="Support" value="2" />
-              <Tab label="Manage users" value="3" disabled/>
+              <Tab label="Manage users" value="3"/>
             </TabList>
           </Box>
           <TabPanel value="1" style={{ minHeight: "73vh" }}>
             <AdminPackagesTabPanel />
           </TabPanel>
-          <TabPanel value="2" style={{ minHeight: "73vh" }}>Item Two</TabPanel>
-          <TabPanel value="3" style={{ minHeight: "73vh" }}>Item Three</TabPanel>
+          <TabPanel value="2" style={{ minHeight: "73vh" }}>
+            <AdminMessageTabPanel />
+          </TabPanel>
+          <TabPanel value="3" style={{ minHeight: "73vh" }}>
+            <UserManagement />
+          </TabPanel>
         </TabContext>
       </Paper>
     </Box>

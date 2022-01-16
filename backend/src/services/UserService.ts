@@ -38,7 +38,8 @@ class UserService {
     const users = await (await repository.find({ relations: ["account"] })).map((user) => ({
       id : user.id,
       accountId: user.accountId,
-      email: (user.account as unknown as AccountEntity).email 
+      email: (user.account as unknown as AccountEntity).email,
+      isActive: (user.account as unknown as AccountEntity).isActive
     }));
 
     const usersAccountIds = [...users].map((user) => user.accountId);

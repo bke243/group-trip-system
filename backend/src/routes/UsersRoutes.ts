@@ -9,4 +9,10 @@ const router = Router();
 // get all users
 router.get("/", isUserAuthenticated, UserCallbacks.getUserWIthPersonalDetails);
 
+// block the user
+router.post("/block/:accountId", isUserAuthenticated, UserCallbacks.PostLockUser);
+
+// block the user
+router.post("/unblock/:accountId", isUserAuthenticated, UserCallbacks.PostActivateUser);
+
 export default router;

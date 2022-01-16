@@ -35,6 +35,25 @@ class AccountService {
     const repository = this.getRepository();
     return repository.findOne({ where: { email: email }});
   }
+
+  public findAccountById = async (accountId: string) => {
+    const repository = this.getRepository();
+    return repository.findOne({ where: { id: accountId }});
+  }
+
+  public blockUserById = async (accountId: number) => {
+    const repository = this.getRepository();
+    const  userEntity = await repository.findOne({ where: { id: accountId } });
+    userEntity!.isActive = false;
+    return repository.save(userEntity!);
+  }
+
+  public activateUserById = async (accountId: number) => {
+    const repository = this.getRepository();
+    const  userEntity = await repository.findOne({ where: { id: accountId } });
+    userEntity!.isActive = true;
+    return repository.save(userEntity!);
+  }
 }
 
 export default new AccountService();
