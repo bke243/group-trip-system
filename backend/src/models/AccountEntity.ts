@@ -13,6 +13,9 @@ class AccountEntity extends BaseEntity {
 
   @Column({ unique: true })
   email!: string;
+
+  @Column('boolean', {default: true, name: "isActive" })
+  isActive: boolean = true;
 }
 
 export interface AccountCreationDto {

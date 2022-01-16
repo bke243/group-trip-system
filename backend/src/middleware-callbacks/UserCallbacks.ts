@@ -1,5 +1,8 @@
 import UserService from "../services/UserService";
 import { NextFunction, Request, Response } from "express";
+import AccountService from "../services/AccountService";
+import { RESPONSE_STATUS } from "../middlewares/request-body-validator";
+import { AccountLoginDto } from "../models/AccountEntity";
 
 class UserCallbacks {
 
@@ -14,6 +17,36 @@ class UserCallbacks {
         return response.json({ error });
     })
   }
+
+  public PostLockUser = async (request: Request<{ accountId: string }, {}, AccountLoginDto>, response: Response, next: NextFunction) => {
+    const accountId = request.params?.accountId;
+    const requestBody = request.body;
+    if (!this.isNumber(accountId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the user id or improper data type"});
+    return AccountService.findAccountById(accountId).then(async (userAccount) => {
+      if (!userAccount) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "User not found "});
+      const blockedUser = await AccountService.blockUserById(userAccount.id);
+      return response.json(blockedUser);
+    }).catch((error) => {
+      return response.json({ result: error });
+    });
+  }
+
+  public PostActivateUser = async (request: Request<{ accountId: string }, {}, AccountLoginDto>, response: Response, next: NextFunction) => {
+    const accountId = request.params?.accountId;
+    const requestBody = request.body;
+    if (!this.isNumber(accountId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({ message: "Missing the user id or improper data type"});
+    return AccountService.findAccountById(accountId).then(async (userAccount) => {
+      if (!userAccount) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "User not found "});
+      const blockedUser = await AccountService.activateUserById(userAccount.id);
+      return response.json(blockedUser);
+    }).catch((error) => {
+      return response.json({ result: error });
+    });
+  }
+
+  private  isNumber = (value: string | number) =>{
+    return ((value != null) && (value !== '') && !isNaN(Number(value.toString())));
+ }
 }
 
 export default new UserCallbacks();
