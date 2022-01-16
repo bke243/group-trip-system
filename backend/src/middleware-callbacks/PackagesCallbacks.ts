@@ -52,6 +52,8 @@ class PackagesCallbacks {
 
   public createPackages = async (request: Request<{}, {}, { userAccountData: UserAccountData } & CreatePackageDto >, response: Response, next: NextFunction) => {
     const requestBody = request.body;
+    console.log(requestBody);
+    
     return AdminService.findAdminByEmail(requestBody.userAccountData.email).then(async (adminRequester) => {
       if (!adminRequester) return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "Unauthorized"});
       // creating country 

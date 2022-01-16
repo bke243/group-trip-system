@@ -8,6 +8,7 @@ const router = Router();
 // get all accounts to be disabled and removed
 router.get("/accounts", AccountCallbacks.getAccounts);
 
+
 // create a user account
 router.post("/signup", validateBodyParams(AccountSingUpSchema), AccountCallbacks.hasAccountWithSameEmail, AccountCallbacks.postUserSignUp);
 
