@@ -1,4 +1,4 @@
-import { PackageCreateModel } from "../../models/PackageModel";
+import { PackageCreateModel, PackageDetailReadModel } from "../../models/PackageModel";
 import RestAxiosService from "../RestAxiosService";
 
 class PackageService {
@@ -8,12 +8,20 @@ class PackageService {
     return RestAxiosService.post(`${PackageService.controllerPath}`, packageDetails);
   }
 
-  static getPackages() {
+  static fetchPackages() {
     return RestAxiosService.get(`${PackageService.controllerPath}`);
   }
 
-  static getPackageById(packageId: number) {
+  static fetchPackageById(packageId: number) {
     return RestAxiosService.get(`${PackageService.controllerPath}/${packageId}`);
+  }
+
+  static updatePackage(packageDetails: PackageDetailReadModel) {
+    return RestAxiosService.put(`${PackageService.controllerPath}/${packageDetails.id}`, packageDetails);
+  }
+
+  static deletePackage(packageId: number) {
+    return RestAxiosService.delete(`${PackageService.controllerPath}/${packageId}`);
   }
 }
 

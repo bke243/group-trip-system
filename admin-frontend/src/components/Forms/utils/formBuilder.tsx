@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash";
+import ActivityField from "../controlledField/ActivityField";
 import DateField from "../formFields/DateField";
 import FreeTextField, { FreeNumberField } from "../formFields/FreeTextField";
 import TextAreaField from "../formFields/TextAreaField";
@@ -94,7 +95,13 @@ const fields: FormFieldProps[] = [
   {
     name: "activities",
     label: "Activities",
-    Component: FreeTextField
+    Component: ActivityField
+  },
+  {
+    name: "id",
+    label: "Package id",
+    Component: FreeTextField,
+    type: "number",
   }
 ];
 

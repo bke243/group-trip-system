@@ -1,4 +1,4 @@
-import { getConnectionManager, Repository } from "typeorm";
+import { getConnectionManager, In, Repository } from "typeorm";
 import AccountEntity, { AccountCreationDto } from "../models/AccountEntity";
 import PersonEntity from "../models/PersonEntity";
 import { APPLICATION_CONNECTION_NAME } from "../utils/index.util";
@@ -38,6 +38,11 @@ class PersonService {
   public findPersonByAccountId = async (accountId: number) => {
     const repository = this.getRepository();
     return repository.findOne({ where: { accountId: accountId  }});
+  }
+
+  public findPersonsByAccountIds = async (accountIds: number[]) => {
+    const repository = this.getRepository();
+    return repository.find({ where: { accountId: In(accountIds) }});
   }
 }
 

@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { makeStyles } from '@mui/styles';
+import { useSelector } from '../../../../../store/react-redux-hooks';
+import { useNavigate } from 'react-router';
 
 const useStyles  = makeStyles(() => ({
   navAppContainer: {
@@ -21,19 +23,22 @@ const useStyles  = makeStyles(() => ({
 
 
 const pages: string[] = [];
-const settings = ["Logout"];
 
 const ApplicationBar = () => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
+  const { isAuthenticated } = useSelector((state) => state.system)
+  const navigate = useNavigate();
+  
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
+  
+  const settings = ["Logout"];
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -51,7 +56,8 @@ const ApplicationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex', cursor: "pointer" } }}
+            onClick={() => navigate("/")}
           >
             App logo
           </Typography>
@@ -107,7 +113,7 @@ const ApplicationBar = () => {
               </Button>
             ))}
           </Box>
-
+          {isAuthenticated ? 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -136,6 +142,7 @@ const ApplicationBar = () => {
               ))}
             </Menu>
           </Box>
+          : <></>}
         </Toolbar>
       </Box>
     </AppBar>

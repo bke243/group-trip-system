@@ -29,10 +29,13 @@ interface ControlledFieldProps {
   onChange: (value: any) => void;
   disabled?: boolean;
   type?: React.HTMLInputTypeAttribute | undefined;
+  error?: boolean
+  errorText: string
 }
 
 const ControlledFreeTextField = (props: ControlledFieldProps) => {
-  const { name, label, disabled, onChange, type, value } = props;
+  const { name, label, disabled, onChange, type, value, error, errorText } = props;
+  
   const classes = useStyles();
 
   return (
@@ -43,10 +46,12 @@ const ControlledFreeTextField = (props: ControlledFieldProps) => {
       variant="outlined"
       name={name}
       label={label}
+      error={error}
       disabled={disabled}
       fullWidth
       onChange={onChange}
       type={type}
+      helperText={ error ? errorText : undefined }
       autoComplete="off"
     />
   );
