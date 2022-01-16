@@ -6,7 +6,7 @@ import isUserAuthenticated from "../middlewares/check-user-auth";
 
 const router = Router();
 
-// get all locations
-router.get("/", isUserAuthenticated, AdminCallbacks.getAdmins);
+// get all admins
+router.get("/", isUserAuthenticated, AdminCallbacks.isAdminUser, AdminCallbacks.getAdmins);
 
 export default router;

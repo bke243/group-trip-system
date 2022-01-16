@@ -1,18 +1,20 @@
-import { Box, TextareaAutosize, IconButton } from "@mui/material";
+import { Box, TextareaAutosize, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "../../store/react-redux-hooks";
-import { fetchUsers } from "../../store/userSlice";
+import { fetchUsers, sendMessageToUser } from "../../store/userSlice";
 import SendIcon from '@mui/icons-material/Send';
 import PersonsList, { PersonsListItem } from "./integrant/PersonsList/PersonsList";
+import PersonMessages from "./integrant/PersonMessages/PersonMessages";
 
 const AdminMessageTabPanel = () => {
   const dispatch = useDispatch();
   const [selectedUserId, setSelectedUserId] = useState<number | undefined>();
-  const [messageContent, SetMessageContent] = useState<string>("");
+  const [messageContent, setMessageContent] = useState<string>("");
   const { users } = useSelector((state) => state.user);
   
   useEffect(() => {
     dispatch(fetchUsers());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const usersDetails = users ? users : [];
@@ -21,8 +23,13 @@ const AdminMessageTabPanel = () => {
     setSelectedUserId(personId);
   }
 
+  const sendMessageHandler = () => {
+    dispatch(sendMessageToUser({ content: messageContent, receiverId: selectedUserId! }));
+    setMessageContent("");
+  }
+
   const onMessageChange = (value: any) => {
-    SetMessageContent(value.target?.value ?? "");
+    setMessageContent(value.target?.value ?? "");
   };
 
   return (
@@ -33,8 +40,8 @@ const AdminMessageTabPanel = () => {
         </PersonsList>
       </Box>  
       <Box width={"75%"} maxHeight={"fit-content"} display="flex" flexDirection="column" justifyContent="space-between">
-        <Box height={"70%"} padding={"10px"}>
-          Messages  {selectedUserId}
+        <Box height={"70%"} padding={"10px"} style={{ overflowY: "scroll" }}>
+          {selectedUserId ? <PersonMessages userId={selectedUserId} /> : <Typography>Select a user</Typography>}
         </Box>
         <Box height={"30%"} maxHeight={"fit-content"} padding={"10px"} display="flex" justifyContent={"space-between"} borderTop={"1px solid grey"}>
           <Box width={"85%"}>
@@ -51,7 +58,7 @@ const AdminMessageTabPanel = () => {
               />
           </Box>
           <Box>
-            <IconButton size="large" disabled={!messageContent} color="primary">
+            <IconButton size="large" disabled={!((messageContent !== "") && (selectedUserId !== undefined))} color="primary" onClick={sendMessageHandler}>
               <SendIcon />
             </IconButton>
           </Box>

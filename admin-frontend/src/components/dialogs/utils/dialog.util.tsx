@@ -11,7 +11,7 @@ export type DialogComponent = {
 export const getDialogComponent = (dialogType: DIALOG_TYPE | undefined) => {
   switch (dialogType) {
     case DIALOG_TYPE.CREATE_PACKAGE: {
-      const createPackage: DialogComponent = { component: <DialogCreatePackage />, width: "sm" };
+      const createPackage: DialogComponent = { component: <DialogCreatePackage />, width: "md" };
       return createPackage;
     }
     case DIALOG_TYPE.DELETE_PACKAGE: {

@@ -11,8 +11,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { makeStyles } from '@mui/styles';
-import { useSelector } from '../../../../../store/react-redux-hooks';
+import { useSelector, useDispatch } from '../../../../../store/react-redux-hooks';
 import { useNavigate } from 'react-router';
+import { userLogout } from '../../../../../store/systemSlice';
 
 const useStyles  = makeStyles(() => ({
   navAppContainer: {
@@ -28,7 +29,8 @@ const ApplicationBar = () => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const { isAuthenticated } = useSelector((state) => state.system)
+  const { isAuthenticated, personData } = useSelector((state) => state.system)
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -38,7 +40,7 @@ const ApplicationBar = () => {
     setAnchorElUser(event.currentTarget);
   };
   
-  const settings = ["Logout"];
+  const settings = [{ name: "Logout", onClick: () => dispatch(userLogout()) }];
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -115,6 +117,7 @@ const ApplicationBar = () => {
           </Box>
           {isAuthenticated ? 
           <Box sx={{ flexGrow: 0 }}>
+            <span style={{ paddingRight: "5px" }}>{personData?.email ?? ""}</span>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="User Image" src="todo" />
@@ -136,8 +139,8 @@ const ApplicationBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.name} onClick={setting.onClick}>
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -40,6 +40,22 @@ class AccountService {
             const repository = this.getRepository();
             return repository.findOne({ where: { email: email } });
         });
+        this.findAccountById = (accountId) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            return repository.findOne({ where: { id: accountId } });
+        });
+        this.blockUserById = (accountId) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            const userEntity = yield repository.findOne({ where: { id: accountId } });
+            userEntity.isActive = false;
+            return repository.save(userEntity);
+        });
+        this.activateUserById = (accountId) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            const userEntity = yield repository.findOne({ where: { id: accountId } });
+            userEntity.isActive = true;
+            return repository.save(userEntity);
+        });
         this.accountRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(AccountEntity_1.default);
     }
 }

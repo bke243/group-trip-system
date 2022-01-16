@@ -20,10 +20,10 @@ const isUserAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0
         const authorization = req.headers.authorization ? req.headers.authorization.split(" ")[1] : "";
         const decoded = yield jsonwebtoken_1.default.verify(authorization, AccountCallbacks_1.default.jwtSecret);
         req.body.userAccountData = Object.assign(Object.assign({}, decoded), { userAccountId: decoded.userId });
-        next();
     }
     catch (error) {
         res.status(request_body_validator_1.RESPONSE_STATUS.UNAUTHORIZED).json({ messagr: "Unauthorized" });
     }
+    next();
 });
 exports.default = isUserAuthenticated;

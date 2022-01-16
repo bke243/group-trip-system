@@ -8,6 +8,7 @@ import { showToast } from "./toastSlice";
 interface UserCredentialSate {
   isAuthenticated: boolean;
   isLoadingUserDetail: boolean;
+  personData?: { email: string, id: number };
 }
 
 const initialState: UserCredentialSate = {
@@ -23,10 +24,9 @@ export const userLogin = createAsyncThunk("system/userLogin", (userData: UserLog
       thunkAPI.dispatch(showToast({ severity: "success", message: "Login done with success" }));
       const authToken = result.data as TokenType;
       LocalStorage.setAuthorizationToken(authToken);
-      return authToken;
+      return result.data as { token: string; personData: { email: string, id: number }  };
     })
     .catch((error: AxiosError) => {
-      // const errorMessage = getResponseErrorMessage(error);
       thunkAPI.dispatch(showToast({ severity: "error", message: `Login failed ,please provide a good Email or Passowrd` }));
       return thunkAPI.rejectWithValue(`Login failed ... with status code, ${error.code as string}`);
     });
@@ -35,11 +35,19 @@ export const userLogin = createAsyncThunk("system/userLogin", (userData: UserLog
 export const systemSlice = createSlice({
   name: "system",
   initialState,
-  reducers: {},
+  reducers: {
+    userLogout: (state) => {
+      LocalStorage.removeAuthorizationToken();
+      state.isAuthenticated = false;
+      state.isLoadingUserDetail = false;
+      state.personData = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
       // const decodedToken = action.payload;
       state.isAuthenticated = true;
+      state.personData = action.payload.personData;
     });
     builder.addCase(userLogin.pending, (state, action) => {
       state.isAuthenticated = false;
@@ -49,5 +57,7 @@ export const systemSlice = createSlice({
     });
   }
 });
+
+export const { userLogout } = systemSlice.actions;
 
 export default systemSlice.reducer;

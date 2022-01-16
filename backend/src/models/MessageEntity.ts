@@ -20,3 +20,8 @@ class MessageEntity extends BaseEntity {
 }
 
 export default MessageEntity;
+
+export interface MessageCreateDto {
+  receiverId: number;
+  content: string;
+}

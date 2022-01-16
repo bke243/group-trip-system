@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const UserEntity_1 = __importDefault(require("../models/UserEntity"));
 const index_util_1 = require("../utils/index.util");
+const PersonService_1 = __importDefault(require("./PersonService"));
 class UserService {
     constructor() {
         this.getRepository = () => {
@@ -34,6 +35,22 @@ class UserService {
         this.saveUser = (user) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.save(user);
+        });
+        this.getUserWIthPersonalDetails = () => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            const users = yield (yield repository.find({ relations: ["account"] })).map((user) => ({
+                id: user.id,
+                accountId: user.accountId,
+                email: user.account.email,
+                isActive: user.account.isActive
+            }));
+            const usersAccountIds = [...users].map((user) => user.accountId);
+            const personsDetails = yield (yield PersonService_1.default.findPersonsByAccountIds(usersAccountIds)).reduce((persons, nextPerson) => {
+                persons[nextPerson.accountId] = nextPerson;
+                return persons;
+            }, {});
+            const usersWithPersonDetails = users.map((user) => (Object.assign(Object.assign({}, user), { personDetails: personsDetails[user.accountId] })));
+            return usersWithPersonDetails;
         });
         this.findUserByAccountId = (accountId) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();

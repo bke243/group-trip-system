@@ -1,3 +1,4 @@
+import { MessageCreateDto } from "../../store/userSlice";
 import RestAxiosService from "../RestAxiosService";
 
 export interface TokenType {
@@ -7,6 +8,7 @@ export interface TokenType {
   
   class UserService {
     static controllerPath = "/users";
+    static messageControllerPath = "/messages/admin";
   static fetchUsers() {
     return RestAxiosService.get(`${UserService.controllerPath}`);
   }
@@ -18,6 +20,15 @@ export interface TokenType {
   static blockUserByAccountId(userAccountId: number) {
     return RestAxiosService.post(`${UserService.controllerPath}/unblock/${userAccountId}`);
   }
+
+  static sendMessageToUser(messageDetails: MessageCreateDto) {
+    return RestAxiosService.post(`${UserService.messageControllerPath}`, messageDetails);
+  }
+
+  static fetchUserMessagesById(userId: number) {
+    return RestAxiosService.get(`/messages/${userId}`);
+  }
+
 }
   export default UserService;
   
