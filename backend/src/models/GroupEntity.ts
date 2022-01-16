@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import UserEntity from "./UserEntity";
 
 @Entity()
@@ -10,20 +17,23 @@ class GroupEntity extends BaseEntity {
   name!: string;
 
   @Column()
-  created!:Date;
+  created!: Date;
 
-  @ManyToOne(type => UserEntity, user => user.id)
-  @JoinColumn()
-  owner!: UserEntity;
+  @ManyToOne((type) => UserEntity, (ownerId) => ownerId.id)
+  ownerId!: number;
 
-  @Column()
-  ownerId!: UserEntity;
-  
   @Column()
   destination!: string;
-  
+
   @Column()
   description!: string;
 }
+
+export interface  CreateGroupDto {
+  name: string,
+  destination: string,
+  description: string,
+}
+
 
 export default GroupEntity;

@@ -7,6 +7,7 @@ import { RESPONSE_STATUS } from "../middlewares/request-body-validator";
 import UserService from "../services/UserService";
 import PersonService from "../services/PersonService";
 import AdminService from "../services/AdminService";
+import CityService from "../services/CityService";
 
 class AccountCallbacks {
 
@@ -103,6 +104,20 @@ class AccountCallbacks {
     }).catch((error) => {
       return response.json({ result: error });
     })
+  }
+
+  public demo = async function(request: Request, response: Response)  {
+    try {
+      
+      const result =  await CityService.getCity();
+      return response.status(200).json(result);
+
+    }catch(exception) {
+
+      return response.status(500).json(exception);
+
+    }
+
   }
 }
 

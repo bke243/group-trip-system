@@ -17,6 +17,7 @@ class CityService {
     return repository.find();
   }
 
+
   public createCityEntity = async (city: { name: string, countryId: number }) => {
     const repository = this.getRepository();
     return repository.create({ 
