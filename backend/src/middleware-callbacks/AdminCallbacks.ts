@@ -20,7 +20,7 @@ class AdminCallbacks {
   }
 
   public isAdminUser = async (request: Request<{}, {}, { userAccountData: UserAccountData }>, response: Response, next: NextFunction) => {
-    const userEmail = request.body.userAccountData.email;
+    const userEmail = request.body.userAccountData?.email;
       try {
         const userAccount = await AccountService.findAccountByEmail(userEmail);
         if (!userAccount) return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({ status: RESPONSE_STATUS.UNAUTHORIZED, result: "Not 1 Authorized" });

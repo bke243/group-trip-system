@@ -2,7 +2,6 @@ import UserService from "../services/UserService";
 import { NextFunction, Request, Response } from "express";
 import AccountService from "../services/AccountService";
 import { RESPONSE_STATUS } from "../middlewares/request-body-validator";
-import { AccountLoginDto } from "../models/AccountEntity";
 import { UserAccountData } from "../middlewares/check-user-auth";
 
 class UserCallbacks {

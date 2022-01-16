@@ -25,15 +25,35 @@ export enum USER_STATUS {
   BLOCKED="BLOCKED"
 };
 
+export interface MessageCreateDto {
+  content: string;
+  receiverId: number;
+}
+
+export interface MessageReadDto {
+  id: number;
+  content: string;
+  originId: number;
+  receiverId: number;
+  sentDate: Date;
+}
+
 interface UserState {
   isLoading: boolean;
   error?: string,
   users?: UserModel[]
+  messages: { [userId: number]: {
+      isLoading: boolean,
+      messages?: MessageReadDto[]
+    }
+  }
 }
 
 const initialState: UserState = {
   isLoading: false,
+  messages: {},
 };
+
 
 export const fetchUsers = createAsyncThunk<UserModel[], void, { rejectValue: string; state: RootState }>("user/fetchUsers", (_packageId: void, thunkAPI) => {
   return UserService.fetchUsers()
@@ -54,6 +74,27 @@ export const manageUserStatus = createAsyncThunk<number, { userAccountId: number
     return thunkAPI.rejectWithValue(`Managing user failed ... with status code, ${error.code as string}`);
   })
 });
+
+export const sendMessageToUser = createAsyncThunk<undefined, MessageCreateDto, { rejectValue: string; state: RootState }>("user/sendMessageToUser", (messageContent, thunkAPI) => {
+  return UserService.sendMessageToUser(messageContent).then((result) => {
+    thunkAPI.dispatch(fecthMessagesByUserId(messageContent.receiverId));
+    return result.data;
+  }).catch((error: AxiosError) => {
+    thunkAPI.dispatch(showToast({ severity: "error", message: `Could not send message to user ` }));
+    return thunkAPI.rejectWithValue(`Sending the message to user failed ... with status code, ${error.code as string}`);
+  })
+});
+
+
+export const fecthMessagesByUserId =  createAsyncThunk<{ messages: MessageReadDto[], userId: number }, number, { rejectValue: string; state: RootState }>("user/fecthMessagesByUserId", (userId, thunkAPI) => {
+  return UserService.fetchUserMessagesById(userId).then((result) => {
+    return { messages: result.data as MessageReadDto[], userId: userId };
+  }).catch((error: AxiosError) => {
+    thunkAPI.dispatch(showToast({ severity: "error", message: `Could not fetch message to user ` }));
+    return thunkAPI.rejectWithValue(`Fetching the messages to user failed ... with status code, ${error.code as string}`);
+  })
+});
+
 
 export const userSlice = createSlice({
   name: "user",
@@ -80,6 +121,17 @@ export const userSlice = createSlice({
         state.users![userIndex].isActive = !state.users![userIndex].isActive;
       }
     });
+
+    builder.addCase(fecthMessagesByUserId.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.messages[action.payload.userId] = { isLoading: false, messages: action.payload.messages };
+    });
+
+    builder.addCase(fecthMessagesByUserId.pending, (state, action) => {
+      state.isLoading = false;
+      state.messages[action.meta.requestId as unknown as number] = { isLoading: true };
+    });
+
   }
 });
 
