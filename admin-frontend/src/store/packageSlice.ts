@@ -131,10 +131,12 @@ export const packageSlice = createSlice({
     });
     builder.addCase(fetchPackages.pending, (state, action) => {
       state.isLoading = true;
+      state.packages = undefined;
     });
     builder.addCase(fetchPackages.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload;
+      state.packages = undefined;
     });
     builder.addCase(fetchPackageById.fulfilled, (state, action) => {
       state.packageViewDetails = action.payload;
