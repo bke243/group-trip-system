@@ -11,7 +11,13 @@ export interface TokenType {
     return RestAxiosService.get(`${UserService.controllerPath}`);
   }
 
+  static ActivatekUserByAccountId(userAccountId: number) {
+    return RestAxiosService.post(`${UserService.controllerPath}/block/${userAccountId}`);
   }
-  
+
+  static blockUserByAccountId(userAccountId: number) {
+    return RestAxiosService.post(`${UserService.controllerPath}/unblock/${userAccountId}`);
+  }
+}
   export default UserService;
   

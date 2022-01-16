@@ -16,8 +16,14 @@ export interface UserModel {
     telephone: string;
     birthDate?: Date;
     accountId: number
-  }
+  },
+  isActive: boolean,
 }
+
+export enum USER_STATUS {
+  ACTIVE="ACTIVE",
+  BLOCKED="BLOCKED"
+};
 
 interface UserState {
   isLoading: boolean;
@@ -29,15 +35,25 @@ const initialState: UserState = {
   isLoading: false,
 };
 
-export const fetchUsers = createAsyncThunk<UserModel[], void, { rejectValue: string; state: RootState }>("package/fetchUsers", (_packageId: void, thunkAPI) => {
+export const fetchUsers = createAsyncThunk<UserModel[], void, { rejectValue: string; state: RootState }>("user/fetchUsers", (_packageId: void, thunkAPI) => {
   return UserService.fetchUsers()
   .then((result: AxiosResponse) => {
     return result.data as UserModel[];
   }).catch((error: AxiosError) => {
     thunkAPI.dispatch(showToast({ severity: "error", message: `Could not load users details` }));
-    return thunkAPI.rejectWithValue(`Fetching packages failed ... with status code, ${error.code as string}`);
+    return thunkAPI.rejectWithValue(`Fetching users failed ... with status code, ${error.code as string}`);
   })
 })
+
+export const manageUserStatus = createAsyncThunk<number, { userAccountId: number, newStatus: USER_STATUS }, { rejectValue: string; state: RootState }>("user/manageUserStatus", (userDetails, thunkAPI) => {
+  const userStatusManager = userDetails.newStatus === USER_STATUS.ACTIVE ? UserService.ActivatekUserByAccountId : UserService.blockUserByAccountId;
+  return userStatusManager(userDetails.userAccountId).then((result) => {
+    return userDetails.userAccountId;
+  }).catch((error: AxiosError) => {
+    thunkAPI.dispatch(showToast({ severity: "error", message: `Could not load users details` }));
+    return thunkAPI.rejectWithValue(`Managing user failed ... with status code, ${error.code as string}`);
+  })
+});
 
 export const userSlice = createSlice({
   name: "user",
@@ -55,6 +71,14 @@ export const userSlice = createSlice({
     builder.addCase(fetchUsers.rejected, (state, action) => {
       state.isLoading = false;
       state.users = undefined;
+    });
+    builder.addCase(manageUserStatus.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const userAccountId = action.payload;
+      const userIndex = (state.users ?? []).findIndex((user) => user.accountId === userAccountId);
+      if (userIndex >=0) {
+        state.users![userIndex].isActive = !state.users![userIndex].isActive;
+      }
     });
   }
 });

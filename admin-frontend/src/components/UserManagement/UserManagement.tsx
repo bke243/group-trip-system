@@ -22,7 +22,8 @@ export interface PersonRowProps {
   firstName: string;
   lastName: string;
   birthDate?: Date;
-  blocked?: boolean;
+  isActive: boolean;
+  accountId: number,
 }
 
 const UserManagement = () => {
@@ -69,7 +70,8 @@ const getPersonsRows = (users: UserModel[]): PersonRowProps[] => {
       firstName: user.personDetails.firstName,
       lastName: user.personDetails.lastName,
       birthDate: user.personDetails.birthDate,
-      blocked: false,
+      isActive: user.isActive,
+      accountId: user.accountId,
     }));
   };
 
