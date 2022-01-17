@@ -19,9 +19,8 @@ router.post("/", isUserAuthenticated, validateBodyParams(CreateGroupSchema), Gro
 // update group 
 router.put("/:groupId", isUserAuthenticated, validateBodyParams(UpdateGroupSchema), GroupCallbacks.updateGroup);
 
-// TODO delete
-// isUserAuthenticated is omitted for testing purposes 
-// router.delete("/:groupId", GroupCallbacks.deleteGroupById);
+// delete group
+router.delete("/:groupId",isUserAuthenticated, GroupCallbacks.deleteGroupById);
 
 
 
