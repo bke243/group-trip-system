@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import { PackageReadDto, setDeletePackageId } from "../../../store/packageSlice"
 import { Box } from '@mui/material';
 import { makeStyles } from "@mui/styles";
-import travelManImage from "../../../assets/travelImage.jpg";
 import { truncateText } from '../../../utils/customTypes';
 import moment from 'moment';
 import { DATE_FORMAT } from '../../Forms/utils/fieldsUtilities';
@@ -25,8 +24,8 @@ const useStyles = makeStyles({
   },
 });
 
-const Package = (props: PackageReadDto) => {
-  const { name, description, price, count, startDate, endDate, id } = props;
+const Package = (props: PackageReadDto & { imageName: string }) => {
+  const { name, description, price, count, startDate, endDate, id, imageName } = props;
   const classes = useStyles()
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const Package = (props: PackageReadDto) => {
       <CardMedia
         component="img"
         height="40%"
-        image={travelManImage}
+        image={imageName}
         alt="card image"
       />
       <Box display="flex" height="60%" flexDirection="column" justifyContent="space-between">
