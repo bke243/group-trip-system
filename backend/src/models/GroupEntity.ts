@@ -14,16 +14,22 @@ class GroupEntity extends BaseEntity {
 
   @ManyToOne(type => UserEntity, user => user.id)
   @JoinColumn()
-  owner!: UserEntity;
+  owner!: number;
 
   @Column()
-  ownerId!: UserEntity;
+  ownerId!: number;
   
   @Column()
   destination!: string;
   
   @Column()
   description!: string;
+}
+
+export interface  CreateGroupDto {
+  name: string,
+  destination: string,
+  description: string,
 }
 
 export default GroupEntity;
