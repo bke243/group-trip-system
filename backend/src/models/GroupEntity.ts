@@ -14,7 +14,7 @@ class GroupEntity extends BaseEntity {
 
   @ManyToOne(type => UserEntity, user => user.id)
   @JoinColumn()
-  owner!: number;
+  owner!: UserEntity;
 
   @Column()
   ownerId!: number;

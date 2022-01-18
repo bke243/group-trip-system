@@ -20,6 +20,14 @@ class GroupUserService {
     return repository.find();
   };
 
+  public getGroupUserByGroupId = async (groupId: number) => {
+    const repository = this.getRepository();
+    return repository.find({
+      where: { groupId: groupId },
+      relations: ["user","user.account"]
+    });
+  };
+
   public createGroupUserEntity = async (groupUserCreateData: CreateGroupUserDto) => {
     const repository = this.getRepository();
     return repository.create({
@@ -34,9 +42,21 @@ class GroupUserService {
     return repository.save(groupUserEntity);
   };
 
-  public deleteGroupUserById = async (groupId: number) => {
+  public findGroupUserById = async (userId: number) => {
+    const repository = this.getRepository();
+    return repository.findOne({
+      where: { userId: userId }
+    });
+  };
+
+  public deleteGroupUserByGroupId = async (groupId: number) => {
     const repository = this.getRepository();
     return repository.delete({ groupId: groupId });
+  };
+
+  public deleteGroupUserByUserId = async (userId: number) => {
+    const repository = this.getRepository();
+    return repository.delete({ userId: userId });
   };
 
 

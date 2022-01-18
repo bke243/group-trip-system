@@ -8,7 +8,7 @@ class UserEntity extends BaseEntity {
 
   @OneToOne(type => AccountEntity, account => account.id)
   @JoinColumn()
-  account!: number;
+  account!: AccountEntity;
 
   @Column()
   accountId!: number;

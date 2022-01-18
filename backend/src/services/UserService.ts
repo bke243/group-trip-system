@@ -23,7 +23,7 @@ class UserService {
   public createUserEntity = async (newPersonAccount: AccountEntity) => {
     const repository = this.getRepository();
     return repository.create({ 
-        account: newPersonAccount.id,
+      
         accountId: newPersonAccount.id,
      })
   }

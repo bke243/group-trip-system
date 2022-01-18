@@ -25,7 +25,6 @@ class GroupService {
     return repository.create({
       name: groupCreateData.name,
       created: new Date(),
-      owner: ownerId,
       ownerId: ownerId,
       destination: groupCreateData.destination,
       description: groupCreateData.description,

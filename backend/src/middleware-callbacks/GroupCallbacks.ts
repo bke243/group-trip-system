@@ -76,7 +76,7 @@ class GroupCallbacks {
       if (!this.isNumber(groupId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
       return  GroupService.findGroupById(groupId as unknown as number).then((foundGroup) => {
         if (!foundGroup) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "Group not found "});
-        const deleteGroupUserResult = GroupUserService.deleteGroupUserById(foundGroup.id);
+        const deleteGroupUserResult = GroupUserService.deleteGroupUserByGroupId(foundGroup.id);
         const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
         return response.json(deleteGroupResult);
       }).catch((error) => {
