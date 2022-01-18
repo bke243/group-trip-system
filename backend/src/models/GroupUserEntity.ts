@@ -18,7 +18,7 @@ class GroupUserEntity extends BaseEntity {
   @JoinColumn()
   user!: UserEntity;
 
-  @Column()
+  @Column({name: "userId"})
   userId!: number;
 
   @Column()

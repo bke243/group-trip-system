@@ -49,6 +49,24 @@ class GroupUserService {
     });
   };
 
+  public verifyUser = async (
+    userId: number,
+    groupId: number
+  ) => {
+    const repository = this.getRepository();
+    return repository.query(
+      `UPDATE group_user_entity SET 
+      "membershipAccepted" = $1
+      WHERE "groupId" = $2 and "userId" = $3`,
+      [
+        true,
+        groupId,
+        userId
+
+      ]
+    );
+  };
+
   public deleteGroupUserByGroupId = async (groupId: number) => {
     const repository = this.getRepository();
     return repository.delete({ groupId: groupId });

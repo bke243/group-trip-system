@@ -7,11 +7,14 @@ import { AddGroupUserSchema } from "../utils/schemas/GroupUserSchema.util";
 
 const router = Router();
 
+// verify group member 
+router.get("/verify/:userId/:groupId", GroupUserCallbacks.verifyUser);
+
 
 // delete group member
 router.delete("/:userId",isUserAuthenticated, GroupUserCallbacks.deleteGroupUserByUserId);
 
 // add group member
-router.post("/", validateBodyParams(AddGroupUserSchema), GroupUserCallbacks.addGroupUserByUserEmail);
+router.post("/", isUserAuthenticated, validateBodyParams(AddGroupUserSchema), GroupUserCallbacks.addGroupUserByUserEmail);
 
 export default router;
