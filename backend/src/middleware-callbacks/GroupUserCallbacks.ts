@@ -33,9 +33,8 @@ class GroupUserCallbacks {
   };
 
   public verifyUser = (
-    
     request: Request<
-      {userId: string,groupId: string},
+      { userId: string; groupId: string },
       {},
       { userAccountData: UserAccountData } & CreateGroupUserDto &
         AddMemberGroupUserDto
@@ -44,12 +43,14 @@ class GroupUserCallbacks {
     next: NextFunction
   ) => {
     console.log(request.params?.userId);
-    
-    return GroupUserService.verifyUser(parseInt(request.params?.userId), parseInt(request.params?.groupId));
+
+    return GroupUserService.verifyUser(
+      parseInt(request.params?.userId),
+      parseInt(request.params?.groupId)
+    );
   };
 
   public addGroupUserByUserEmail = async (
-    
     request: Request<
       {},
       {},
@@ -61,7 +62,6 @@ class GroupUserCallbacks {
   ) => {
     const requesterId = request.body.userAccountData.userAccountId;
     const groupId = request.body.groupId;
-
 
     if (!this.isNumber(requesterId))
       return response
@@ -81,8 +81,7 @@ class GroupUserCallbacks {
           .then((foundGroupCollection) => {
             for (let index = 0; index < foundGroupCollection.length; index++) {
               const element = foundGroupCollection[index];
-              
-              
+
               const user = element.user;
               const account = user.account;
               if (account.email === request.body.email) {
@@ -94,16 +93,21 @@ class GroupUserCallbacks {
 
                   transporter.sendMail({
                     to: request.body.email,
-                    from: "257307@student.pwr.edu.pl", 
+                    from: "257307@student.pwr.edu.pl",
                     subject: "Group trip invitation!",
-                    html:"Click to accept <a href='http://127.0.0.1:5000/groupUser/verify/" + element.userId+"/"+element.groupId+"'> invitation!</a>",
-                    });
-                  
-                  return response.json({message: "Ok!"});
+                    html:
+                      "Click to accept <a href='http://127.0.0.1:5000/groupUser/verify/" +
+                      element.userId +
+                      "/" +
+                      element.groupId +
+                      "'> invitation!</a>",
+                  });
+
+                  return response.json({ message: "Ok!" });
                 }
               }
             }
-            return response.json({message: "Something went wrong!"})
+            return response.json({ message: "Something went wrong!" });
           })
           .catch((error) => {
             return response.status(500).json({ error });
@@ -114,28 +118,33 @@ class GroupUserCallbacks {
 
   public deleteGroupUserByUserId = async (
     request: Request<
-      { userId: string },
+      { userId: string; groupId: string },
       { userAccountData: UserAccountData },
       any
     >,
     response: Response,
     next: NextFunction
   ) => {
-    const userId = request.params?.userId;
+    const userId = parseInt(request.params?.userId);
+    const groupId = parseInt(request.params?.groupId);
+
     console.log(userId);
 
     if (!this.isNumber(userId))
       return response
         .status(RESPONSE_STATUS.BAD_REQUEST)
         .json({ message: "Missing the user id or improper data type" });
-    return GroupUserService.findGroupUserById(userId as unknown as number)
-      .then((foundGroupUser) => {
-        if (!foundGroupUser)
+
+    return GroupService.findGroupById(groupId)
+      .then(async (requesterGroup) => {
+        if (requesterGroup?.ownerId !== request.body.userAccountData.userAccountId) {
           return response
-            .status(RESPONSE_STATUS.NOT_FOUND)
-            .json({ message: "Group User not found " });
+            .status(RESPONSE_STATUS.UNAUTHORIZED)
+            .json({ message: "User has no permission!" });
+        }
         const deleteGroupUserResult = GroupUserService.deleteGroupUserByUserId(
-          foundGroupUser.userId
+          userId,
+          groupId
         );
         return response.json(deleteGroupUserResult);
       })

@@ -1,162 +1,277 @@
 {
   "openapi": "3.0.0",
   "info": {
-      "version": "1.0.0",
-      "title": "Group trip settlement system",
-      "description": "Description is coming, to do ...",
-      "license": {
-          "name": "MIT",
-          "url": "https://opensource.org/licenses/MIT"
-      }
+    "version": "1.0.0",
+    "title": "Group trip settlement system",
+    "description": "Description is coming, to do ...",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
-      {
-          "url": "http://localhost:5000",
-          "description": "Local Dev"
-      }
+    {
+      "url": "http://localhost:5000",
+      "description": "Local Dev"
+    }
   ],
 
   "paths": {
     "/auth/signup": {
       "post": {
-        "tags": [
-            "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Crate a new user in the system",
         "requestBody": {
           "description": "User sign up data ",
           "required": true,
           "content": {
-              "application/json": {
-                  "schema": {
-                      "$ref": "#/definitions/UserSignUpDto"
-                  }
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UserSignUpDto"
               }
+            }
           }
-      },
+        },
         "responses": {
           "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/UserSignUpDtoOKResponse"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDtoOKResponse"
             }
           },
           "409": {
-              "description": "Conflict, user with the email already exist"
+            "description": "Conflict, user with the email already exist"
           },
           "400": {
-              "description": "Bad request, the request body is not of the proper format"
+            "description": "Bad request, the request body is not of the proper format"
           }
-
         }
       }
-  },
-  "/auth/login/": {
+    },
+    "/auth/login/": {
       "post": {
-          "tags": [ "Users" ],
-          "summary": "Authenticate both the customer and the administrator in the system, and returns JWT",
-          "content": {
-            "application/json": {
-                "schema": {
-                    "$ref": "#/definitions/UserSignUpDto"
-                }
+        "tags": ["Users"],
+        "summary": "Authenticate both the customer and the administrator in the system, and returns JWT",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDto"
             }
+          }
         },
         "responses": {
-            "200": {
-                "description": "OK, Successfully athenticated",
-                "schema": {
-                  "$ref": "#/definitions/UserSignUpDtoOKResponse"
-              }
-            },
-            "401": {
-                "description": "UnAuthorized, the user credential provide is wrong (missing user/wrong password/ wrong email)"
+          "200": {
+            "description": "OK, Successfully athenticated",
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDtoOKResponse"
+            }
+          },
+          "401": {
+            "description": "UnAuthorized, the user credential provide is wrong (missing user/wrong password/ wrong email)"
+          }
+        }
+      }
+    },
+    "/packages": {
+      "get": {
+        "tags": ["Packages"],
+        "summary": "Used to retreive all the available packages in the system",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDto"
             }
           }
-      }
-  },
-  "/packages": {
-    "get": {
-      "tags": [ "Packages" ],
-      "summary": "Used to retreive all the available packages in the system",
-      "content": {
+        }
+      },
+      "post": {
+        "tags": ["Packages"],
+        "summary": "Used to create packages by the administrator",
+        "content": {
           "application/json": {
-              "schema": {
-                  "$ref": "#/definitions/UserSignUpDto"
-              }
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDto"
+            }
           }
+        }
       }
     },
-    "post": {
-      "tags": [ "Packages" ],
-      "summary": "Used to create packages by the administrator",
-      "content": {
+    "/packages/:id": {
+      "put": {
+        "tags": ["Packages"],
+        "summary": "Used to update a package in the system by the administrator",
+        "content": {
           "application/json": {
-              "schema": {
-                  "$ref": "#/definitions/UserSignUpDto"
-              }
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDto"
+            }
           }
+        }
+      },
+      "delete": {
+        "tags": ["Packages"],
+        "summary": "Used to delete packages by the administrator",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/definitions/UserSignUpDto"
+            }
+          }
+        }
+      }
+    },
+    "/groups": {
+      "post": {
+        "tags": ["Groups"],
+        "summary": "Create a new trip group in the system",
+        "requestBody": {
+          "description": "Group creation data ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/CreateGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request, the request body is not of the proper format"
+          },
+          "401": {
+            "description": "UnAuthorized"
+          }
+        }
+      }
+    },
+    "/groups/:groupId": {
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "description": "groupId of the group that we want to update or delete",
+          "type": "string"
+        }
+      ],
+      "put": {
+        "tags": ["Groups"],
+        "summary": "Used to update a group in the system by the group owner",
+        "requestBody": {
+          "description": "Group update data ",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UpdateGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request, the request body is not of the proper format"
+          },
+          "401": {
+            "description": "UnAuthorized"
+          },
+          "404": {
+            "description": "Group not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Groups"],
+        "summary": "Used to delete group in the system by the group owner",
+
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request, the request body is not of the proper format"
+          },
+          "401": {
+            "description": "UnAuthorized"
+          },
+          "404": {
+            "description": "Group not found"
+          }
+        }
       }
     }
   },
-  "/packages/:id": {
-    "put": {
-      "tags": [ "Packages" ],
-      "summary": "Used to update a package in the system by the administrator",
-      "content": {
-          "application/json": {
-              "schema": {
-                  "$ref": "#/definitions/UserSignUpDto"
-              }
-          }
-      }
-    },
-    "delete": {
-      "tags": [ "Packages" ],
-      "summary": "Used to delete packages by the administrator",
-      "content": {
-          "application/json": {
-              "schema": {
-                  "$ref": "#/definitions/UserSignUpDto"
-              }
-          }
-      }
-    }
-  }
-},
   "definitions": {
     "UserSignUpDto": {
-        "type": "object",
-        "properties": {
-            "password": {
-                "type": "string"
-            },
-            "firstName": {
-                "type": "string"
-            },
-            "lastName": {
-                "type": "string"
-            },
-            "telephone": {
-                "type": "string"
-            },
-            "email": {
-              "type": "string",
-              "format": "email"
-          },
-          "birthDate": {
-            "type": "string",
-            "format": "date"
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date"
         }
-        }
+      }
     },
     "UserSignUpDtoOKResponse": {
-        "type": "object",
-        "properties": {
-            "token": {
-                "type": "string"
-            }
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
         }
+      }
+    },
+    "CreateGroupDto": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateGroupDto": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
     }
   }
 }

@@ -72,9 +72,9 @@ class GroupUserService {
     return repository.delete({ groupId: groupId });
   };
 
-  public deleteGroupUserByUserId = async (userId: number) => {
+  public deleteGroupUserByUserId = async (userId: number, groupId: number) => {
     const repository = this.getRepository();
-    return repository.delete({ userId: userId });
+    return repository.delete({ userId: userId, groupId:  groupId});
   };
 
 
