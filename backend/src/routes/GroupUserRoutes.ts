@@ -12,7 +12,7 @@ router.get("/verify/:userId/:groupId", GroupUserCallbacks.verifyUser);
 
 
 // delete group member
-router.delete("/:userId",isUserAuthenticated, GroupUserCallbacks.deleteGroupUserByUserId);
+router.delete("/:userId/:groupId",isUserAuthenticated,GroupUserCallbacks.deleteGroupUserByUserId);
 
 // add group member
 router.post("/", isUserAuthenticated, validateBodyParams(AddGroupUserSchema), GroupUserCallbacks.addGroupUserByUserEmail);

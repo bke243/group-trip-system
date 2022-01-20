@@ -59,7 +59,10 @@ class GroupCallbacks {
          // group
         const groupEntityBody = {name: requestBody.name, destination: requestBody.destination, description: requestBody.description};
         const groupEntity = await GroupService.createGroupEntity(groupEntityBody, requestBody.userAccountData.userAccountId);
-   
+        
+        if (foundGroup.ownerId !== requestBody.userAccountData.userAccountId){
+          return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
+        }
         const updatedGroup = await GroupService.updateGroup(requestBody.groupId, groupEntity);
   
         
@@ -69,13 +72,16 @@ class GroupCallbacks {
       })
     }
 
-    public deleteGroupById = async (request: Request<{ groupId:string }, {}, any>, response: Response, next: NextFunction) => {
+    public deleteGroupById = async (request: Request<{ groupId:string }, {}, { userAccountData: UserAccountData}>, response: Response, next: NextFunction) => {
       const groupId = request.params?.groupId;
       console.log(groupId);
       
       if (!this.isNumber(groupId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
       return  GroupService.findGroupById(groupId as unknown as number).then((foundGroup) => {
         if (!foundGroup) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "Group not found "});
+        if (foundGroup.ownerId !== request.body.userAccountData.userAccountId){
+          return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
+        }
         const deleteGroupUserResult = GroupUserService.deleteGroupUserByGroupId(foundGroup.id);
         const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
         return response.json(deleteGroupResult);
