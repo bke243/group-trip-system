@@ -31,8 +31,6 @@ class GroupCallbacks {
     
     public createGroups = async (request: Request<{}, {}, { userAccountData: UserAccountData } &  CreateGroupDto>, response: Response, next: NextFunction) => {
       const requestBody = request.body;
-      console.log(requestBody);
-      
   
       const newGroupEntity = await GroupService.createGroupEntity(requestBody, requestBody.userAccountData.userAccountId);
       const createdGroup = await GroupService.saveGroup(newGroupEntity);
@@ -74,7 +72,6 @@ class GroupCallbacks {
 
     public deleteGroupById = async (request: Request<{ groupId:string }, {}, { userAccountData: UserAccountData}>, response: Response, next: NextFunction) => {
       const groupId = request.params?.groupId;
-      console.log(groupId);
       
       if (!this.isNumber(groupId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
       return  GroupService.findGroupById(groupId as unknown as number).then((foundGroup) => {

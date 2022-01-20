@@ -42,7 +42,6 @@ class GroupUserCallbacks {
     response: Response,
     next: NextFunction
   ) => {
-    console.log(request.params?.userId);
 
     return GroupUserService.verifyUser(
       parseInt(request.params?.userId),
@@ -88,9 +87,7 @@ class GroupUserCallbacks {
                 if (element.membershipAccepted === true)
                   return response.json({ message: "Already member!" });
                 else {
-                  console.log("here");
-                  console.log(account.email);
-
+                  
                   transporter.sendMail({
                     to: request.body.email,
                     from: "257307@student.pwr.edu.pl",
@@ -127,8 +124,6 @@ class GroupUserCallbacks {
   ) => {
     const userId = parseInt(request.params?.userId);
     const groupId = parseInt(request.params?.groupId);
-
-    console.log(userId);
 
     if (!this.isNumber(userId))
       return response
