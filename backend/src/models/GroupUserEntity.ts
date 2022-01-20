@@ -25,4 +25,17 @@ class GroupUserEntity extends BaseEntity {
   membershipAccepted!: boolean
 }
 
+export interface  CreateGroupUserDto {
+  groupId: number,
+  userId: number,
+  membershipAccepted: boolean,
+}
+
+export interface UpdateGroupDto {
+  groupId: number;
+  name: string;
+  destination: string;
+  description: string;
+}
+
 export default GroupUserEntity;

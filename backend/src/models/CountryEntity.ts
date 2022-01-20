@@ -9,4 +9,6 @@ class CountryEntity extends BaseEntity {
   name!: string;
 }
 
+
+
 export default CountryEntity;

@@ -8,6 +8,7 @@ import swaggerUI from "swagger-ui-express";
 import LocationRoutes from "./routes/LocationRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import UsersRoutes from "./routes/UsersRoutes";
+import GroupRoutes from "./routes/GroupRoutes";
 import MessagesRoutes from "./routes/MessagesRoutes";
 const swaggerDocumentDemo =  require("./swagger-demo.json");
 const swaggerDocument =  require("./swagger.json");
@@ -44,6 +45,7 @@ app.use("/locations", LocationRoutes);
 app.use("/admins", AdminRoutes);
 app.use("/users", UsersRoutes);
 app.use("/messages", MessagesRoutes);
+app.use("/groups", GroupRoutes);
 
 // documentation demo command out to see the result
 // app.use("/docs/demo", swaggerUI.serve, swaggerUI.setup(swaggerDocumentDemo));
