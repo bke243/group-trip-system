@@ -16,9 +16,9 @@ class GroupUserEntity extends BaseEntity {
 
   @ManyToOne(type => UserEntity, user => user.id)
   @JoinColumn()
-  user!: number;
+  user!: UserEntity;
 
-  @Column()
+  @Column({name: "userId"})
   userId!: number;
 
   @Column()
@@ -29,6 +29,12 @@ export interface  CreateGroupUserDto {
   groupId: number,
   userId: number,
   membershipAccepted: boolean,
+}
+
+export interface  AddMemberGroupUserDto {
+  email: string,
+  groupId: number,
+
 }
 
 export interface UpdateGroupDto {

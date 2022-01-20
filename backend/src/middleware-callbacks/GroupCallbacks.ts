@@ -69,6 +69,21 @@ class GroupCallbacks {
       })
     }
 
+    public deleteGroupById = async (request: Request<{ groupId:string }, {}, any>, response: Response, next: NextFunction) => {
+      const groupId = request.params?.groupId;
+      console.log(groupId);
+      
+      if (!this.isNumber(groupId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
+      return  GroupService.findGroupById(groupId as unknown as number).then((foundGroup) => {
+        if (!foundGroup) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "Group not found "});
+        const deleteGroupUserResult = GroupUserService.deleteGroupUserByGroupId(foundGroup.id);
+        const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
+        return response.json(deleteGroupResult);
+      }).catch((error) => {
+          return response.status(500).json({ error });
+      })
+    }
+
 
   }
   
