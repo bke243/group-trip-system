@@ -15,16 +15,15 @@ import LocationEntity from "./models/LocationEntity";
 import GroupUserEntity from "./models/GroupUserEntity";
 
 
-
 createConnection({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: "user",
-  password: "password",
+  username: "postgres",
+  password: "elvin12345",
   database: "grouptripdatabase",
   synchronize: true,
-  // logging: true, // comment it to disable db logs
+  logging: true, // comment it to disable db logs
   entities: [
     AccountEntity, AdminEntity, UserEntity, 
     PersonEntity, GroupEntity, MessageEntity,

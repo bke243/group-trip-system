@@ -12,9 +12,9 @@ router.get("/verify/:userId/:groupId", GroupUserCallbacks.verifyUser);
 
 
 // delete group member
-router.delete("/:userId/:groupId",isUserAuthenticated,GroupUserCallbacks.deleteGroupUserByUserId);
+router.delete("/:userId/:groupId", isUserAuthenticated,GroupUserCallbacks.deleteGroupUserByUserId);
 
-// add group member
-router.post("/", isUserAuthenticated, validateBodyParams(AddGroupUserSchema), GroupUserCallbacks.addGroupUserByUserEmail);
+// add group member *Todo: ADD NEW API KEY
+router.post("/", validateBodyParams(AddGroupUserSchema), isUserAuthenticated, GroupUserCallbacks.addGroupUserByUserEmail);
 
 export default router;
