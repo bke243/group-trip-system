@@ -49,6 +49,15 @@ class GroupUserService {
     });
   };
 
+  public findGroupUserByGroupIdUserId = async (groupId: number, userId: number) => {
+    const repository = this.getRepository();
+    return repository.findOne({
+      where: { groupId: groupId, userId: userId }
+    });
+  };
+
+
+
   public verifyUser = async (
     userId: number,
     groupId: number

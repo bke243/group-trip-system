@@ -14,14 +14,17 @@ import UserService from "../services/UserService";
 import AccountService from "../services/AccountService";
 import AdminService from "../services/AdminService";
 
+
+
 const nodemailer = require("nodemailer");
 
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-        "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",
+      process.env.APIKEY,
     },
   })
 );
@@ -42,7 +45,6 @@ class GroupUserCallbacks {
     response: Response,
     next: NextFunction
   ) => {
-
     return GroupUserService.verifyUser(
       parseInt(request.params?.userId),
       parseInt(request.params?.groupId)
@@ -59,35 +61,64 @@ class GroupUserCallbacks {
     response: Response,
     next: NextFunction
   ) => {
-    const requesterId = request.body.userAccountData.userAccountId;
     const groupId = request.body.groupId;
 
-    if (!this.isNumber(requesterId))
-      return response
-        .status(RESPONSE_STATUS.BAD_REQUEST)
-        .json({ message: "Missing the requester id or improper data type" });
     return GroupService.findGroupById(groupId as unknown as number).then(
-      (foundGroup) => {
+      async (foundGroup) => {
         if (!foundGroup)
           return response
             .status(RESPONSE_STATUS.NOT_FOUND)
             .json({ message: "Group not found " });
+        const foundUser = await UserService.findUserByAccountId(
+          request.body.userAccountData.userAccountId
+        );
+        const requesterId = foundUser?.id;
         if (foundGroup.ownerId !== requesterId)
           return response
             .status(RESPONSE_STATUS.NOT_FOUND)
             .json({ message: "Requester has no permission!" });
+        const emailAccount = await AccountService.findAccountByEmail(
+          request.body.email
+        );
+        const userEmailAccount = await UserService.findUserByAccountId(
+          emailAccount?.id!
+        );
+        if (!userEmailAccount)
+          return response
+            .status(RESPONSE_STATUS.NOT_FOUND)
+            .json({ message: "Email not found " });
+        const groupUserBody = {
+          groupId: groupId,
+          userId: userEmailAccount.id,
+          membershipAccepted: false,
+        };
+        const newGroupUserEntity = await GroupUserService.createGroupUserEntity(
+          groupUserBody
+        );
+        const foundGroupUser =
+          await GroupUserService.findGroupUserByGroupIdUserId(
+            groupId,
+            userEmailAccount.id
+          );
+        if (foundGroupUser)
+          return response
+            .status(RESPONSE_STATUS.NOT_FOUND)
+            .json({ message: "Invitation already sent!" });
+        const createdGroupUser = await GroupUserService.saveGroupUser(
+          newGroupUserEntity
+        );
         return GroupUserService.getGroupUserByGroupId(groupId)
           .then((foundGroupCollection) => {
             for (let index = 0; index < foundGroupCollection.length; index++) {
               const element = foundGroupCollection[index];
-
+              console.log(process.env.SEND_GRID_API_KEY);
+              
               const user = element.user;
               const account = user.account;
               if (account.email === request.body.email) {
                 if (element.membershipAccepted === true)
                   return response.json({ message: "Already member!" });
                 else {
-                  
                   transporter.sendMail({
                     to: request.body.email,
                     from: "257307@student.pwr.edu.pl",
@@ -132,7 +163,10 @@ class GroupUserCallbacks {
 
     return GroupService.findGroupById(groupId)
       .then(async (requesterGroup) => {
-        if (requesterGroup?.ownerId !== request.body.userAccountData.userAccountId) {
+        const foundUser = await UserService.findUserByAccountId(
+          request.body.userAccountData.userAccountId
+        );
+        if (requesterGroup?.ownerId !== foundUser?.id) {
           return response
             .status(RESPONSE_STATUS.UNAUTHORIZED)
             .json({ message: "User has no permission!" });
