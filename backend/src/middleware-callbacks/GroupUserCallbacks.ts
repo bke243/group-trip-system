@@ -121,7 +121,7 @@ class GroupUserCallbacks {
                 else {
                   transporter.sendMail({
                     to: request.body.email,
-                    from: "257307@student.pwr.edu.pl",
+                    from: "",
                     subject: "Group trip invitation!",
                     html:
                       "Click to accept <a href='http://127.0.0.1:5000/groupUser/verify/" +

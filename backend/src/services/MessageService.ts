@@ -37,6 +37,17 @@ class MessageService {
     return repository.save(messageEntity);
   }
 
+  public getMessagesCount = async () => {
+    const repository = this.getRepository();
+    return repository.query(
+      `SELECT "receiverId", COUNT ('receiverId') AS “count”
+      FROM message_entity
+      GROUP BY "receiverId"
+	  Order by “count” asc
+	  limit 1`
+    );
+  }
+
 
   public getMessagesByUserOrAdminId = async (userOrAdminid: number) => {
     const repository = this.getRepository();

@@ -19,8 +19,8 @@ createConnection({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: "user",
-  password: "value",
+  username: "postgres",
+  password: "elvin12345",
   database: "grouptripdatabase",
   synchronize: true,
   logging: true, // comment it to disable db logs

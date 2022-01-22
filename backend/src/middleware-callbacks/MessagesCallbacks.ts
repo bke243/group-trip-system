@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { UserAccountData } from "../middlewares/check-user-auth";
 import { MessageCreateDto } from "../models/MessageEntity";
 import { RESPONSE_STATUS } from "../middlewares/request-body-validator";
+import AdminService from "../services/AdminService";
 
 class MessageCallbacks {
 
@@ -30,7 +31,7 @@ class MessageCallbacks {
 
   public createMessage = async (request: Request<{}, {}, AdminMessageCreate>, response: Response, next: NextFunction) => {
     const requestBody = request.body
-
+    
     const messageEntity = await MessageService.createMessageEntity({ 
       content: requestBody.content,
       destinationId: requestBody.receiverId,
@@ -41,6 +42,42 @@ class MessageCallbacks {
     }).catch((error) => {
         return response.json({ error });
     })
+  }
+
+  public createMessageForUser = async (request: Request<{}, {}, AdminMessageCreate>, response: Response, next: NextFunction) => {
+    const requestBody = request.body
+    const adminRep = await AdminService.getAdmins();
+    const messageCount = await MessageService.getMessagesCount();
+   
+    
+    if (messageCount) {
+      const adminAccountId = messageCount[0].receiverId;
+      const messageEntity = await MessageService.createMessageEntity({ 
+      content: requestBody.content,
+      destinationId: adminAccountId,
+      originId: requestBody.userAccountData.userAccountId });
+
+    return  MessageService.saveMessageEntity(messageEntity).then((message) => {
+        return response.json(message);
+    }).catch((error) => {
+        return response.json({ error });
+    })
+    }
+    if (adminRep){
+      const messageEntity = await MessageService.createMessageEntity({ 
+        content: requestBody.content,
+        destinationId: adminRep[0].accountId,
+        originId: requestBody.userAccountData.userAccountId });
+  
+      return  MessageService.saveMessageEntity(messageEntity).then((message) => {
+          return response.json(message);
+      }).catch((error) => {
+          return response.json({ error });
+      })
+    }else {
+      return response.json({error: "Error"});
+    }
+    
   }
 
   private  isNumber = (value: string | number) =>{
