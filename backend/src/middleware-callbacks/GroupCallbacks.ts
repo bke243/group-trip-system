@@ -21,7 +21,7 @@ class GroupCallbacks {
       return GroupService.getGroups().then((groups) => {
         return response.json(groups);
       }).catch((error) => {
-        return response.json(error);
+        return response.status(500).json(error);
       });
 
     }

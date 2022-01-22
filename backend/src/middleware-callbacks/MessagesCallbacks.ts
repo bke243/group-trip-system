@@ -15,7 +15,7 @@ class MessageCallbacks {
     return  MessageService.getMessages().then((messages) => {
         return response.json(messages);
     }).catch((error) => {
-        return response.json({ error });
+        return response.status(500).json({ error });
     })
   }
 
@@ -25,7 +25,7 @@ class MessageCallbacks {
     return  MessageService.getMessagesByUserOrAdminId(userOrAdminId!).then((messages) => {
         return response.json(messages);
     }).catch((error) => {
-        return response.json({ error });
+        return response.status(500).json({ error });
     })
   }
 
@@ -40,7 +40,7 @@ class MessageCallbacks {
     return  MessageService.saveMessageEntity(messageEntity).then((message) => {
         return response.json(message);
     }).catch((error) => {
-        return response.json({ error });
+        return response.status(500).json({ error });
     })
   }
 
@@ -60,7 +60,7 @@ class MessageCallbacks {
     return  MessageService.saveMessageEntity(messageEntity).then((message) => {
         return response.json(message);
     }).catch((error) => {
-        return response.json({ error });
+        return response.status(500).json({ error });
     })
     }
     if (adminRep){
@@ -72,7 +72,7 @@ class MessageCallbacks {
       return  MessageService.saveMessageEntity(messageEntity).then((message) => {
           return response.json(message);
       }).catch((error) => {
-          return response.json({ error });
+          return response.status(500).json({ error });
       })
     }else {
       return response.json({error: "Error"});
