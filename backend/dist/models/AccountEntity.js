@@ -8,8 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const FeedbackEntity_1 = __importDefault(require("./FeedbackEntity"));
 let AccountEntity = class AccountEntity extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
@@ -33,9 +37,13 @@ __decorate([
     __metadata("design:type", String)
 ], AccountEntity.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)('boolean', { default: true, name: "isActive" }),
+    (0, typeorm_1.Column)({ type: 'boolean', default: true, name: "isActive" }),
     __metadata("design:type", Boolean)
 ], AccountEntity.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => FeedbackEntity_1.default, feedback => feedback.user),
+    __metadata("design:type", Array)
+], AccountEntity.prototype, "feedback", void 0);
 AccountEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], AccountEntity);

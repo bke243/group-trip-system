@@ -28,7 +28,6 @@ class UserService {
         this.createUserEntity = (newPersonAccount) => __awaiter(this, void 0, void 0, function* () {
             const repository = this.getRepository();
             return repository.create({
-                account: newPersonAccount.id,
                 accountId: newPersonAccount.id,
             });
         });

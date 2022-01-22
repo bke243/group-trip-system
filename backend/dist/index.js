@@ -26,6 +26,7 @@ const CountryEntity_1 = __importDefault(require("./models/CountryEntity"));
 const CityEntity_1 = __importDefault(require("./models/CityEntity"));
 const LocationEntity_1 = __importDefault(require("./models/LocationEntity"));
 const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
+const FeedbackEntity_1 = __importDefault(require("./models/FeedbackEntity"));
 (0, typeorm_1.createConnection)({
     type: "postgres",
     host: "localhost",
@@ -34,12 +35,13 @@ const GroupUserEntity_1 = __importDefault(require("./models/GroupUserEntity"));
     password: "password",
     database: "grouptripdatabase",
     synchronize: true,
-    // logging: true, // comment it to disable db logs
+    logging: true,
     entities: [
         AccountEntity_1.default, AdminEntity_1.default, UserEntity_1.default,
         PersonEntity_1.default, GroupEntity_1.default, MessageEntity_1.default,
         CountryEntity_1.default, CityEntity_1.default, LocationEntity_1.default,
-        PackageEntity_1.default, PurchaseDetailEntity_1.default, GroupUserEntity_1.default
+        PackageEntity_1.default, PurchaseDetailEntity_1.default, GroupUserEntity_1.default,
+        FeedbackEntity_1.default
     ],
     name: index_util_1.APPLICATION_CONNECTION_NAME,
 }).then((connect) => __awaiter(void 0, void 0, void 0, function* () {

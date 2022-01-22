@@ -88,6 +88,24 @@ class PackageService {
     const repository = this.getRepository();
     return repository.delete({ id: packageEntity.id });
   }
+
+  public decreasePackageCount = async (packageId: number) => {
+    const repository = this.getRepository();
+    const my_package = await repository.findOne({id: packageId});
+    if(!(my_package instanceof PackageEntity)) throw Error('Package not found');
+    const decreaseCount = await repository
+      .update({
+        id: my_package.id
+      }, {
+        count: my_package.count-1
+      })
+      .then(()=> {
+        return true;
+      })
+      .catch(err => {
+        return err;
+      })
+  }
 }
 
 export default new PackageService();

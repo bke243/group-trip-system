@@ -13,8 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const FeedbackEntity_1 = __importDefault(require("./FeedbackEntity"));
 const GroupEntity_1 = __importDefault(require("./GroupEntity"));
-const PackageEntity_1 = __importDefault(require("./PackageEntity"));
+var PurchaseStatus;
+(function (PurchaseStatus) {
+    PurchaseStatus["CREATED"] = "created";
+    PurchaseStatus["PAID"] = "paid";
+    PurchaseStatus["DONE"] = "done";
+})(PurchaseStatus || (PurchaseStatus = {}));
 let PurchaseDetailEntity = class PurchaseDetailEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -26,27 +32,22 @@ __decorate([
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "cost", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
-], PurchaseDetailEntity.prototype, "paid", void 0);
+    (0, typeorm_1.Column)({ type: "enum", enum: PurchaseStatus, default: PurchaseStatus.CREATED }),
+    __metadata("design:type", String)
+], PurchaseDetailEntity.prototype, "purchase_status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => GroupEntity_1.default, group => group.id),
+    (0, typeorm_1.ManyToOne)((type) => GroupEntity_1.default, (group) => group.id),
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", GroupEntity_1.default)
 ], PurchaseDetailEntity.prototype, "group", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], PurchaseDetailEntity.prototype, "groupId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => PackageEntity_1.default, packageEntity => packageEntity.id),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Number)
-], PurchaseDetailEntity.prototype, "country", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], PurchaseDetailEntity.prototype, "countryId", void 0);
+    (0, typeorm_1.OneToMany)(() => FeedbackEntity_1.default, feedback => feedback.purchase),
+    __metadata("design:type", Array)
+], PurchaseDetailEntity.prototype, "feedback", void 0);
 PurchaseDetailEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], PurchaseDetailEntity);

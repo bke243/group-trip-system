@@ -86,6 +86,10 @@ class GroupUserService {
     return repository.delete({ userId: userId, groupId:  groupId});
   };
 
+  public getGroupUserCount = async (groupId: number) => {
+    const userCount = await this.getRepository().findAndCount({groupId: groupId})
+    return userCount[1];
+  }
 
 }
 

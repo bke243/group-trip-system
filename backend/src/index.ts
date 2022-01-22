@@ -1,3 +1,4 @@
+import { addDummyPackages } from './utils/database_seed';
 import { APPLICATION_PORT, APPLICATION_CONNECTION_NAME } from "./utils/index.util";
 import { createConnection } from "typeorm";
 import { join } from 'path/posix';
@@ -13,6 +14,7 @@ import CountryEntity from "./models/CountryEntity";
 import CityEntity from "./models/CityEntity";
 import LocationEntity from "./models/LocationEntity";
 import GroupUserEntity from "./models/GroupUserEntity";
+import FeedbackEntity from './models/FeedbackEntity';
 
 
 createConnection({
@@ -20,7 +22,7 @@ createConnection({
   host: "localhost",
   port: 5432,
   username: "user",
-  password: "value",
+  password: "password",
   database: "grouptripdatabase",
   synchronize: true,
   logging: true, // comment it to disable db logs
@@ -28,7 +30,8 @@ createConnection({
     AccountEntity, AdminEntity, UserEntity, 
     PersonEntity, GroupEntity, MessageEntity,
     CountryEntity, CityEntity, LocationEntity,
-    PackageEntity, PurchaseDetailEntity, GroupUserEntity
+    PackageEntity, PurchaseDetailEntity, GroupUserEntity,
+    FeedbackEntity
   ],
   name: APPLICATION_CONNECTION_NAME,
 }).then(async (connect) => {

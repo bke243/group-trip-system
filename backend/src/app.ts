@@ -11,6 +11,7 @@ import UsersRoutes from "./routes/UsersRoutes";
 import GroupRoutes from "./routes/GroupRoutes";
 import GroupUserRoutes from "./routes/GroupUserRoutes";
 import MessagesRoutes from "./routes/MessagesRoutes";
+import PurchaseRoutes from "./routes/PurchaseRoutes";
 const swaggerDocumentDemo =  require("./swagger-demo.json");
 const swaggerDocument =  require("./swagger.json");
 
@@ -48,6 +49,7 @@ app.use("/users", UsersRoutes);
 app.use("/messages", MessagesRoutes);
 app.use("/groups", GroupRoutes);
 app.use("/groupUser", GroupUserRoutes);
+app.use("/purchase", PurchaseRoutes);
 
 
 // documentation demo command out to see the result
