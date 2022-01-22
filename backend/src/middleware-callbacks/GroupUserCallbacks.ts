@@ -19,12 +19,12 @@ import AdminService from "../services/AdminService";
 const nodemailer = require("nodemailer");
 
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-
+const sendgrid_api_key = "";
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-      process.env.APIKEY,
+      sendgrid_api_key,
     },
   })
 );
