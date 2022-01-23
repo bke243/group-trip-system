@@ -14,7 +14,7 @@ class UserCallbacks {
     return  UserService.getUserWIthPersonalDetails().then((admins) => {
         return response.json(admins);
     }).catch((error) => {
-        return response.json({ error });
+      next(error);
     })
   }
 
@@ -26,7 +26,7 @@ class UserCallbacks {
       const blockedUser = await AccountService.blockUserById(userAccount.id);
       return response.json(blockedUser);
     }).catch((error) => {
-      return response.json({ result: error });
+      next(error);
     });
   }
 
@@ -38,7 +38,7 @@ class UserCallbacks {
       const blockedUser = await AccountService.activateUserById(userAccount.id);
       return response.json(blockedUser);
     }).catch((error) => {
-      return response.json({ result: error });
+      next(error);
     });
   }
 

@@ -15,12 +15,12 @@ class AccountCallbacks {
 
   }
 
-  public getAccounts = async (_req: Request, res: Response) => {
+  public getAccounts = async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const accounts = await AccountService.getAccounts();
       return res.json({ accounts });
     } catch (error) {
-      return res.json({ error });
+      next(error);
     }
   }
 
@@ -32,11 +32,11 @@ class AccountCallbacks {
         }
         next();
       }).catch((error) => {
-        return response.status(RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json({ status: RESPONSE_STATUS.INTERNAL_SERVER_ERROR, result: error  });
+        next(error);
       });
   }
 
-  public postUserSignUp = async (request: Request<{}, {}, AccountCreationDto>, response: Response) => {
+  public postUserSignUp = async (request: Request<{}, {}, AccountCreationDto>, response: Response, next: NextFunction) => {
     const requestBody = request.body;
     return bcrypt.hash(requestBody.password, 13).then(async (hashedPassword) => {
       const updatedRequestBody = { ...requestBody, password: hashedPassword };
@@ -55,11 +55,11 @@ class AccountCallbacks {
 
         return response.status(RESPONSE_STATUS.OK).json({ token: `Bearer ${token}`, personData: { email: userAccount.email, id: userAccount.id } });
       }).catch((error) => {
-        return response.json({ result: error });
+        next(error);
       });
   }
 
-  public postAdminSignUp = async (request: Request<{}, {}, AccountCreationDto>, response: Response) => {
+  public postAdminSignUp = async (request: Request<{}, {}, AccountCreationDto>, response: Response, next: NextFunction) => {
     const requestBody = request.body;
     return bcrypt.hash(requestBody.password, 13).then(async (hashedPassword) => {
       const updatedRequestBody = { ...requestBody, password: hashedPassword };
@@ -78,7 +78,7 @@ class AccountCallbacks {
 
         return response.status(RESPONSE_STATUS.OK).json({ token: `Bearer ${token}`, personData: { email: userAccount.email, id: userAccount.id } });
       }).catch((error) => {
-        return response.json({ result: error });
+        next(error);;
       });
   }
 
@@ -101,7 +101,7 @@ class AccountCallbacks {
         return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({ status: RESPONSE_STATUS.UNAUTHORIZED, result: "Invalud  email or password" });
       })
     }).catch((error) => {
-      return response.json({ result: error });
+      next(error);
     })
   }
 }

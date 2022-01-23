@@ -11,7 +11,7 @@ class LoactionCallbacks {
     return  LocationService.getLocations().then((locations) => {
         return response.json(locations);
     }).catch((error) => {
-        return response.json({ error });
+      next(error);
     })
   }
 }

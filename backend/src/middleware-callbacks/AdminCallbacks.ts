@@ -15,7 +15,7 @@ class AdminCallbacks {
     return  AdminService.getAdminsWithPersonDetails().then((admins) => {
         return response.json(admins);
     }).catch((error) => {
-        return response.json({ error });
+      next(error);
     })
   }
 
@@ -27,8 +27,7 @@ class AdminCallbacks {
         const adminUser = await AdminService.findAdminByAccountId(userAccount.id);
         if (!adminUser) response.status(RESPONSE_STATUS.UNAUTHORIZED).json({ status: RESPONSE_STATUS.UNAUTHORIZED, result: "Not Authorized" });
       } catch(error) {
-      
-        return response.status(RESPONSE_STATUS.BAD_REQUEST).json({ message: error });
+        next(error);
       }
       next();
   }

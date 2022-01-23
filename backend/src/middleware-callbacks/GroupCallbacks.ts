@@ -51,7 +51,7 @@ class GroupCallbacks {
         
         return response.json({ createdGroup: createdGroup });
       }).catch((error) => {
-        return response.status(500).json({ error });
+        next(error);
     });
     }
 
@@ -75,7 +75,7 @@ class GroupCallbacks {
           
         return response.json({ group: updatedGroup });
       }).catch((error) => {
-          return response.status(500).json({ error });
+        next(error);
       })
     }
 
@@ -93,7 +93,7 @@ class GroupCallbacks {
         const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
         return response.json(deleteGroupResult);
       }).catch((error) => {
-          return response.status(500).json({ error });
+        next(error);
       })
     }
 
