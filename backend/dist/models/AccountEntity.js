@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], AccountEntity.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => FeedbackEntity_1.default, feedback => feedback.user),
+    (0, typeorm_1.OneToMany)(() => FeedbackEntity_1.default, feedback => feedback.account),
     __metadata("design:type", Array)
 ], AccountEntity.prototype, "feedback", void 0);
 AccountEntity = __decorate([

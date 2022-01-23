@@ -111,7 +111,6 @@ class GroupUserCallbacks {
           .then((foundGroupCollection) => {
             for (let index = 0; index < foundGroupCollection.length; index++) {
               const element = foundGroupCollection[index];
-              console.log(process.env.SEND_GRID_API_KEY);
               
               const user = element.user;
               const account = user.account;

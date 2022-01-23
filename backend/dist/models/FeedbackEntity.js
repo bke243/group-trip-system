@@ -23,11 +23,11 @@ __decorate([
 ], FeedbackEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => AccountEntity_1.default, user => user.feedback, { nullable: false }),
-    __metadata("design:type", AccountEntity_1.default)
-], FeedbackEntity.prototype, "user", void 0);
+    __metadata("design:type", Number)
+], FeedbackEntity.prototype, "account", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => PurchaseDetailEntity_1.default, purchase => purchase.feedback, { nullable: false }),
-    __metadata("design:type", PurchaseDetailEntity_1.default)
+    __metadata("design:type", Number)
 ], FeedbackEntity.prototype, "purchase", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: false }),

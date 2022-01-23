@@ -8,10 +8,10 @@ class FeedbackEntity extends BaseEntity {
   id!: number;
   
   @ManyToOne(()=> AccountEntity, user => user.feedback, {nullable: false})
-  user!: AccountEntity;
+  account!: number;
 
   @ManyToOne(()=> PurchaseDetailEntity, purchase => purchase.feedback, {nullable: false})
-  purchase!: PurchaseDetailEntity;
+  purchase!: number;
   
   @Column({type: 'text', nullable: false})
   feedback!: string;

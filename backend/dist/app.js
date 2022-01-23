@@ -17,8 +17,9 @@ const GroupRoutes_1 = __importDefault(require("./routes/GroupRoutes"));
 const GroupUserRoutes_1 = __importDefault(require("./routes/GroupUserRoutes"));
 const MessagesRoutes_1 = __importDefault(require("./routes/MessagesRoutes"));
 const PurchaseRoutes_1 = __importDefault(require("./routes/PurchaseRoutes"));
-const swaggerDocumentDemo = require("../src/swagger-demo.json");
-const swaggerDocument = require("../src/swagger.json");
+const FeedbackRoutes_1 = __importDefault(require("./routes/FeedbackRoutes"));
+const swaggerDocumentDemo = require("../swagger-demo.json");
+const swaggerDocument = require("../swagger.json");
 const app = (0, express_1.default)();
 // log requests
 app.use((0, morgan_1.default)('combined'));
@@ -47,6 +48,7 @@ app.use("/messages", MessagesRoutes_1.default);
 app.use("/groups", GroupRoutes_1.default);
 app.use("/groupUser", GroupUserRoutes_1.default);
 app.use("/purchase", PurchaseRoutes_1.default);
+app.use("/feedback", FeedbackRoutes_1.default);
 // documentation demo command out to see the result
 // app.use("/docs/demo", swaggerUI.serve, swaggerUI.setup(swaggerDocumentDemo));
 app.use("/api/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));

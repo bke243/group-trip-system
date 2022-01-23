@@ -11,10 +11,10 @@ class PurchaseCallbacks {
     public async createPurchase (request: Request, response: Response) : Promise<Response> {
         return await PurchaseService.createPurchase(request)
             .then(data => {
-                return response.json(data).status(200)
+                return response.status(200).json({success: 'purchase created successfully'})
             })
             .catch(err => {
-                return response.json(err).status(400)
+                return response.status(400).json({error: err})
             })
     } 
   

@@ -12,12 +12,6 @@ import FeedbackEntity from "./FeedbackEntity";
 import GroupEntity from "./GroupEntity";
 import PackageEntity from "./PackageEntity";
 
-enum PurchaseStatus {
-  CREATED = "created",
-  PAID = "paid",
-  DONE = "done",
-}
-
 @Entity()
 class PurchaseDetailEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -26,22 +20,22 @@ class PurchaseDetailEntity extends BaseEntity {
   @Column()
   cost!: number;
 
-  @Column({type: "enum", enum: PurchaseStatus, default: PurchaseStatus.CREATED})
-  purchase_status!: string;
+  @Column({type: "boolean", nullable: false, default: "false"})
+  paid!: boolean;
 
   @ManyToOne((type) => GroupEntity, (group) => group.id)
   @JoinColumn()
-  group!: GroupEntity;
+  group!: number;
 
   @Column()
   groupId!: number;
 
-  // @ManyToOne((type) => PackageEntity, (packageEntity) => packageEntity.id)
-  // @JoinColumn()
-  // country!: number;
+  @ManyToOne((type) => PackageEntity, (packageEntity) => packageEntity.id)
+  @JoinColumn()
+  package!: number;
 
-  // @Column()
-  // countryId!: number;
+  @Column()
+  packageId!: number;
 
   @OneToMany(() => FeedbackEntity, feedback => feedback.purchase)
   feedback!: FeedbackEntity[];

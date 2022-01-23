@@ -93,7 +93,7 @@ class PackageService {
             const my_package = yield repository.findOne({ id: packageId });
             if (!(my_package instanceof PackageEntity_1.default))
                 throw Error('Package not found');
-            const decreaseCount = yield repository
+            return yield repository
                 .update({
                 id: my_package.id
             }, {

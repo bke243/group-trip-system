@@ -93,7 +93,7 @@ class PackageService {
     const repository = this.getRepository();
     const my_package = await repository.findOne({id: packageId});
     if(!(my_package instanceof PackageEntity)) throw Error('Package not found');
-    const decreaseCount = await repository
+    return await repository
       .update({
         id: my_package.id
       }, {

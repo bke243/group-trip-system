@@ -18,7 +18,7 @@ class AccountEntity extends BaseEntity {
   @Column({type: 'boolean', default: true, name: "isActive" })
   isActive: boolean = true;
 
-  @OneToMany(() => FeedbackEntity, feedback => feedback.user)
+  @OneToMany(() => FeedbackEntity, feedback => feedback.account)
   feedback!: FeedbackEntity[];
 }
 
