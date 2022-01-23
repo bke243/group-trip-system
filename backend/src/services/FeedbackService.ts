@@ -42,7 +42,7 @@ class FeedbackService {
                             try {
                                 const newFeedback = repository
                                     .insert({
-                                        account: account.id,
+                                        user: user.id,
                                         purchase: purchase_detail.id,
                                         feedback: request.body.feedback
                                     })

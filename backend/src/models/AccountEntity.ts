@@ -17,9 +17,6 @@ class AccountEntity extends BaseEntity {
 
   @Column('boolean', {default: true, name: "isActive" })
   isActive: boolean = true;
-
-  @OneToMany(() => FeedbackEntity, feedback => feedback.account)
-  feedback!: FeedbackEntity[];
 }
 
 export interface AccountCreationDto {

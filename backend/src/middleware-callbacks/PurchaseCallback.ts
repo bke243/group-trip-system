@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { RESPONSE_STATUS } from '../middlewares/request-body-validator';
 import PurchaseService from "../services/PurchaseService";
 
 class PurchaseCallbacks {
@@ -14,7 +15,7 @@ class PurchaseCallbacks {
                 return response.status(200).json({success: 'purchase created successfully'})
             })
             .catch(err => {
-                return response.status(400).json({error: err})
+                return response.status(RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json({error: err})
             })
     } 
   
