@@ -141,7 +141,7 @@ class GroupUserCallbacks {
             return response.json({ message: "Something went wrong!" });
           })
           .catch((error) => {
-            return response.status(500).json({ error });
+            next(error);
           });
       }
     );
@@ -181,7 +181,7 @@ class GroupUserCallbacks {
         return response.json(deleteGroupUserResult);
       })
       .catch((error) => {
-        return response.status(500).json({ error });
+        next(error);
       });
   };
 }
