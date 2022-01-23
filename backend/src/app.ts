@@ -1,10 +1,10 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParder from "body-parser";
-import morgan from "morgan";
-import cors from "cors";
+import morgan from 'morgan';
+import cors from 'cors';
 import AccountRoutes from "./routes/AccountRoutes";
 import PackageRoutes from "./routes/PackageRoutes";
-import swaggerUI from "swagger-ui-express";
+import swaggerUI from 'swagger-ui-express';
 import LocationRoutes from "./routes/LocationRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import UsersRoutes from "./routes/UsersRoutes";

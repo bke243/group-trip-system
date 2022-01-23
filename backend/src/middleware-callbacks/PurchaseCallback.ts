@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import PurchaseService from "../services/PurchaseService";
 
 class PurchaseCallbacks {
