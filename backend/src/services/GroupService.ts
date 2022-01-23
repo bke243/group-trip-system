@@ -15,10 +15,6 @@ class GroupService {
     return this.groupRepository;
   };
 
-  public getGroups = async () => {
-    const repository = this.getRepository();
-    return repository.find({relations: ["owner", "owner.account"]});
-  };
 
   public createGroupEntity = async (groupCreateData: CreateGroupDto, ownerId: number) => {
     const repository = this.getRepository();
