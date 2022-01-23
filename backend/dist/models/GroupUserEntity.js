@@ -33,10 +33,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(type => UserEntity_1.default, user => user.id),
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", UserEntity_1.default)
 ], GroupUserEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ name: "userId" }),
     __metadata("design:type", Number)
 ], GroupUserEntity.prototype, "userId", void 0);
 __decorate([

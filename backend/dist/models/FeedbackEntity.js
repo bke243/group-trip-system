@@ -14,22 +14,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const AccountEntity_1 = __importDefault(require("./AccountEntity"));
-let UserEntity = class UserEntity extends typeorm_1.BaseEntity {
+const PurchaseDetailEntity_1 = __importDefault(require("./PurchaseDetailEntity"));
+let FeedbackEntity = class FeedbackEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], UserEntity.prototype, "id", void 0);
+], FeedbackEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(type => AccountEntity_1.default, account => account.id),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", AccountEntity_1.default)
-], UserEntity.prototype, "account", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.ManyToOne)(() => AccountEntity_1.default, user => user.feedback, { nullable: false }),
     __metadata("design:type", Number)
-], UserEntity.prototype, "accountId", void 0);
-UserEntity = __decorate([
+], FeedbackEntity.prototype, "account", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => PurchaseDetailEntity_1.default, purchase => purchase.feedback, { nullable: false }),
+    __metadata("design:type", Number)
+], FeedbackEntity.prototype, "purchase", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: false }),
+    __metadata("design:type", String)
+], FeedbackEntity.prototype, "feedback", void 0);
+FeedbackEntity = __decorate([
     (0, typeorm_1.Entity)()
-], UserEntity);
-exports.default = UserEntity;
+], FeedbackEntity);
+exports.default = FeedbackEntity;

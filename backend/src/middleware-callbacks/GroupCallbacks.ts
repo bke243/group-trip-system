@@ -3,6 +3,7 @@ import GroupUserService from "../services/GroupUserService";
 import { NextFunction, Request, Response } from "express";
 import { RESPONSE_STATUS } from "../middlewares/request-body-validator";
 import { UserAccountData } from "../middlewares/check-user-auth";
+import UserEntity from "../models/UserEntity";
 import GroupEntity from "../models/GroupEntity";
 import GroupUserEntity, { UpdateGroupDto } from "../models/GroupUserEntity";
 import { CreateGroupDto } from "../models/GroupEntity";
@@ -31,20 +32,19 @@ class GroupCallbacks {
     
     public createGroups = async (request: Request<{}, {}, { userAccountData: UserAccountData } &  CreateGroupDto>, response: Response, next: NextFunction) => {
       const requestBody = request.body;
-      console.log(requestBody);
-      
+      return UserService.findUserByAccountId(requestBody.userAccountData.userAccountId).then(async (foundUser) => {
+        const newGroupEntity = await GroupService.createGroupEntity(requestBody, foundUser?.id!);
+        const createdGroup = await GroupService.saveGroup(newGroupEntity);
   
-      const newGroupEntity = await GroupService.createGroupEntity(requestBody, requestBody.userAccountData.userAccountId);
-      const createdGroup = await GroupService.saveGroup(newGroupEntity);
-
-      
-      const groupUserBody = {groupId: createdGroup.id, userId: requestBody.userAccountData.userAccountId, membershipAccepted: true};
-      const newGroupUserEntity = await GroupUserService.createGroupUserEntity(groupUserBody);
-      const createdGroupUser = await GroupUserService.saveGroupUser(newGroupUserEntity);
-      
-      return response.json({ createdGroup: createdGroup });
-      
-      
+        
+        const groupUserBody = {groupId: createdGroup.id, userId: requestBody.userAccountData.userAccountId, membershipAccepted: true};
+        const newGroupUserEntity = await GroupUserService.createGroupUserEntity(groupUserBody);
+        const createdGroupUser = await GroupUserService.saveGroupUser(newGroupUserEntity);
+        
+        return response.json({ createdGroup: createdGroup });
+      }).catch((error) => {
+        return response.status(500).json({ error });
+    });
     }
 
     public updateGroup = async (request: Request<{ groupId: string }, {}, { userAccountData: UserAccountData } & UpdateGroupDto >, response: Response, next: NextFunction) => {
@@ -55,11 +55,14 @@ class GroupCallbacks {
       if (parseInt(groupId) !== requestBody.groupId) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
       return  GroupService.findGroupById(requestBody.groupId).then(async (foundGroup) => {
         if (!foundGroup) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "Group not found "});
-         
+         const foundUser = await UserService.findUserByAccountId(requestBody.userAccountData.userAccountId);
          // group
         const groupEntityBody = {name: requestBody.name, destination: requestBody.destination, description: requestBody.description};
-        const groupEntity = await GroupService.createGroupEntity(groupEntityBody, requestBody.userAccountData.userAccountId);
-   
+        const groupEntity = await GroupService.createGroupEntity(groupEntityBody, foundUser?.id!);
+        
+        if (foundGroup.ownerId !== foundUser?.id!){
+          return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
+        }
         const updatedGroup = await GroupService.updateGroup(requestBody.groupId, groupEntity);
   
         
@@ -69,13 +72,16 @@ class GroupCallbacks {
       })
     }
 
-    public deleteGroupById = async (request: Request<{ groupId:string }, {}, any>, response: Response, next: NextFunction) => {
+    public deleteGroupById = async (request: Request<{ groupId:string }, {}, { userAccountData: UserAccountData}>, response: Response, next: NextFunction) => {
       const groupId = request.params?.groupId;
-      console.log(groupId);
       
       if (!this.isNumber(groupId)) return response.status(RESPONSE_STATUS.BAD_REQUEST).json({message: "Missing the group id or improper data type"});
-      return  GroupService.findGroupById(groupId as unknown as number).then((foundGroup) => {
+      return  GroupService.findGroupById(groupId as unknown as number).then(async (foundGroup) => {
         if (!foundGroup) return response.status(RESPONSE_STATUS.NOT_FOUND).json({ message: "Group not found "});
+        const foundUser = await UserService.findUserByAccountId(request.body.userAccountData.userAccountId);
+        if (foundGroup.ownerId !== foundUser?.id){
+          return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
+        }
         const deleteGroupUserResult = GroupUserService.deleteGroupUserByGroupId(foundGroup.id);
         const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
         return response.json(deleteGroupResult);

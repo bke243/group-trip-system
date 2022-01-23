@@ -88,6 +88,24 @@ class PackageService {
             const repository = this.getRepository();
             return repository.delete({ id: packageEntity.id });
         });
+        this.decreasePackageCount = (packageId) => __awaiter(this, void 0, void 0, function* () {
+            const repository = this.getRepository();
+            const my_package = yield repository.findOne({ id: packageId });
+            if (!(my_package instanceof PackageEntity_1.default))
+                throw Error('Package not found');
+            return yield repository
+                .update({
+                id: my_package.id
+            }, {
+                count: my_package.count - 1
+            })
+                .then(() => {
+                return true;
+            })
+                .catch(err => {
+                return err;
+            });
+        });
         this.locationRepository = (0, typeorm_1.getConnectionManager)().get(index_util_1.APPLICATION_CONNECTION_NAME).getRepository(PackageEntity_1.default);
     }
 }

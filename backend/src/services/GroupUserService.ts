@@ -49,6 +49,15 @@ class GroupUserService {
     });
   };
 
+  public findGroupUserByGroupIdUserId = async (groupId: number, userId: number) => {
+    const repository = this.getRepository();
+    return repository.findOne({
+      where: { groupId: groupId, userId: userId }
+    });
+  };
+
+
+
   public verifyUser = async (
     userId: number,
     groupId: number
@@ -72,11 +81,15 @@ class GroupUserService {
     return repository.delete({ groupId: groupId });
   };
 
-  public deleteGroupUserByUserId = async (userId: number) => {
+  public deleteGroupUserByUserId = async (userId: number, groupId: number) => {
     const repository = this.getRepository();
-    return repository.delete({ userId: userId });
+    return repository.delete({ userId: userId, groupId:  groupId});
   };
 
+  public getGroupUserCount = async (groupId: number) => {
+    const userCount = await this.getRepository().findAndCount({groupId: groupId})
+    return userCount[1];
+  }
 
 }
 

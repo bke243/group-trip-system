@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, OneToMany } from "typeorm";
+import FeedbackEntity from "./FeedbackEntity";
 
 @Entity()
 class AccountEntity extends BaseEntity {
@@ -14,8 +15,11 @@ class AccountEntity extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
-  @Column('boolean', {default: true, name: "isActive" })
+  @Column({type: 'boolean', default: true, name: "isActive" })
   isActive: boolean = true;
+
+  @OneToMany(() => FeedbackEntity, feedback => feedback.account)
+  feedback!: FeedbackEntity[];
 }
 
 export interface AccountCreationDto {
@@ -31,4 +35,5 @@ export interface AccountLoginDto {
   password: string;
   email: string;
 }
+
 export default AccountEntity;

@@ -35,7 +35,7 @@ __decorate([
 ], GroupEntity.prototype, "owner", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", UserEntity_1.default)
+    __metadata("design:type", Number)
 ], GroupEntity.prototype, "ownerId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

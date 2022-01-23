@@ -25,7 +25,8 @@ class AdminCallbacks {
             });
         });
         this.isAdminUser = (request, response, next) => __awaiter(this, void 0, void 0, function* () {
-            const userEmail = request.body.userAccountData.email;
+            var _a;
+            const userEmail = (_a = request.body.userAccountData) === null || _a === void 0 ? void 0 : _a.email;
             try {
                 const userAccount = yield AccountService_1.default.findAccountByEmail(userEmail);
                 if (!userAccount)

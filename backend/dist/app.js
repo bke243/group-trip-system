@@ -13,8 +13,13 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const LocationRoutes_1 = __importDefault(require("./routes/LocationRoutes"));
 const AdminRoutes_1 = __importDefault(require("./routes/AdminRoutes"));
 const UsersRoutes_1 = __importDefault(require("./routes/UsersRoutes"));
-const swaggerDocumentDemo = require("./swagger-demo.json");
-const swaggerDocument = require("./swagger.json");
+const GroupRoutes_1 = __importDefault(require("./routes/GroupRoutes"));
+const GroupUserRoutes_1 = __importDefault(require("./routes/GroupUserRoutes"));
+const MessagesRoutes_1 = __importDefault(require("./routes/MessagesRoutes"));
+const PurchaseRoutes_1 = __importDefault(require("./routes/PurchaseRoutes"));
+const FeedbackRoutes_1 = __importDefault(require("./routes/FeedbackRoutes"));
+const swaggerDocumentDemo = require("../swagger-demo.json");
+const swaggerDocument = require("../swagger.json");
 const app = (0, express_1.default)();
 // log requests
 app.use((0, morgan_1.default)('combined'));
@@ -39,6 +44,11 @@ app.use("/packages", PackageRoutes_1.default);
 app.use("/locations", LocationRoutes_1.default);
 app.use("/admins", AdminRoutes_1.default);
 app.use("/users", UsersRoutes_1.default);
+app.use("/messages", MessagesRoutes_1.default);
+app.use("/groups", GroupRoutes_1.default);
+app.use("/groupUser", GroupUserRoutes_1.default);
+app.use("/purchase", PurchaseRoutes_1.default);
+app.use("/feedback", FeedbackRoutes_1.default);
 // documentation demo command out to see the result
 // app.use("/docs/demo", swaggerUI.serve, swaggerUI.setup(swaggerDocumentDemo));
 app.use("/api/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));

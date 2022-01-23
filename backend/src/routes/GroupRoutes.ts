@@ -14,10 +14,10 @@ router.get("/",isUserAuthenticated, GroupCallbacks.getGroups);
 
 
 // create group
-router.post("/", isUserAuthenticated, validateBodyParams(CreateGroupSchema), GroupCallbacks.createGroups);
+router.post("/", validateBodyParams(CreateGroupSchema), isUserAuthenticated, GroupCallbacks.createGroups);
 
 // update group 
-router.put("/:groupId", isUserAuthenticated, validateBodyParams(UpdateGroupSchema), GroupCallbacks.updateGroup);
+router.put("/:groupId", validateBodyParams(UpdateGroupSchema), isUserAuthenticated, GroupCallbacks.updateGroup);
 
 // delete group
 router.delete("/:groupId",isUserAuthenticated, GroupCallbacks.deleteGroupById);
