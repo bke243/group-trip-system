@@ -45,7 +45,7 @@ class GroupCallbacks {
         const createdGroup = await GroupService.saveGroup(newGroupEntity);
   
         
-        const groupUserBody = {groupId: createdGroup.id, userId: requestBody.userAccountData.userAccountId, membershipAccepted: true};
+        const groupUserBody = {groupId: createdGroup.id, userId: foundUser?.id!, membershipAccepted: true};
         const newGroupUserEntity = await GroupUserService.createGroupUserEntity(groupUserBody);
         const createdGroupUser = await GroupUserService.saveGroupUser(newGroupUserEntity);
         
