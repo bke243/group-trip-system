@@ -17,13 +17,21 @@ class GroupCallbacks {
   
     }
 
-    public getGroups = async (request: Request<{}, {}, any>, response: Response, next: NextFunction) => {
-      return GroupService.getGroups().then((groups) => {
-        return response.json(groups);
-      }).catch((error) => {
-        return response.status(500).json(error);
-      });
-
+    public getGroups = async (request: Request<{}, {}, {userAccountData: UserAccountData}>, response: Response, next: NextFunction) => {
+      const foundUser = await UserService.findUserByAccountId(request.body.userAccountData.userAccountId);
+      if (!foundUser) return response.status(RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json({message: "User not found!"});
+      const foundUserId = foundUser.id;
+      const groupUserCollection = await GroupUserService.findAllGroupUserByUserId(foundUserId);
+      let groupCollection = [];
+      
+      for (let index = 0; index < groupUserCollection.length; index++) {
+        const groupId = groupUserCollection[index].groupId;
+        const foundGroup = await GroupService.findGroupById(groupId);
+        if (!foundGroup) return response.status(500).json("error");
+        groupCollection.push(foundGroup);
+      }
+      
+      return response.json(groupCollection);
     }
 
     private  isNumber = (value: string | number) =>{
@@ -43,7 +51,7 @@ class GroupCallbacks {
         
         return response.json({ createdGroup: createdGroup });
       }).catch((error) => {
-        return response.status(500).json({ error });
+        next(error);
     });
     }
 
@@ -64,11 +72,10 @@ class GroupCallbacks {
           return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
         }
         const updatedGroup = await GroupService.updateGroup(requestBody.groupId, groupEntity);
-  
-        
+          
         return response.json({ group: updatedGroup });
       }).catch((error) => {
-          return response.status(500).json({ error });
+        next(error);
       })
     }
 
@@ -86,7 +93,7 @@ class GroupCallbacks {
         const deleteGroupResult = GroupService.deleteGroupById(foundGroup.id);
         return response.json(deleteGroupResult);
       }).catch((error) => {
-          return response.status(500).json({ error });
+        next(error);
       })
     }
 

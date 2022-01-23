@@ -12,7 +12,6 @@ const router = Router();
 // get groups
 router.get("/",isUserAuthenticated, GroupCallbacks.getGroups);
 
-
 // create group
 router.post("/", validateBodyParams(CreateGroupSchema), isUserAuthenticated, GroupCallbacks.createGroups);
 

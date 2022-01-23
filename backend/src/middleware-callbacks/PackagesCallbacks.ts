@@ -23,7 +23,7 @@ class PackagesCallbacks {
     return  PackageService.getPackages().then((packages) => {
         return response.json(packages);
     }).catch((error) => {
-        return response.status(500).json({ error });
+      next(error);
     })
   }
 
@@ -42,7 +42,7 @@ class PackagesCallbacks {
       delete flatPackage.location;
       return response.json(flatPackage);
     }).catch((error) => {
-        return response.status(500).json({ error });
+      next(error);
     })
   }
 
@@ -79,7 +79,7 @@ class PackagesCallbacks {
       return response.json({ package: createdPackage });
 
     }).catch((error) => {
-      return response.status(500).json({ error });
+      next(error);
   });
   }
 
@@ -118,7 +118,7 @@ class PackagesCallbacks {
       // delete flatPackage.location;
       return response.json({ package: updatedPackage });
     }).catch((error) => {
-        return response.status(500).json({ error });
+      next(error);
     })
   }
 
@@ -130,7 +130,7 @@ class PackagesCallbacks {
       const deletepackageResult = PackageService.deletePackageById(foundPackage);
       return response.json(deletepackageResult);
     }).catch((error) => {
-        return response.status(500).json({ error });
+      next(error);
     })
   }
 }

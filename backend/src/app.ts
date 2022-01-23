@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import bodyParder from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
@@ -11,6 +11,7 @@ import UsersRoutes from "./routes/UsersRoutes";
 import GroupRoutes from "./routes/GroupRoutes";
 import GroupUserRoutes from "./routes/GroupUserRoutes";
 import MessagesRoutes from "./routes/MessagesRoutes";
+import { RESPONSE_STATUS } from "./middlewares/request-body-validator";
 const swaggerDocumentDemo =  require("./swagger-demo.json");
 const swaggerDocument =  require("./swagger.json");
 
@@ -54,5 +55,11 @@ app.use("/groupUser", GroupUserRoutes);
 // app.use("/docs/demo", swaggerUI.serve, swaggerUI.setup(swaggerDocumentDemo));
 
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    res.status(RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json({
+        message: 'Problem Occured !',
+    });
+});
 
 module.exports = app;
