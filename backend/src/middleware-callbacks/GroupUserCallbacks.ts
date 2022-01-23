@@ -45,10 +45,13 @@ class GroupUserCallbacks {
     response: Response,
     next: NextFunction
   ) => {
-    return GroupUserService.verifyUser(
+    const updatedGroupUser =  GroupUserService.verifyUser(
       parseInt(request.params?.userId),
       parseInt(request.params?.groupId)
     );
+    if (!updatedGroupUser) return response.status(RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json({ message: "Inter server error"});
+
+    return response.json({ groupUser: updatedGroupUser });
   };
 
   public addGroupUserByUserEmail = async (
