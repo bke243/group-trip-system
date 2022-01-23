@@ -75,7 +75,7 @@ class MessageCallbacks {
           return response.status(500).json({ error });
       })
     }else {
-      return response.json({error: "Error"});
+      return response.status(500).json({error: "Error"});
     }
     
   }

@@ -72,8 +72,7 @@ class GroupCallbacks {
           return response.status(RESPONSE_STATUS.UNAUTHORIZED).json({message: "User has no permission!"});
         }
         const updatedGroup = await GroupService.updateGroup(requestBody.groupId, groupEntity);
-  
-        
+          
         return response.json({ group: updatedGroup });
       }).catch((error) => {
           return response.status(500).json({ error });

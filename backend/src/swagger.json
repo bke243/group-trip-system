@@ -120,7 +120,26 @@
         }
       }
     },
+ 
+      
+
     "/groups": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Used to fetch all groups of the user",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          
+          "401": {
+            "description": "UnAuthorized"
+          },
+          "500": {
+            "description": "Internal server error, User not found!"
+          }
+        }
+      },
       "post": {
         "tags": ["Groups"],
         "summary": "Create a new trip group in the system",
@@ -206,6 +225,67 @@
           }
         }
       }
+    },
+
+    "/messages/:userId": {
+      "get": {
+      "tags": ["Messages"],
+      "summary": "Used to fetch all messages of the user",
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "id of the user",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "400": {
+          "description": "Bad request, the request body is not of the proper format"
+        },
+        "401": {
+          "description": "UnAuthorized"
+        },
+        "500": {
+          "description": "Internal server error"
+        }
+      }
+    }
+    },
+    "/messages/user": {
+      "post": {
+      "tags": ["Messages"],
+      "summary": "Used to send message to the admin",
+      "requestBody": {
+        "description": "Send message data",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/definitions/SendMessageDto"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "400": {
+          "description": "Bad request, the request body is not of the proper format"
+        },
+        "401": {
+          "description": "UnAuthorized"
+        },
+        "500": {
+          "description": "Internal server error"
+        }
+      }
+    }
     }
   },
   "definitions": {
@@ -269,6 +349,14 @@
           "type": "string"
         },
         "description": {
+          "type": "string"
+        }
+      }
+    },
+    "SendMessageDto": {
+      "type": "object",
+      "properties": {
+        "content": {
           "type": "string"
         }
       }
