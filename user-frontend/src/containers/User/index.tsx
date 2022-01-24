@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AppShell, Burger, Button, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { MapIcon } from '@heroicons/react/outline';
 import { $fetch_groups } from '../../redux/groups.reducer';
 
 export const Dashboard = () => {
@@ -9,11 +10,6 @@ export const Dashboard = () => {
     const theme = useMantineTheme();
     const $user = useSelector((state: RootStateOrAny) => state.$user)
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch($fetch_groups())
-    }, []);
-
     return (
         <AppShell
             navbarOffsetBreakpoint="sm"
@@ -47,6 +43,13 @@ export const Dashboard = () => {
                             fullWidth>
                             Packages
                         </Button>
+                        <Button
+                            component={Link} to="/dashboard/finished"
+                            variant='default'
+                            style={{ justifyContent: "flex-start" }}
+                            fullWidth>
+                            Finished Trips
+                        </Button>
                     </Navbar.Section>
                     <Navbar.Section>
                         <div className='w-full h-auto flex flex-row items-center'>
@@ -73,7 +76,7 @@ export const Dashboard = () => {
                             />
                         </MediaQuery>
 
-                        <Text>Application header</Text>
+                        <div className='inline-flex items-center'><MapIcon className='w-5 h-5 mr-1' /> Group Trip System</div>
                     </div>
                 </Header >
             }

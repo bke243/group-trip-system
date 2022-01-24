@@ -1,8 +1,9 @@
 import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 export const PackageCard = () => {
     const theme = useMantineTheme();
-
+    const navigate = useNavigate()
     const secondaryColor = theme.colorScheme === 'dark'
         ? theme.colors.dark[1]
         : theme.colors.gray[7];
@@ -25,8 +26,8 @@ export const PackageCard = () => {
                     activities on and around the fjords of Norway
                 </Text>
 
-                <Button variant="light" color="blue" fullWidth style={{ marginTop: 14 }}>
-                    View
+                <Button variant="light" color="blue" fullWidth style={{ marginTop: 14 }} onClick={() => navigate(`buy/1`)}>
+                    Purchase
                 </Button>
 
 
