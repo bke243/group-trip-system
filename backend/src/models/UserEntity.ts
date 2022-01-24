@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, Column, OneToMany } from "typeorm";
 import AccountEntity from "./AccountEntity";
+import FeedbackEntity from "./FeedbackEntity";
 
 @Entity()
 class UserEntity extends BaseEntity {
@@ -12,6 +13,9 @@ class UserEntity extends BaseEntity {
 
   @Column()
   accountId!: number;
+
+  @OneToMany(() => FeedbackEntity, feedback => feedback.user)
+  feedback!: FeedbackEntity[];
 }
 
 export default UserEntity;

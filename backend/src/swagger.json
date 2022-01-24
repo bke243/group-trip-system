@@ -15,7 +15,6 @@
       "description": "Local Dev"
     }
   ],
-
   "paths": {
     "/auth/signup": {
       "post": {
@@ -120,26 +119,7 @@
         }
       }
     },
- 
-      
-
     "/groups": {
-      "get": {
-        "tags": ["Groups"],
-        "summary": "Used to fetch all groups of the user",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          
-          "401": {
-            "description": "UnAuthorized"
-          },
-          "500": {
-            "description": "Internal server error, User not found!"
-          }
-        }
-      },
       "post": {
         "tags": ["Groups"],
         "summary": "Create a new trip group in the system",
@@ -226,66 +206,153 @@
         }
       }
     },
-
-    "/messages/:userId": {
-      "get": {
-      "tags": ["Messages"],
-      "summary": "Used to fetch all messages of the user",
+    "/purchase" : {
+      "post": {
+        "tags": ["Purchase"],
+        "summary": "Crate a new purchase for a package",
+        "requestBody": {
+          "description": "Purchase data with payment details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/CreatePurchaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/"
+            }
+          },
+          "400": {
+            "description": "Error message about one of the validations"
+          }
+        }
+      } 
+    },
+    "/feedback" : {
+      "post": {
+        "tags": ["Feedback"],
+        "summary": "Crate a new purchase for a package",
+        "requestBody": {
+          "description": "Purchase data with payment details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/CreateFeedbackDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/"
+            }
+          },
+          "400": {
+            "description": "Error with one of the validations"
+          }
+        }
+    }
+    },
+    "/groupUser/verify/:userId/:groupId": {
       "parameters": [
         {
           "name": "userId",
           "in": "path",
           "required": true,
-          "description": "id of the user",
+          "description": "userId of the user we want to verify",
+          "type": "string"
+        },
+        {
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "description": "groupId of the group for which we want to verify the user for",
           "type": "string"
         }
       ],
-      "responses": {
-        "200": {
-          "description": "OK"
+      "get": {
+        "tags": ["GroupUser"],
+        "summary": "Used to verify a group member and change their membership status",
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {}
         },
-        "400": {
-          "description": "Bad request, the request body is not of the proper format"
-        },
-        "401": {
-          "description": "UnAuthorized"
-        },
-        "500": {
-          "description": "Internal server error"
-        }
-      }
-    }
-    },
-    "/messages/user": {
-      "post": {
-      "tags": ["Messages"],
-      "summary": "Used to send message to the admin",
-      "requestBody": {
-        "description": "Send message data",
-        "required": true,
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/definitions/SendMessageDto"
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
-      },
-      "responses": {
-        "200": {
-          "description": "OK"
+      }
+    },
+    "/groupUser/:userId/:groupId": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "userId of the user you want to delete from the group",
+          "type": "string"
         },
-        "400": {
-          "description": "Bad request, the request body is not of the proper format"
+        {
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "description": "groupId of the user you want to delete the user from",
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "tags": ["GroupUser"],
+        "summary": "Delete a user from a group",
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {}
         },
-        "401": {
-          "description": "UnAuthorized"
-        },
-        "500": {
-          "description": "Internal server error"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
         }
       }
-    }
+    },
+    "/groupUser": {
+      "post": {
+        "tags": ["GroupUser"],
+        "summary": "Add a user to a group",
+        "requestBody": {
+          "description": "add a member to a group",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/AddGroupMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request, the request body is not of the proper format"
+          },
+          "401": {
+            "description": "UnAuthorized"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -353,11 +420,69 @@
         }
       }
     },
-    "SendMessageDto": {
+    "CreatePurchaseDto": {
       "type": "object",
       "properties": {
-        "content": {
-          "type": "string"
+        "group_id": {
+          "type":"number",
+          "required": true
+        },
+        "package_id": {
+          "type":"number",
+          "required":true
+        },
+        "payment_details": {
+          "type":"object",
+          "required": true,
+          "properties": {
+            "card_number":{
+              "type": "string",
+              "required": true
+            },
+            "expiry_month": {
+              "type": "number",
+              "require": true
+            },
+            "expiry_year": {
+              "type": "number",
+              "required":true
+            },
+            "cvc": {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    },
+    "CreateFeedbackDto": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "number",
+          "required": true
+        },
+        "package_id": {
+          "type": "number",
+          "required": true
+        },
+        "feedback": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "AddGroupMemberDto": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format":"email",
+          "required":true
+        },
+        "groupId": {
+          "type":"number",
+          "required":true
         }
       }
     }

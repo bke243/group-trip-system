@@ -13,6 +13,7 @@ import CountryEntity from "./models/CountryEntity";
 import CityEntity from "./models/CityEntity";
 import LocationEntity from "./models/LocationEntity";
 import GroupUserEntity from "./models/GroupUserEntity";
+import FeedbackEntity from './models/FeedbackEntity';
 
 
 createConnection({
@@ -28,7 +29,8 @@ createConnection({
     AccountEntity, AdminEntity, UserEntity, 
     PersonEntity, GroupEntity, MessageEntity,
     CountryEntity, CityEntity, LocationEntity,
-    PackageEntity, PurchaseDetailEntity, GroupUserEntity
+    PackageEntity, PurchaseDetailEntity, GroupUserEntity,
+    FeedbackEntity
   ],
   name: APPLICATION_CONNECTION_NAME,
 }).then(async (connect) => {

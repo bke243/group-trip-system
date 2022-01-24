@@ -1,4 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import FeedbackEntity from "./FeedbackEntity";
 import GroupEntity from "./GroupEntity";
 import PackageEntity from "./PackageEntity";
 
@@ -6,26 +16,29 @@ import PackageEntity from "./PackageEntity";
 class PurchaseDetailEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
-  
+
   @Column()
   cost!: number;
 
-  @Column()
+  @Column({type: "boolean", nullable: false, default: "false"})
   paid!: boolean;
 
-  @ManyToOne(type => GroupEntity, group => group.id)
+  @ManyToOne((type) => GroupEntity, (group) => group.id)
   @JoinColumn()
   group!: number;
 
   @Column()
   groupId!: number;
 
-  @ManyToOne(type => PackageEntity, packageEntity => packageEntity.id)
+  @ManyToOne((type) => PackageEntity, (packageEntity) => packageEntity.id)
   @JoinColumn()
-  country!: number;
+  package!: number;
 
   @Column()
-  countryId!: number;
+  packageId!: number;
+
+  @OneToMany(() => FeedbackEntity, feedback => feedback.purchase)
+  feedback!: FeedbackEntity[];
 }
 
 export default PurchaseDetailEntity;
