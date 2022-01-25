@@ -14,7 +14,9 @@ import CityEntity from "./models/CityEntity";
 import LocationEntity from "./models/LocationEntity";
 import GroupUserEntity from "./models/GroupUserEntity";
 import FeedbackEntity from './models/FeedbackEntity';
+import dotenv from "dotenv";
 
+dotenv.config({ path: join(__dirname, ".env") });
 
 createConnection({
   type: "postgres",
@@ -37,7 +39,7 @@ createConnection({
     // populate tables if not created  in the database
     await connect.synchronize();
     // start the application
-    const server = require("./app").listen(APPLICATION_PORT,  () => {
-        console.log("==================The application started==========");
+    const server = require("./app").listen(process.env.PORT,  () => {
+      console.log(`==================The application started on PORT ${process.env.PORT} ==========`);
     });
 })
