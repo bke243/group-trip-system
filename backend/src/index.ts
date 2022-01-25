@@ -1,6 +1,5 @@
 import { APPLICATION_PORT, APPLICATION_CONNECTION_NAME } from "./utils/index.util";
 import { createConnection } from "typeorm";
-import { join } from 'path/posix';
 import AccountEntity from "./models/AccountEntity";
 import AdminEntity from "./models/AdminEntity";
 import UserEntity from "./models/UserEntity";
@@ -15,14 +14,15 @@ import LocationEntity from "./models/LocationEntity";
 import GroupUserEntity from "./models/GroupUserEntity";
 import FeedbackEntity from './models/FeedbackEntity';
 import dotenv from "dotenv";
+import path from "path";
 
-dotenv.config({ path: join(__dirname, ".env") });
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 createConnection({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: "username",
+  username: "user",
   password: "value",
   database: "grouptripdatabase",
   synchronize: true,

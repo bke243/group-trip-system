@@ -19,12 +19,11 @@ import AdminService from "../services/AdminService";
 const nodemailer = require("nodemailer");
 
 const sendgridTransport = require("nodemailer-sendgrid-transport");
-const sendgrid_api_key = "";
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-      sendgrid_api_key,
+      process.env.SENDGRID_API,
     },
   })
 );
@@ -114,7 +113,6 @@ class GroupUserCallbacks {
           .then((foundGroupCollection) => {
             for (let index = 0; index < foundGroupCollection.length; index++) {
               const element = foundGroupCollection[index];
-              console.log(process.env.SEND_GRID_API_KEY);
               
               const user = element.user;
               const account = user.account;
@@ -124,7 +122,7 @@ class GroupUserCallbacks {
                 else {
                   transporter.sendMail({
                     to: request.body.email,
-                    from: "",
+                    from: process.env.SENDGRID_EMAIL,
                     subject: "Group trip invitation!",
                     html:
                       "Click to accept <a href='http://127.0.0.1:5000/groupUser/verify/" +
