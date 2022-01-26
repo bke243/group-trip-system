@@ -44,11 +44,11 @@ export const Dashboard = () => {
                             Packages
                         </Button>
                         <Button
-                            component={Link} to="/dashboard/finished"
+                            component={Link} to="/dashboard/messages"
                             variant='default'
                             style={{ justifyContent: "flex-start" }}
                             fullWidth>
-                            Finished Trips
+                            Messages
                         </Button>
                     </Navbar.Section>
                     <Navbar.Section>

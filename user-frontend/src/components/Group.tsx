@@ -1,42 +1,54 @@
-import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '@mantine/core';
-import { useDispatch } from 'react-redux';
+import { Card, Image, Text, Badge, Button, Group, useMantineTheme, Modal } from '@mantine/core';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { GroupDetails } from '../containers/User/GroupDetails';
 import { $delete_group, Group as GType } from '../redux/groups.reducer';
 
 
 export const GroupCard = ({ group }: { group: GType }) => {
     const theme = useMantineTheme();
     const dispatch = useDispatch()
+    const $user = useSelector(state => state.$user)
+    const [opened, setOpened] = useState(false);
     const secondaryColor = theme.colorScheme === 'dark'
         ? theme.colors.dark[1]
         : theme.colors.gray[7];
 
     return (
-        <div style={{ width: 340, margin: 'auto' }}>
-            <Card shadow="sm" padding="lg">
+        <div style={{ width: "100%", margin: 'auto' }}>
+            <Modal
+                opened={opened}
+                onClose={() => setOpened(false)}
+                title="Update the group"
+            >
+                <GroupDetails group={group} />
+            </Modal>
+            <div className='w-full h-auto bg-white border border-gray-200 rounded-lg shadow-md p-2'>
 
                 <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
                     <Text weight={500}>{group.name}</Text>
 
                 </Group>
-                <Text size='md'>Personal</Text>
+                <Text size='md'>Destination</Text>
                 <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
                     {group.destination}
                 </Text>
-                <Text size='md'>Trip</Text>
+                <Text size='md'>Description</Text>
                 <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
                     {group.description}
                 </Text>
-                <Group className='w-full flex flex-row items-center justify-center'>
-                    <Button component={Link} to={`/dashboard/group/${group.id}`} variant="light" color="blue" style={{ marginTop: 14 }}>
-                        View
-                    </Button>
-                    <Button variant="light" color="red" style={{ marginTop: 14 }} onClick={() => dispatch($delete_group(group.id))}>
-                        Delete
-                    </Button>
-                </Group>
+                {$user.personData.id === group.ownerId && <div className='w-full flex flex-row items-center justify-center space-x-2 mt-2'>
 
-            </Card>
-        </div>
+                    <button onClick={() => setOpened(true)} className='w-full text-white py-2 font-semibold bg-purple-600 hover:bg-purple-700 rounded-lg shadow-md'>View</button>
+
+
+                    <div className='w-full'>
+                        <button onClick={() => dispatch($delete_group(group.id))} className='w-full text-white py-2 font-semibold bg-red-600 hover:bg-red-700 rounded-lg shadow-md'>Delete</button>
+                    </div>
+                </div>}
+
+            </div>
+        </div >
     );
 }

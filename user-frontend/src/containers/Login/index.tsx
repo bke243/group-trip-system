@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from '@mantine/core';
@@ -17,7 +17,6 @@ const images = [
 ]
 export const Login = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     return <div className='fixed w-full h-screen max-h-screen'>
         <img src={images[Math.floor(Math.random() * 4)]} className='absolute inset-0 h-screen w-full object-cover brightness-50' alt="" />
         <div className='absolute z-10 left-0 right-0 lg:left-20 w-full p-2 md:p-10 lg:p-0  md:w-full lg:w-1/3 flex items-center justify-center h-screen my-auto top-auto bottom-auto'>
@@ -33,7 +32,6 @@ export const Login = () => {
                         console.log(values);
 
                         dispatch($login({ ...values }))
-                        navigate('/dashboard', { replace: true })
                     }}
                 >
                     {({ errors, touched, handleBlur, handleChange, values: { email = '', password = '' } }) => (
@@ -46,8 +44,8 @@ export const Login = () => {
                                     <div>{errors.password}</div>
                                 ) : null} />
 
-                                <button type="submit" className='w-full rounded-lg text-white bg-sky-600 hover:bg-sky-700 transition-colors py-2 mt-2 shadow-md'>Log In</button>
-                                <p className='text-center'>Do not have an account? <Link to='/register' className='text-sky-700 cursor-pointer'>Sign Up</Link></p>
+                                <button type="submit" className='w-full rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition-colors py-2 mt-2 shadow-md'>Log In</button>
+                                <p className='text-center'>Do not have an account? <Link to='/register' className='text-purple-700 cursor-pointer'>Sign Up</Link></p>
                             </div>
                         </Form>
                     )}

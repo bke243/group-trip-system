@@ -4,15 +4,16 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import { Login } from "./containers/Login";
+import { NewLogin } from "./containers/Login/NewLogin";
 import { Register } from "./containers/Register";
 import { Dashboard } from "./containers/User";
 import { GroupDetails } from "./containers/User/GroupDetails";
 import { Groups } from "./containers/User/Groups";
-import { FinishedTrips } from "./containers/User/FinishedTrips";
+import { Messages } from "./containers/User/Messages";
 import { NewGroup } from "./containers/User/NewGroup";
 import { UserPackages } from "./containers/User/Packages";
+import { UserOutlet } from "./containers/User/UserOutlet";
 import { retrieveUser } from "./redux/user.reducer";
-import { BuyPackage } from "./containers/User/BuyPackage";
 function App() {
   const dispatch = useDispatch()
   const $user = useSelector((state: RootStateOrAny) => state.$user)
@@ -34,19 +35,14 @@ function App() {
     <div style={{ width: '100%', height: "100%" }}>
       <Routes>
         <Route path='/'>
-          <Route index element={<Login />} />
+          <Route index element={<NewLogin />} />
           <Route path='register' element={<Register />} />
+          <Route path='login' element={<Login />} />
 
-          <Route path='/dashboard' element={<Dashboard />} >
+          <Route path='/dashboard' element={<UserOutlet />} >
             <Route index element={<Groups />} />
-            <Route path="group/:id" element={<GroupDetails />} />
-            <Route path="create/group" element={<NewGroup />} />
-            <Route path="packages"  >
-              <Route index element={<UserPackages />} />
-              <Route path='buy/:id' element={<BuyPackage />} />
-
-            </Route>
-            <Route path="finished" element={<FinishedTrips />} />
+            <Route path="packages" element={<UserPackages />} />
+            <Route path="finished" element={<Messages />} />
           </Route>
         </Route>
       </Routes>

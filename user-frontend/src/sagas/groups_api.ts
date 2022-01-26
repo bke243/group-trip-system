@@ -13,9 +13,9 @@ interface ITask {
   //other things here
 }
 interface DeleteGroupAction extends Action, ITask { type: 'DELETE_GROUP' }
+interface DeleteMemberAction extends Action, ITask { type: 'DELETE_MEMBER' }
 
 interface PostGroupAction extends Action, IPostGroup { type: 'POST_MESSAGES' }
-
 interface IPostGroup {
   payload: {
     api_path: string,
@@ -23,11 +23,12 @@ interface IPostGroup {
   }
   //other things here
 }
-interface PostAddGroupMemberAction extends Action, IPostGroupMember { type: 'POST_ADD_GROUP_MEMBER' }
-interface IPostGroupMember {
+interface PostAddMemberAction extends Action, IPostAddMember { type: 'ADD_MEMBER' }
+interface IPostAddMember {
   payload: {
     api_path: string,
-    groupId: any, email: string
+    email: string,
+    groupId: string
   }
   //other things here
 }
@@ -40,6 +41,9 @@ const api = {
   },
   delete_api: async ({ api_path }: { api_path: string }) => {
     return await axios.delete(`${endpoint}${api_path}`, { headers: { 'Authorization': JSON.parse(window.localStorage.getItem(`user`) || JSON.stringify({ token: '' }))?.token } })
+  },
+  patch_api: async ({ api_path, body }: { api_path: string, body: Record<string, any> }) => {
+    return await axios.patch(`${endpoint}${api_path}`, { ...body }, { headers: { 'Authorization': JSON.parse(window.localStorage.getItem(`user`) || JSON.stringify({ token: '' }))?.token } })
   },
 
 }
@@ -61,7 +65,8 @@ export function* get_groups() {
 function* post_groups_request({ payload: { api_path, description, destination, name } }: PostGroupAction): any {
   try {
     const data: AxiosResponse = yield call(api.post_api, { api_path, body: { description, destination, name } });
-    yield put({ type: "CREATE_GROUPS", payload: data.data });
+    yield get_groups_request({ type: 'GET_GROUPS', payload: { api_path: '/groups' } })
+
   } catch (e) {
     console.error('error', e);
     yield put({ type: "CREATE_GROUPS_FAIL" });
@@ -87,16 +92,45 @@ export function* delete_groups() {
   yield takeLatest<DeleteGroupAction>("DELETE_GROUP", delete_groups_request);
 }
 
-function* post_add_group_member_request({ payload: { api_path, email, groupId } }: PostAddGroupMemberAction): any {
+function* post_add_member_action({ payload: { api_path, email, groupId } }: PostAddMemberAction): any {
   try {
     const data: AxiosResponse = yield call(api.post_api, { api_path, body: { email, groupId } });
-    yield put({ type: "ADD_MEMBER", payload: data.data });
+    yield put({ type: "REDUX_ADD_MEMBER", payload: data.data });
   } catch (e) {
     console.error('error', e);
-    yield put({ type: "ADD_MEMBER_FAIL" });
+    yield put({ type: "REDUX_ADD_MEMBER_FAIL" });
+  }
+}
+export function* add_member() {
+  yield takeLatest<PostAddMemberAction>("ADD_MEMBER", post_add_member_action);
+}
+
+function* delete_member_request({ payload: { api_path } }: DeleteMemberAction): any {
+  try {
+    const data: AxiosResponse = yield call(api.delete_api, { api_path });
+    yield get_groups_request({ type: 'GET_GROUPS', payload: { api_path: '/groups' } })
+    yield put({ type: "DELETE_M", payload: api_path });
+  } catch (e) {
+    console.error('error', e);
+    yield put({ type: "DELETE_GROUP_FAIL" });
   }
 }
 
-export function* post_add_group_member() {
-  yield takeLatest<PostAddGroupMemberAction>("POST_ADD_GROUP_MEMBER", post_add_group_member_request);
+export function* delete_member() {
+  yield takeLatest<DeleteMemberAction>("DELETE_MEMBER", delete_member_request);
+}
+
+function* update_group_request({ payload: { api_path, description, destination, name } }: PostGroupAction): any {
+  try {
+    const data: AxiosResponse = yield call(api.patch_api, { api_path, body: { description, destination, name } });
+    yield get_groups_request({ type: 'GET_GROUPS', payload: { api_path: '/groups' } })
+
+  } catch (e) {
+    console.error('error', e);
+    yield put({ type: "CREATE_GROUPS_FAIL" });
+  }
+}
+
+export function* update_group() {
+  yield takeLatest<PostGroupAction>("UPDATE_GROUP", update_group_request);
 }

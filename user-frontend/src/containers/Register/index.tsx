@@ -58,8 +58,8 @@ export const Register = () => {
                                     <div>{errors.password}</div>
                                 ) : null} />
 
-                                <button type="submit" className='w-full rounded-lg text-white bg-sky-600 hover:bg-sky-700 transition-colors py-2 mt-2 shadow-md'>Sign Up</button>
-                                <p className='text-center'>Already have an account? <Link to='/' className='text-sky-700 cursor-pointer'>Log In</Link></p>
+                                <button type="submit" className='w-full rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition-colors py-2 mt-2 shadow-md'>Sign Up</button>
+                                <p className='text-center'>Already have an account? <Link to='/' className='text-purple-700 cursor-pointer'>Log In</Link></p>
                             </div>
                         </Form>
                     )}

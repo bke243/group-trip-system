@@ -6,7 +6,7 @@ export type Group = {
     ownerId: number,
     destination: string,
     description: string,
-    id: number
+    id: string
 }
 type InitialStateProps = {
     groups: {
@@ -29,7 +29,7 @@ const reducer = (state = initialState, { type, payload }: { type: string, payloa
             return { ...state, groups: { data: [...state.groups.data, payload], last_updated: Date.now() } };
         case 'D_GROUP': {
             const gid = payload.split('/')[2]
-            return { ...state, groups: { data: [...state.groups.data].filter(d => d.id !== parseInt(gid)), last_updated: Date.now() } };
+            return { ...state, groups: { data: [...state.groups.data].filter(d => d.id !== (gid)), last_updated: Date.now() } };
         }
         default:
             return state;
@@ -46,6 +46,24 @@ export const $fetch_groups = () => (dispatch: Dispatch<{ type: string, payload: 
         }
     })
 }
+export const $add_group_member = (email: string, groupId: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, email: string, groupId: string } }>) => {
+    dispatch({
+        type: "ADD_MEMBER",
+        payload: {
+            api_path: "/groupUser",
+            email,
+            groupId
+        }
+    })
+}
+export const $delete_group_member = (userId: string, groupId: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string } }>) => {
+    dispatch({
+        type: "DELETE_MEMBER",
+        payload: {
+            api_path: `/groupUser/${userId}/${groupId}`,
+        }
+    })
+}
 
 export const $create_group = (name: string, destination: string, description: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, name: string, destination: string, description: string } }>) => {
     dispatch({
@@ -58,20 +76,23 @@ export const $create_group = (name: string, destination: string, description: st
         }
     })
 }
+export const $update_group = (name: string, destination: string, description: string, groupId: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, name: string, destination: string, description: string } }>) => {
+    dispatch({
+        type: "UPDATE_GROUP",
+        payload: {
+            api_path: `/groups/${groupId}`,
+            name,
+            destination,
+            description
+        }
+    })
+}
 
 export const $delete_group = (groupID: any) => (dispatch: Dispatch<{ type: string, payload: { api_path: string } }>) => {
     dispatch({
         type: "DELETE_GROUP",
         payload: {
             api_path: `/groups/${groupID}`
-        }
-    })
-}
-export const $add_group_member = (groupId: any, email: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, groupId: any, email: string } }>) => {
-    dispatch({
-        type: "POST_ADD_GROUP_MEMBER",
-        payload: {
-            api_path: `/groupUser`, email, groupId
         }
     })
 }
