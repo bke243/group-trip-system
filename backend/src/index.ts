@@ -23,7 +23,7 @@ createConnection({
   host: "localhost",
   port: 5432,
   username: "user",
-  password: "value",
+  password: "password",
   database: "grouptripdatabase",
   synchronize: true,
   // logging: true, // comment it to disable db logs
