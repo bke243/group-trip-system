@@ -56,12 +56,19 @@ class GroupUserService {
     });
   };
 
+  public findAllUsersOfGroup = async (groupId: number) => {
+    const repository = this.getRepository();
+    return repository.find({ where: { groupId: groupId, membershipAccepted: true }, relations: ["user", "user.account"] });
+  }
+
   public findGroupUserByGroupIdUserId = async (groupId: number, userId: number) => {
     const repository = this.getRepository();
     return repository.findOne({
       where: { groupId: groupId, userId: userId }
     });
   };
+
+
 
 
 

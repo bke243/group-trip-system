@@ -8,10 +8,10 @@ const isUserAuthenticated = async (req: Request, res: Response, next: NextFuncti
     const authorization = req.headers.authorization ? req.headers.authorization.split(" ")[1] : "";
     const decoded: any = await jwt.verify(authorization, AccountCallbacks.jwtSecret);  
     req.body.userAccountData = { ...decoded, userAccountId: decoded.userId };
+    next();
   } catch(error) {
     res.status(RESPONSE_STATUS.UNAUTHORIZED).json({messagr: "Unauthorized"});
   }
-  next();
 };
 
 export interface UserAccountData {

@@ -182,6 +182,27 @@ class GroupUserCallbacks {
         next(error);
       });
   };
+
+  public getAlGroupMemebers = async (request: Request<{ groupId: string }, {}, any>, response: Response, next: NextFunction) => {
+    const groupId = request.params.groupId;
+    if (!this.isNumber(groupId))
+      return response
+        .status(RESPONSE_STATUS.BAD_REQUEST)
+        .json({ message: "Missing the groupId" });
+    
+    return GroupUserService.findAllUsersOfGroup(groupId as unknown as number).then((groupUsers) => {
+      const updatedGroups = groupUsers.map((groupUser) => {
+        return {
+          userId: groupUser.userId,
+          accountId: groupUser.user.accountId,
+          email: groupUser.user.account.email,
+        }
+      })
+      return response.status(RESPONSE_STATUS.OK).json(updatedGroups);
+    }).catch((error) => {
+      next(error);
+    })
+  }
 }
 
 export default new GroupUserCallbacks();
