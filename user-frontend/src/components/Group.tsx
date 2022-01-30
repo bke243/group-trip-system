@@ -17,13 +17,6 @@ export const GroupCard = ({ group }: { group: GType }) => {
 
     return (
         <div style={{ width: "100%", margin: 'auto' }}>
-            <Modal
-                opened={opened}
-                onClose={() => setOpened(false)}
-                title="Update the group"
-            >
-                <GroupDetails group={group} />
-            </Modal>
             <div className='w-full h-auto bg-white border border-gray-200 rounded-lg shadow-md p-2'>
 
                 <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
@@ -38,16 +31,15 @@ export const GroupCard = ({ group }: { group: GType }) => {
                 <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
                     {group.description}
                 </Text>
-                {$user.personData.id === group.ownerId && <div className='w-full flex flex-row items-center justify-center space-x-2 mt-2'>
-
-                    <button onClick={() => setOpened(true)} className='w-full text-white py-2 font-semibold bg-purple-600 hover:bg-purple-700 rounded-lg shadow-md'>View</button>
-
+                <div className='w-full flex flex-row items-center justify-center space-x-2 mt-2'>
+                    <Link className='w-full' to={`group/${group.id}`}>
+                        <button onClick={() => setOpened(true)} className='w-full text-white py-2 font-semibold bg-purple-600 hover:bg-purple-700 rounded-lg shadow-md'>View</button>
+                    </Link>
 
                     <div className='w-full'>
                         <button onClick={() => dispatch($delete_group(group.id))} className='w-full text-white py-2 font-semibold bg-red-600 hover:bg-red-700 rounded-lg shadow-md'>Delete</button>
                     </div>
-                </div>}
-
+                </div>
             </div>
         </div >
     );

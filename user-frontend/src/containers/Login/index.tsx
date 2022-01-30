@@ -19,8 +19,8 @@ export const Login = () => {
     const dispatch = useDispatch()
     return <div className='fixed w-full h-screen max-h-screen'>
         <img src={images[Math.floor(Math.random() * 4)]} className='absolute inset-0 h-screen w-full object-cover brightness-50' alt="" />
-        <div className='absolute z-10 left-0 right-0 lg:left-20 w-full p-2 md:p-10 lg:p-0  md:w-full lg:w-1/3 flex items-center justify-center h-screen my-auto top-auto bottom-auto'>
-            <div className='w-full h-auto bg-white rounded-lg shadow-md py-4 px-4'>
+        <div className='absolute z-10 inset-0 flex items-center justify-center'>
+            <div className='max-w-sm w-96 h-auto bg-white rounded-lg shadow-md py-4 px-4'>
                 <h1 className='text-5xl font-semibold text-gray-600'>Log In</h1>
                 <Formik
                     initialValues={{

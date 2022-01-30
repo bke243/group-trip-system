@@ -45,7 +45,7 @@ export const UserOutlet = () => {
                   <div className="flex items-center">
                     <div className="flex-shrink-0 inline-flex items-center">
                       <MapIcon className='text-white w-8 h-8 mr-2' />
-                      <p className='text-white font-semibold'>Group Trip System</p>
+                      <p className='text-white font-semibold'>Group Trip Settlement</p>
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">

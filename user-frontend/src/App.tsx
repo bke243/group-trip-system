@@ -42,6 +42,7 @@ function App() {
           <Route path='/dashboard' element={<UserOutlet />} >
             <Route index element={<Groups />} />
             <Route path="packages" element={<UserPackages />} />
+            <Route path="group/:id" element={<GroupDetails />} />
             <Route path="finished" element={<Messages />} />
           </Route>
         </Route>

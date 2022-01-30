@@ -12,13 +12,19 @@ type InitialStateProps = {
     groups: {
         data: Group[],
         last_updated: number
-    }
+    },
+    groupUsers: {
+userId:number,
+accountId:number,
+email:string
+    }[]
 }
 const initialState = {
     groups: {
         data: [],
         last_updated: 0
-    }
+    },
+    groupUsers: []
 } as InitialStateProps;
 
 const reducer = (state = initialState, { type, payload }: { type: string, payload: any }): InitialStateProps => {
@@ -30,6 +36,11 @@ const reducer = (state = initialState, { type, payload }: { type: string, payloa
         case 'D_GROUP': {
             const gid = payload.split('/')[2]
             return { ...state, groups: { data: [...state.groups.data].filter(d => d.id !== (gid)), last_updated: Date.now() } };
+        }
+        case 'GROUP_USERS': {
+            console.log(payload);
+            
+            return {...state, groupUsers:[...payload.data]}
         }
         default:
             return state;
@@ -46,6 +57,15 @@ export const $fetch_groups = () => (dispatch: Dispatch<{ type: string, payload: 
         }
     })
 }
+export const $group_users = (groupId: any) => (dispatch: Dispatch<{ type: string, payload: { api_path: string,  groupId:any } }>) => {
+    dispatch({
+        type: "GET_GROUP_USERS",
+        payload: {
+            api_path: `/groups/${groupId}/users`,
+            groupId
+        }
+    })
+}
 export const $add_group_member = (email: string, groupId: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, email: string, groupId: string } }>) => {
     dispatch({
         type: "ADD_MEMBER",
@@ -56,11 +76,13 @@ export const $add_group_member = (email: string, groupId: string) => (dispatch: 
         }
     })
 }
-export const $delete_group_member = (userId: string, groupId: string) => (dispatch: Dispatch<{ type: string, payload: { api_path: string } }>) => {
+export const $delete_group_member = (userId: number, groupId: any) => (dispatch: Dispatch<{ type: string, payload: { api_path: string, groupId: any,userId: number } }>) => {
     dispatch({
         type: "DELETE_MEMBER",
         payload: {
             api_path: `/groupUser/${userId}/${groupId}`,
+            groupId, 
+            userId
         }
     })
 }

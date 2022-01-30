@@ -12,8 +12,22 @@ interface ITask {
   }
   //other things here
 }
+interface GetGroupUsersAction extends Action, IGroupUsers { type: 'GET_GROUP_USERS' }
+interface IGroupUsers {
+  payload: {
+    api_path: string,
+    groupId: number
+  }
+  //other things here
+}
 interface DeleteGroupAction extends Action, ITask { type: 'DELETE_GROUP' }
-interface DeleteMemberAction extends Action, ITask { type: 'DELETE_MEMBER' }
+interface DeleteMemberAction extends Action, IDeleteMember { type: 'DELETE_MEMBER' }
+interface IDeleteMember {
+  payload: {
+    api_path: string, groupId: any, userId:any
+  }
+  //other things here
+}
 
 interface PostGroupAction extends Action, IPostGroup { type: 'POST_MESSAGES' }
 interface IPostGroup {
@@ -62,6 +76,20 @@ export function* get_groups() {
   yield takeLatest<GetGroupsAction>("GET_GROUPS", get_groups_request);
 }
 
+function* get_group_users_request({ payload: { api_path, groupId } }: GetGroupUsersAction): any {
+  try {
+    const data: AxiosResponse = yield call(api.fetch_api, { api_path });
+    yield put({ type: "GROUP_USERS", payload: {data:data.data, groupId} });
+  } catch (e) {
+    console.error('error', e);
+    yield put({ type: "GROUP_USERS_FAIL" });
+  }
+}
+
+export function* get_group_users() {
+  yield takeLatest<GetGroupUsersAction>("GET_GROUP_USERS", get_group_users_request);
+}
+
 function* post_groups_request({ payload: { api_path, description, destination, name } }: PostGroupAction): any {
   try {
     const data: AxiosResponse = yield call(api.post_api, { api_path, body: { description, destination, name } });
@@ -105,10 +133,10 @@ export function* add_member() {
   yield takeLatest<PostAddMemberAction>("ADD_MEMBER", post_add_member_action);
 }
 
-function* delete_member_request({ payload: { api_path } }: DeleteMemberAction): any {
+function* delete_member_request({ payload: { api_path, groupId, userId } }: DeleteMemberAction): any {
   try {
     const data: AxiosResponse = yield call(api.delete_api, { api_path });
-    yield get_groups_request({ type: 'GET_GROUPS', payload: { api_path: '/groups' } })
+    yield get_group_users_request({type: `GET_GROUP_USERS`, payload:{api_path:  `/groups/${groupId}/users`, groupId: groupId}})
     yield put({ type: "DELETE_M", payload: api_path });
   } catch (e) {
     console.error('error', e);

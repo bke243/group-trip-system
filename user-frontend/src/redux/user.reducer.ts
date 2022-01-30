@@ -25,10 +25,12 @@ const reducer = (state = initialState, { type, payload }: { type: string, payloa
     switch (type) {
         case 'REGISTER': {
             window.localStorage.setItem("user", JSON.stringify(payload))
+            window.location.reload()
             return { ...state, personData: { email: payload.personData.email, id: payload.personData.id }, token: payload.token, loading: false, loggedIn: true }
         }
         case 'LOGIN': {
             window.localStorage.setItem("user", JSON.stringify(payload))
+            window.location.reload()
             return { ...state, personData: { email: payload.personData.email, id: payload.personData.id }, token: payload.token, loading: false, loggedIn: true }
         }
         case 'RETRIEVE_USER': {
