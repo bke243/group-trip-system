@@ -49,7 +49,7 @@ export const NewLogin = () => {
             <span className="block text-indigo-600 xl:inline">with your group!</span>
           </h1>
           <p className="mt-3 text-base text-gray-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-            Group Trip System is the best place to start your journey with your friends, family, and your loved ones!
+            Group Trip Settlement is the best place to start your journey with your friends, family, and your loved ones!
           </p>
         </div>
 
